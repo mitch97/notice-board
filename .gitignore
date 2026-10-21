@@ -1,0 +1,21 @@
+# Dati dei progetti: restano solo sul PC
+SAL.md
+STORICO.md
+TODO.md
+UTILS.md
+UTILS.enc
+*.enc
+_STATO-PROGETTI.json
+_MAPPA-PROGETTI.md
+
+# Credenziali e segreti
+*passw*
+*credenz*
+*.pfx
+*.key
+
+# Varie
+*.pdf
+*.url
+Thumbs.db
+__pycache__/
