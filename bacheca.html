@@ -94,6 +94,50 @@ main{max-width:1100px;margin:0 auto;padding:24px;min-height:calc(100vh - 90px)}
 .chip{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;display:inline-block}
 .chip.P1{background:var(--p1s);color:var(--p1)} .chip.P2{background:var(--p2s);color:var(--p2)} .chip.P3{background:var(--p3s);color:var(--p3)} .chip.none{background:var(--code);color:var(--muted)}
 .chip[data-prioopen]{transition:transform .25s ease,box-shadow .25s ease}.chip[data-prioopen]:hover{transform:translateY(-1px);box-shadow:0 0 0 3px color-mix(in srgb,currentColor 14%,transparent)}
+.chip.test{background:#e8defa;color:#6b3fc2}@media (prefers-color-scheme:dark){.chip.test{background:#33264f;color:#cdb6ff}}
+.chip.wait{background:var(--p3s);color:var(--p3)}
+.kb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start;padding:2px 2px 8px}
+main.wide{max-width:2400px;padding-left:28px;padding-right:28px}
+.kcard .head{flex-wrap:nowrap;align-items:flex-start}.kcard .head .chip{flex:none;margin-top:1px}.kcard .ttl{flex:1;min-width:0;overflow-wrap:anywhere}.kcard .det{overflow-wrap:anywhere}
+.kcol{background:color-mix(in srgb,var(--accent) 5%,var(--panel));border:1px solid var(--line);border-radius:14px;padding:10px;min-height:150px;transition:background-color .25s ease,border-color .25s ease}
+.kcol.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel))}
+.khead{display:flex;align-items:center;gap:8px;margin:2px 4px 10px;font-size:14px}
+.khead .kn{background:var(--code);color:var(--muted);border-radius:99px;padding:0 8px;font-size:12px;font-weight:700}
+.kcol.wip .kn{background:var(--p2s);color:var(--p2)}.kwip{font-size:12px;color:var(--p2);margin-left:auto}
+.kcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:9px 10px;margin-bottom:8px;cursor:grab;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease}
+.kcard:hover{transform:translateY(-1px)}.kcard.dragging{opacity:.4}
+.kcard.kpP1{border-left-color:var(--p1)}.kcard.kpP2{border-left-color:var(--p2)}.kcard.kpP3{border-left-color:var(--p3)}.kcard.kpnone{border-left-color:var(--line)}
+.kcard.kdone{opacity:.78}.kcard.kdone .ttl{text-decoration:line-through;color:var(--muted)}
+.ksec{font-size:11.5px;color:var(--muted);margin-top:3px}
+.kfoot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;gap:8px}
+.kmv{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.chip.run{background:var(--accent-soft);color:var(--accent)}
+.kcard.pk{cursor:pointer}.pkchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.pkdl{margin-top:6px}
+@media (min-width:901px) and (max-width:1099px){.kb{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:901px) and (max-width:1499px){.kb.kb5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1500px){.kb.kb5{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.kcard[data-kk]{cursor:pointer}.kcard[data-kk]:hover .ttl{color:var(--accent)}
+.modal.tp{width:min(1000px,100%);max-height:calc(100vh - 32px);overflow:auto;gap:12px}
+.tpmeta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.chip.tpst{background:var(--code);color:var(--muted)}
+.tpt{margin:0;font-size:22px;line-height:1.35;overflow-wrap:anywhere}
+.tpb{font-size:16px;line-height:1.65;overflow-wrap:anywhere}.tpb p{margin:0 0 .7em}.tpb p:last-child{margin-bottom:0}
+.tpb p.lp{--lc:var(--accent);border-left:3px solid var(--lc);padding:3px 0 3px 12px;margin-bottom:.9em}.tpb p.lp.upd{--lc:var(--p3)}.tpb p.lp.todo{--lc:var(--p2)}.tpb .lbl{color:var(--lc);font-weight:700}
+.tpmv{border-top:1px solid var(--line);padding-top:12px}
+.kcard.ovt{box-shadow:0 -3px 0 0 var(--accent),var(--shadow)}.kcard.ovb{box-shadow:0 3px 0 0 var(--accent),var(--shadow)}
+.kadd{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);width:26px;height:26px;border-radius:8px;cursor:pointer;font-size:17px;line-height:1;padding:0;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.kadd:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}.kwip+.kadd{margin-left:8px}
+.modal.nt{width:min(700px,100%);max-height:calc(100vh - 32px);overflow:auto}
+.ntf{display:flex;flex-direction:column;gap:5px}.ntl{color:var(--muted);font-size:13px}.ntl .meta{font-size:12px}
+.modal.nt input,.modal.nt textarea,.modal.nt select{box-sizing:border-box;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease}
+.modal.nt input,.modal.nt select{height:38px;padding:0 12px}.modal.nt #ntTitle,.modal.nt #ntProj{width:100%}.modal.nt textarea{width:100%;padding:10px 12px;line-height:1.55;resize:vertical;min-height:120px}
+.modal.nt input:hover,.modal.nt textarea:hover,.modal.nt select:hover{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))}
+.modal.nt input:focus,.modal.nt textarea:focus,.modal.nt select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.ddw{position:relative;display:inline-block}
+.btn.dd{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-width:220px;height:38px;padding:0 12px;border-radius:10px;text-align:left}
+.btn.dd.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.ddc{color:var(--muted);font-size:12px}
+.ddpop{left:0;right:auto;min-width:100%;max-height:230px;overflow:auto}.ddpop.up{top:auto;bottom:calc(100% + 6px)}
+.ntact{gap:10px}.ntact .meta{margin-left:auto;color:var(--muted);font-size:13px}
+.kempty{color:var(--muted);text-align:center;padding:14px 0;font-size:13px}.kfootc{text-align:center;margin-top:4px;font-size:12px}
+@media (max-width:900px){.kb,.kb.kb5{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(78%,1fr);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.kcol{scroll-snap-align:start}}
 .chip.zero{background:var(--accent-soft);color:var(--done)}
 .empty{color:var(--muted);padding:40px;text-align:center;border:1px dashed var(--line);border-radius:14px}
 .crumb{margin-bottom:12px}
@@ -364,7 +408,7 @@ setInterval(()=>{if(utilsPw&&Date.now()-utilsLast>5*60000){utilsLock('UTILS bloc
 ['click','keydown'].forEach(ev=>document.addEventListener(ev,()=>{if(utilsPw)utilsLast=Date.now()},true));
 
 /* ---------- TODO ---------- */
-const ITEM=/^(\s*)- \[( |~|x|X)\]\s*(?:\*\*(P[123])\*\*\s*)?(.*)$/;
+const ITEM=/^(\s*)- \[( |~|x|X|\?|t|T)\]\s*(?:\*\*(P[123])\*\*\s*)?(.*)$/;
 function autoTitle(t){
   let x=t.replace(/`/g,'').replace(/\*\*/g,'').replace(/\s+/g,' ').trim();
   const cut=x.search(/:\s|\s\(|\.\s|;\s| — /); if(cut>8)x=x.slice(0,cut);
@@ -379,7 +423,7 @@ function parseTodo(text){
   const lines=text.split(/\r?\n/), items=[]; let sec='';
   lines.forEach((l,idx)=>{
     const h=l.match(/^#{2,3}\s+(.*)/); if(h){sec=h[1];return}
-    const m=l.match(ITEM); if(m){const it={idx,raw:l,mark:m[2].toLowerCase(),prio:m[3]||'none',text:m[4],sec};splitTitle(it);items.push(it)}
+    const m=l.match(ITEM); if(m){let tx=m[4],dd='';const dm=tx.match(/\s*✓\s*(\d{4}-\d{2}-\d{2})\s*$/);if(dm){dd=dm[1];tx=tx.slice(0,dm.index)}const it={idx,raw:l,mark:m[2].toLowerCase(),prio:m[3]||'none',text:tx,sec,doneDate:dd};splitTitle(it);items.push(it)}
   });
   return {lines,items};
 }
@@ -433,6 +477,18 @@ const isDone=p=>states[p.name]?.stato==='terminato';
 
 /* ---------- scritture ---------- */
 async function readState(){const s=await readText(root,STATE_FILE);let cur={};try{cur=s?JSON.parse(s.text):{}}catch(e){}return cur}
+const isWait=p=>states[p.name]?.stato==='attesa';
+async function setProjectKb(name,col){
+  try{
+    const cur=await readState(); const e=cur[name]||{}; const d=new Date();
+    if(col==='terminato'){e.stato='terminato';e.data=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+    else if(col==='attesa'||col==='test'){e.stato=col;delete e.data}
+    else{delete e.stato;delete e.data}
+    if(Object.keys(e).length)cur[name]=e;else delete cur[name];
+    await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
+    states=cur; toast(name+': '+(col==='terminato'?'terminato':col==='attesa'?'in attesa':col==='test'?'in test':'in corso')); render();
+  }catch(err){toast('Scrittura non riuscita (permesso?)')}
+}
 async function setProjectState(name,terminato){
   const cur=await readState(); const e=cur[name]||{};
   if(terminato){e.stato='terminato';e.data=new Date().toISOString().slice(0,10);cur[name]=e}
@@ -460,7 +516,7 @@ async function setProjectTipo(name,tipo){
     detailTab=tipo==='documentazione'?'Documenti':'TODO';keep();await refresh(true);
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
-let viewMode='grid';try{viewMode=localStorage.getItem('bacheca-view')==='list'?'list':'grid'}catch(e){}
+let viewMode='grid';try{const v=localStorage.getItem('bacheca-view');viewMode=v==='list'||v==='kanban'?v:'grid'}catch(e){}
 let sortKey='prio';try{sortKey=localStorage.getItem('bacheca-sort')||'prio'}catch(e){}
 const DAY=86400000;
 function dlInfo(n){
@@ -485,9 +541,9 @@ let sortMenu=false;
 const SORTS=[['prio','Priorità'],['az','A–Z'],['agg','Aggiornamento'],['manual','Manuale']];
 const ICON_FILTER='<svg class="ficon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 3.5h12M3.8 8h8.4M5.6 12.5h4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg>';
 const sortBar=()=>{
-  const cs=(SORTS.find(x=>x[0]===sortKey)||SORTS[0])[1], cv=viewMode==='list'?'Elenco':'Blocchi';
+  const cs=(SORTS.find(x=>x[0]===sortKey)||SORTS[0])[1], vm=viewMode==='kanban'&&view==='documentazione'?'grid':viewMode, cv=vm==='list'?'Elenco':vm==='kanban'?'Kanban':'Blocchi';
   const it=(attr,k,txt,on)=>`<button role="menuitemradio" aria-checked="${on}" data-${attr}="${k}" class="fitem ${on?'on':''}"><span class="ck">${on?'✓':''}</span>${txt}</button>`;
-  const pop=sortMenu?`<div class="fpop" role="menu"><div class="fsec">Vista</div>${it('view','grid','▦ Blocchi',viewMode==='grid')}${it('view','list','☰ Elenco',viewMode==='list')}<div class="fsep"></div><div class="fsec">Ordina per</div>${SORTS.map(([k,l])=>it('sort',k,l,sortKey===k)).join('')}</div>`:'';
+  const pop=sortMenu?`<div class="fpop" role="menu"><div class="fsec">Vista</div>${it('view','grid','▦ Blocchi',vm==='grid')}${it('view','list','☰ Elenco',vm==='list')}${view==='documentazione'?'':it('view','kanban','▥ Kanban',vm==='kanban')}<div class="fsep"></div><div class="fsec">Ordina per</div>${SORTS.map(([k,l])=>it('sort',k,l,sortKey===k)).join('')}</div>`:'';
   return `<span class="spacer"></span><span class="fmenu"><button class="btn fbtn ${sortMenu?'on':''}" id="fbtn" aria-haspopup="menu" aria-expanded="${sortMenu}" title="Vista: ${cv} · Ordine: ${esc(cs)}">${ICON_FILTER}<span class="fl">Ordina</span></button>${pop}</span>`;
 };
 const label=n=>(states[n]&&states[n].nome)||n;
@@ -521,6 +577,32 @@ async function setProjectNome(name,nome){
     states=cur;renaming=false;editOpen=false;toast('Nome aggiornato');render();
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
+function applyMark(line,newMark){
+  let l=line.replace(/\[( |~|x|X|\?|t|T)\]/,'['+newMark+']').replace(/\s*✓\s*\d{4}-\d{2}-\d{2}\s*$/,'');
+  if(newMark==='x'){const d=new Date();l+=' ✓'+d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  return l;
+}
+function lineIdx(lines,item){
+  if(lines[item.idx]===item.raw)return item.idx;
+  const f=lines.map((l,i)=>l===item.raw?i:-1).filter(i=>i>=0);return f.length===1?f[0]:-1;
+}
+/* sposta la riga di un'attività prima/dopo un'altra (e, se serve, cambia il marcatore): l'ordine delle righe nel TODO.md è l'ordine manuale */
+async function moveTask(srcKey,dstKey,before,newMark){
+  const [p,si]=findItem(srcKey), [p2,di]=findItem(dstKey);
+  if(!p||!si||!di||p!==p2||si===di)return;
+  try{
+    const cur=await readText(p.dir,'TODO.md'); if(!cur)throw 0;
+    const eol=cur.text.includes('\r\n')?'\r\n':'\n', lines=cur.text.split(/\r?\n/);
+    const a=lineIdx(lines,si), b=lineIdx(lines,di);
+    if(a<0||b<0){toast('Il TODO è cambiato nel frattempo: ricarico');await refresh();return}
+    let ln=lines.splice(a,1)[0];
+    if(newMark!==undefined&&newMark!==si.mark)ln=applyMark(ln,newMark);
+    const bb=b>a?b-1:b;
+    lines.splice(before?bb:bb+1,0,ln);
+    await writeText(p.dir,'TODO.md',lines.join(eol));
+    await refresh(true);
+  }catch(e){toast('Scrittura non riuscita (permesso?)')}
+}
 async function setMark(pname,item,newMark){
   const p=projects.find(x=>x.name===pname);
   try{
@@ -529,7 +611,7 @@ async function setMark(pname,item,newMark){
     let idx=lines[item.idx]===item.raw?item.idx:-1;
     if(idx<0){const f=lines.map((l,i)=>l===item.raw?i:-1).filter(i=>i>=0);if(f.length===1)idx=f[0]}
     if(idx<0){toast('Il TODO è cambiato nel frattempo: ricarico');await refresh();return}
-    lines[idx]=lines[idx].replace(/\[( |~|x|X)\]/,'['+newMark+']');
+    lines[idx]=applyMark(lines[idx],newMark);
     await writeText(p.dir,'TODO.md',lines.join(eol));
     await refresh(true);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
@@ -544,7 +626,7 @@ function cardHTML(p,i){
   const d=dlInfo(p.name);
   const tags=(d?`<span class="dl c-dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} (${esc(d.txt)}) — clicca per modificare">⏰ ${esc(d.short)} · ${d.dd.slice(0,5)}</span>`:'<span class="c-dl nodl">—</span>')
     +`<span class="dl upd c-upd" title="Ultimo aggiornamento ${esc(updLabel(p))}">✏️ ${esc(updShort(p))}</span>`
-    +(tipoOf(p.name)==='documentazione'?'<span class="c-x">📄 Documentazione</span>':'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'');
+    +(tipoOf(p.name)==='documentazione'?'<span class="c-x">📄 Documentazione</span>':'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'')+(isWait(p)?'<span class="c-x chip wait">in attesa</span>':'')+(states[p.name]?.stato==='test'?'<span class="c-x chip test">in test</span>':'');
   return `<div class="card${sortKey==='manual'?' dnd':''}"${sortKey==='manual'?' draggable="true" title="Trascina per riordinare"':''} data-card="${esc(p.name)}" style="--c:${colOf(p.name)}">
     <span class="rank">${i+1}</span>
     <h2 data-open="${esc(p.name)}" title="${esc(p.excerpt||'')}">${esc(label(p.name))}</h2>
@@ -553,7 +635,7 @@ function cardHTML(p,i){
 }
 function reEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 function snippet(line,q){
-  let s=line.replace(/^\s*(?:[-*]\s*(?:\[[ x~]\]\s*)?|#{1,6}\s*)/i,'').replace(/\*\*|`/g,'').trim();
+  let s=line.replace(/^\s*(?:[-*]\s*(?:\[[ x~?tT]\]\s*)?|#{1,6}\s*)/i,'').replace(/\*\*|`/g,'').trim();
   const i=s.toLowerCase().indexOf(q); let a=Math.max(0,i-60), b=Math.min(s.length,i+q.length+120);
   s=(a>0?'…':'')+s.slice(a,b)+(b<s.length?'…':'');
   return esc(s).replace(new RegExp(reEsc(esc(q)),'gi'),m=>`<mark>${m}</mark>`);
@@ -584,7 +666,35 @@ function viewSearch(){
   }
   return `<h2 style="margin-top:0">Risultati per “${esc(gQ.trim())}” <span class="meta" style="font-weight:400">· ${total}</span></h2>${html||'<div class="empty">Nessun risultato.</div>'}`;
 }
+
+/* ---------- Kanban dei progetti ---------- */
+const PK_COLS=[['attesa','In attesa'],['corso','In corso'],['test','Test'],['terminato','Terminato']], PK_DAYS=30;
+let pkMenu='',pkAllDone=false,pkDrag=null;
+const pkCol=p=>{const s=states[p.name]&&states[p.name].stato;return s==='terminato'||s==='attesa'||s==='test'?s:'corso'};
+function pkCard(p,col){
+  const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Apri il kanban del progetto con questa priorità" style="cursor:pointer">${k==='none'?'senza prio':k} · ${p.open[k]}</span>`).join('');
+  const run=p.todo.items.filter(i=>i.mark==='~').length, st=states[p.name], d=dlInfo(p.name);
+  const menu=pkMenu===p.name?`<div class="kmv">${PK_COLS.filter(c=>c[0]!==col).map(c=>`<button class="btn small" data-pkmove="${esc(p.name)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
+  return `<div class="kcard pk" draggable="true" data-kp="${esc(p.name)}" style="border-left-color:${colOf(p.name)}">
+    <div class="head"><span class="ttl" style="color:${colOf(p.name)}">${esc(label(p.name))}</span></div>
+    <div class="pkchips">${p.openCount?chips:'<span class="chip zero">✓ Tutto fatto</span>'}${run?`<span class="chip run">▶ ${run} in corso</span>`:''}</div>
+    ${d&&col!=='terminato'?`<div class="pkdl"><span class="dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} — clicca per modificare">⏰ ${esc(d.short)} · ${d.dd.slice(0,5)}</span></div>`:''}
+    <div class="kfoot">${col==='terminato'&&st&&st.data?`<span class="meta">✓ ${esc(st.data.slice(8)+'/'+st.data.slice(5,7))}</span>`:'<span></span>'}<button class="btn small" data-pkmenu="${esc(p.name)}" title="Sposta in un'altra colonna">Sposta ▾</button></div>${menu}</div>`;
+}
+function viewProgettiKanban(){
+  const pr=projects.filter(p=>tipoOf(p.name)==='progetto');
+  const recent=p=>{const d=states[p.name]&&states[p.name].data;if(!d)return false;const [y,m,g]=d.split('-').map(Number);return Date.now()-new Date(y,m-1,g).getTime()<=PK_DAYS*DAY};
+  const cols=PK_COLS.map(([col,name])=>{
+    let list=pr.filter(p=>pkCol(p)===col), hidden=0;
+    if(col==='terminato'){const r=list.filter(recent);hidden=list.length-r.length;if(!pkAllDone)list=r}
+    list=sortProjects(list);
+    const foot=col==='terminato'?(hidden||pkAllDone?`<div class="kfootc"><button class="btn small" data-pkall="1">${pkAllDone?`Solo ultimi ${PK_DAYS} giorni`:`Mostra anche i più vecchi · ${hidden}`}</button></div>`:`<div class="kfootc meta">ultimi ${PK_DAYS} giorni</div>`):'';
+    return `<div class="kcol" data-pcol="${col}"><div class="khead"><b>${name}</b><span class="kn">${list.length}</span></div>${list.map(p=>pkCard(p,col)).join('')||'<div class="kempty">—</div>'}${foot}</div>`;
+  }).join('');
+  return `<div class="toolbar">${sortBar()}</div><div class="kb">${cols}</div>`;
+}
 function viewProgetti(){
+  if(viewMode==='kanban')return viewProgettiKanban();
   const pr=projects.filter(p=>tipoOf(p.name)==='progetto');
   const inc=pr.filter(p=>!isDone(p)), fin=pr.filter(isDone);
   const fs=filterState==='terminati'?'terminati':'in corso';
@@ -605,14 +715,118 @@ function rowHTML(p,i,showProj){
   return `<div class="todo-row ${done?'done':''} ${isOpen?'open':''}">
     <input type="checkbox" ${done?'checked':''} data-chk="${esc(p.name)}|${i.idx}">
     <div class="t"><div class="head ${has?'exp':''}" ${has?`data-exp="${esc(k)}"`:''}>
-      ${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span>${showProj?`<span class="proj-tag" data-open="${esc(p.name)}">${esc(label(p.name))}</span>`:''}${has?'<span class="chev">▾</span>':''}</div>
+      ${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}${i.mark==='?'?'<span class="chip wait">in attesa</span>':''}${i.mark==='t'?'<span class="chip test">in test</span>':''}<span class="ttl">${inline(i.title)}</span>${showProj?`<span class="proj-tag" data-open="${esc(p.name)}">${esc(label(p.name))}</span>`:''}${has?'<span class="chev">▾</span>':''}</div>
       ${isOpen?`<div class="det">${inline(i.detail)}</div>`:''}</div>
     ${done?'':`<button class="doing ${doing?'':'off'}" data-doing="${esc(p.name)}|${i.idx}">in corso</button>`}</div>`;
+}
+
+/* ---------- Kanban dei task del progetto ---------- */
+const KB_COLS=[['?','In attesa'],[' ','Da fare'],['~','In corso'],['t','Test'],['x','Fatto']], KB_WIP=3, KB_DAYS=14;
+let kbMenu='',kbAllDone=false,kbDrag=null,kbDragPrio='',taskPop='';
+function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);return Date.now()-new Date(y,m-1,g).getTime()<=KB_DAYS*DAY}
+function kbCard(p,i,mk){
+  const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
+  const menu=kbMenu===key?`<div class="kmv">${mk==='x'?'':`<button class="btn small" data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">↑ Su</button><button class="btn small" data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">↓ Giù</button>`}${KB_COLS.filter(c=>c[0]!==mk).map(c=>`<button class="btn small" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
+  const dd=mk==='x'&&i.doneDate?`<span class="meta">✓ ${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
+  return `<div class="kcard kp${i.prio}${mk==='x'?' kdone':''}" draggable="true" data-kk="${esc(key)}" data-prio="${i.prio}">
+    <div class="head">${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span></div>
+    ${i.sec?`<div class="ksec">${esc(i.sec)}</div>`:''}
+    <div class="kfoot">${dd}<button class="btn small" data-kmenu="${esc(key)}" title="Sposta in un'altra colonna">Sposta ▾</button></div>${menu}</div>`;
+}
+
+function taskPopHTML(p){
+  const it=p.todo.items.find(i=>p.name+'|'+i.idx===taskPop); if(!it){taskPop='';return ''}
+  const col=KB_COLS.find(c=>c[0]===it.mark)||KB_COLS[1];
+  let paras=[];{const toks=(it.detail||'').split(/(?<=[.;])\s+(?=[A-ZÀ-Ü0-9`(])/);let cur='';for(const t of toks){cur=cur?cur+' '+t:t;if((cur.match(/`/g)||[]).length%2===0){paras.push(cur);cur=''}}if(cur)paras.push(cur)}
+  const has=!!it.detail&&it.detail!==it.title;
+  const para=x=>{const m=x.match(/^([^:`*\n]{2,45}):\s+([\s\S]*)$/);if(!m)return `<p>${inline(x)}</p>`;const l=m[1],cls=/^aggiorn/i.test(l)?' upd':/^(da fare|prossim|azione|todo)/i.test(l)?' todo':'';return `<p class="lp${cls}"><strong class="lbl">${esc(l)}:</strong> ${inline(m[2])}</p>`};
+  const moves=KB_COLS.filter(c=>c[0]!==it.mark).map(c=>`<button class="btn small" data-kmove="${esc(p.name+'|'+it.idx)}|${c[0]}">${c[1]}</button>`).join('');
+  return `<div class="mback" data-mclose="1"><div class="modal tp" role="dialog" aria-label="Dettagli attività">
+    <div class="mhead"><span class="tpmeta">${it.prio!=='none'?`<span class="chip ${it.prio}">${it.prio}</span>`:''}<span class="chip tpst">${esc(col[1])}</span>${it.sec?`<span class="meta">${esc(it.sec)}</span>`:''}</span><button class="btn small" data-mclose="1" aria-label="Chiudi">✕</button></div>
+    <h3 class="tpt">${inline(it.title)}</h3>
+    <div class="tpb">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>
+    ${it.mark==='x'&&it.doneDate?`<div class="meta">Completata il ${esc(it.doneDate.split('-').reverse().join('/'))}</div>`:''}
+    <div class="mrow tpmv"><span>Sposta in</span>${moves}</div>
+  </div></div>`;
+}
+function renderKanban(p){
+  if(!p.files['TODO.md'])return '<div class="empty">Nessun TODO.md: il kanban usa i TODO del progetto.</div>';
+  const items=p.todo.items.filter(i=>!tabPrio||i.prio===tabPrio), rank={P1:0,P2:1,P3:2,none:3};
+  const flt=`<div class="filters" style="margin-bottom:12px"><span>Priorità:</span><span class="seg" style="margin:0">${[['','Tutte'],['P1','P1'],['P2','P2'],['P3','P3'],['none','Senza']].map(([k,l])=>`<button data-kprio="${k}" class="${tabPrio===k?'on':''}">${l}</button>`).join('')}</span><span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button></div>`;
+  const cols=KB_COLS.map(([mk,name])=>{
+    let list=items.filter(i=>i.mark===mk), hidden=0;
+    if(mk==='x'){const rec=list.filter(i=>kbRecent(i.doneDate));hidden=list.length-rec.length;if(!kbAllDone)list=rec;list.sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')||a.idx-b.idx)}
+    else list.sort((a,b)=>rank[a.prio]-rank[b.prio]||a.idx-b.idx);
+    const wip=mk==='~'&&list.length>KB_WIP;
+    const foot=mk==='x'?(hidden||kbAllDone?`<div class="kfootc"><button class="btn small" data-kall="1">${kbAllDone?`Solo ultimi ${KB_DAYS} giorni`:`Mostra anche i più vecchi · ${hidden}`}</button></div>`:`<div class="kfootc meta">ultimi ${KB_DAYS} giorni</div>`):'';
+    return `<div class="kcol${wip?' wip':''}" data-kmark="${mk}"><div class="khead"><b>${name}</b><span class="kn">${list.length}</span>${wip?`<span class="kwip" title="Troppe attività contemporaneamente">⚠ oltre ${KB_WIP}</span>`:''}${mk==='x'?'':`<button class="kadd" data-nt="${esc(mk)}" title="Nuova attività in ${esc(name)}" aria-label="Nuova attività in ${esc(name)}">+</button>`}</div>${list.map(i=>kbCard(p,i,mk)).join('')||'<div class="kempty">—</div>'}${foot}</div>`;
+  }).join('');
+  return `${flt}<div class="kb kb5">${cols}</div>`;
+}
+
+/* ---------- Nuova attività ---------- */
+let newTask=null,ntDD='';const ddOpts={};
+function ddHTML(id,opts,val,ph,up){
+  ddOpts[id]=opts; const cur=opts.find(o=>o[0]===val), on=ntDD===id;
+  return `<span class="ddw"><button type="button" class="btn dd${on?' on':''}" data-dd="${id}" aria-haspopup="listbox" aria-expanded="${on}"><span class="ddl">${esc(cur?cur[1]:ph||'Scegli…')}</span><span class="ddc">▾</span></button>${on?`<div class="fpop ddpop${up?' up':''}" role="listbox">${opts.map((o,i)=>`<button type="button" role="option" aria-selected="${o[0]===val}" class="fitem${o[0]===val?' on':''}" data-ddv="${id}|${i}"><span class="ck">${o[0]===val?'✓':''}</span>${esc(o[1])}</button>`).join('')}</div>`:''}</span>`;
+}
+const NT_MARKS=[[' ','Da fare'],['?','In attesa'],['~','In corso'],['t','Test']];
+function ntSections(p){const out=[];(p&&p.files['TODO.md']?p.files['TODO.md'].text.split(/\r?\n/):[]).forEach(l=>{const h=l.match(/^#{2,3}\s+(.*)/);if(h&&!out.includes(h[1]))out.push(h[1])});return out}
+function ntDefSec(p){return ntSections(p).find(x=>!/fatt|complet|archiv|chius/i.test(x))||'__new'}
+function openNewTask(mark,pname){const p=projects.find(x=>x.name===pname);newTask={pname:pname||'',mark:mark||' ',prio:'P2',title:'',detail:'',secSel:p?ntDefSec(p):'',secNew:'Da fare',focused:false};render()}
+function newTaskHTML(){
+  const n=newTask, p=projects.find(x=>x.name===n.pname), secs=p?ntSections(p):[];
+  const plist=projects.filter(x=>!isDone(x)).slice().sort((a,b)=>label(a.name).localeCompare(label(b.name),'it',{sensitivity:'base'}));
+  const projRow=detail?'':`<div class="mrow"><span>Progetto</span>${ddHTML('ntProj',plist.map(x=>[x.name,label(x.name)]),n.pname,'Scegli il progetto…')}</div>`;
+  const secRow=p?`<div class="mrow"><span>Sezione</span>${ddHTML('ntSec',secs.map(x=>[x,x]).concat([['__new','Nuova sezione…']]),n.secSel,'Scegli la sezione…',true)}${n.secSel==='__new'?`<input id="ntSecNew" placeholder="Nome della sezione" maxlength="60" value="${esc(n.secNew)}">`:''}</div>`:'';
+  return `<div class="mback" data-mclose="1"><div class="modal nt" role="dialog" aria-label="Nuova attività">
+    <div class="mhead"><b>Nuova attività${p?' · '+esc(label(p.name)):''}</b><button class="btn small" data-mclose="1" aria-label="Chiudi">✕</button></div>
+    ${projRow}
+    <div class="ntf"><span class="ntl">Titolo</span><input id="ntTitle" maxlength="70" placeholder="Titolo breve (max 5 parole)" value="${esc(n.title)}" autocomplete="off"></div>
+    <div class="ntf"><span class="ntl">Dettagli <span class="meta">(facoltativi · ogni riga diventa un paragrafo; inizia una riga con <i>Aggiornamento …:</i> o <i>Da fare:</i> per metterla in evidenza)</span></span><textarea id="ntDetail" rows="6">${esc(n.detail)}</textarea></div>
+    <div class="mrow"><span>Priorità</span><span class="seg" style="margin:0">${[['P1','P1'],['P2','P2'],['P3','P3'],['none','Nessuna']].map(([k,l])=>`<button data-ntprio="${k}" class="${n.prio===k?'on':''}">${l}</button>`).join('')}</span></div>
+    <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${NT_MARKS.map(([k,l])=>`<button data-ntmark="${esc(k)}" class="${n.mark===k?'on':''}">${l}</button>`).join('')}</span></div>
+    ${secRow}
+    <div class="mrow ntact"><button class="btn primary" id="ntsave">Aggiungi</button><button class="btn" data-mclose="1">Annulla</button><span class="meta">Ctrl+Invio per aggiungere</span></div>
+  </div></div>`;
+}
+async function addTask(){
+  const n=newTask; if(!n)return;
+  const title=(n.title||'').replace(/\*\*/g,'').replace(/\s+/g,' ').trim();
+  if(title.length<2){toast('Scrivi un titolo');return}
+  const p=projects.find(x=>x.name===n.pname); if(!p){toast('Scegli il progetto');return}
+  const detail=(n.detail||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(x=>/[.;:!?]$/.test(x)?x:x+'.').join(' ');
+  const line=`- [${n.mark}] ${n.prio&&n.prio!=='none'?`**${n.prio}** `:''}**${title}**${detail?` — ${detail}`:''}`;
+  const sec=(n.secSel==='__new'?(n.secNew||'').trim():(n.secSel||'')).replace(/\s+/g,' ');
+  const d=new Date(), today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  try{
+    const cur=await readText(p.dir,'TODO.md');
+    let out;
+    if(!cur){out=`# ${label(p.name)} — TODO\n\n_Ultimo aggiornamento: ${today}_\n\n## ${sec||'Da fare'}\n${line}\n`}
+    else{
+      const eol=cur.text.includes('\r\n')?'\r\n':'\n', lines=cur.text.split(/\r?\n/);
+      const hi=sec?lines.findIndex(l=>{const h=l.match(/^#{2,3}\s+(.*)/);return h&&h[1].trim()===sec}):-1;
+      if(hi>=0){
+        let end=lines.length;for(let i=hi+1;i<lines.length;i++){if(/^#{1,3}\s/.test(lines[i])){end=i;break}}
+        let last=hi;for(let i=end-1;i>hi;i--){if(lines[i].trim()){last=i;break}}
+        lines.splice(last+1,0,line);
+      }else if(sec){
+        while(lines.length&&!lines[lines.length-1].trim())lines.pop();
+        lines.push('','## '+sec,line,'');
+      }else{
+        while(lines.length&&!lines[lines.length-1].trim())lines.pop();
+        lines.push(line,'');
+      }
+      out=lines.join(eol).replace(/(_Ultimo aggiornamento:\s*)\d{4}-\d{2}-\d{2}/,'$1'+today);
+    }
+    await writeText(p.dir,'TODO.md',out);
+    newTask=null; await refresh(true); toast('Attività aggiunta a '+label(p.name));
+  }catch(e){toast('Scrittura non riuscita (permesso?)')}
 }
 function findItem(key){const [n,ix]=key.split('|');const p=projects.find(x=>x.name===n);return [p,p.todo.items.find(i=>i.idx==ix)]}
 function viewDaFare(){
   const act=projects.filter(p=>!isDone(p));
-  const fl=`<div class="filters"><span>Mostra:</span>${['P1','P2','P3','none'].map(k=>`<label><input type="checkbox" data-prio="${k}" ${todoPrio[k]?'checked':''}> ${k==='none'?'senza priorità':k}</label>`).join('')}<span class="spacer"></span>DFBTN<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div>`;
+  const fl=`<div class="filters"><span>Mostra:</span>${['P1','P2','P3','none'].map(k=>`<label><input type="checkbox" data-prio="${k}" ${todoPrio[k]?'checked':''}> ${k==='none'?'senza priorità':k}</label>`).join('')}<span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button>DFBTN<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div>`;
   let html=fl, tot=0, nDoing=0;
   if(doingFirst){
     const rows=[];sortProjects(act).forEach(p=>p.todo.items.filter(i=>i.mark==='~'&&todoPrio[i.prio]).forEach(i=>rows.push(rowHTML(p,i,true))));
@@ -672,7 +886,7 @@ function renderTodoDoc(p){
   if(open)html+='</div>';
   if((q||tabPrio)&&!found)html='<div class="empty">Nessun risultato.</div>';
   html=top+html;
-  return `<div class="filters" style="margin-bottom:8px">${sBox()}${dfBtn(nDoing)}${tabPrio?`<button class="btn small primary" data-clrprio="1" title="Togli il filtro">Priorità: ${tabPrio==='none'?'senza prio':tabPrio} ✕</button>`:''}<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div><div class="doc">${html}</div>`;
+  return `<div class="filters" style="margin-bottom:8px">${sBox()}<button class="btn small primary" data-nt=" ">+ Nuova attività</button>${dfBtn(nDoing)}${tabPrio?`<button class="btn small primary" data-clrprio="1" title="Togli il filtro">Priorità: ${tabPrio==='none'?'senza prio':tabPrio} ✕</button>`:''}<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div><div class="doc">${html}</div>`;
 }
 function renderStorico(p){
   const f=p.files['STORICO.md']; if(!f)return '<div class="empty">Nessuno STORICO.md.</div>';
@@ -725,10 +939,11 @@ function renderUtils(p){
 function viewDetail(){
   const p=projects.find(x=>x.name===detail); if(!p){detail=null;return viewProgetti()}
   const isDoc=tipoOf(p.name)==='documentazione';
-  const tabs=((isDoc||p.docs.length)?['Documenti']:[]).concat(['TODO','SAL','STORICO','UTILS']);
+  const tabs=((isDoc||p.docs.length)?['Documenti']:[]).concat((p.files['TODO.md']?['Kanban']:[]),['TODO','SAL','STORICO','UTILS']);
   let body='';
   if(detailTab==='Documenti')body=renderDocs(p);
   else if(detailTab==='SAL')body=p.files['SAL.md']?`<div class="filters" style="margin-bottom:8px">${sBox()}</div>${mdFiltered(p.files['SAL.md'].text)}`:'<div class="empty">Nessun SAL.md.</div>';
+  else if(detailTab==='Kanban')body=renderKanban(p);
   else if(detailTab==='TODO')body=renderTodoDoc(p);
   else if(detailTab==='STORICO')body=renderStorico(p);
   else if(detailTab==='UTILS')body=renderUtils(p);
@@ -740,13 +955,14 @@ function viewDetail(){
     <div class="mrow"><span>Cartella</span><span class="meta" style="color:var(--muted)">${esc(p.name)} (non viene rinominata)</span></div>
     <div class="mrow"><span>Colore</span>${PAL.map(c=>`<button class="sw ${colOf(p.name).toLowerCase()===c?'on':''}" style="background:${c}" data-color="${c}" title="${c}"></button>`).join('')}<label class="sw custom" title="Colore a scelta"><input type="color" id="colcustom" value="${colOf(p.name)}" data-cname="${esc(p.name)}"></label>${states[p.name]&&states[p.name].colore?`<button class="btn small" data-color="">Automatico</button>`:''}</div>
     <div class="mrow"><span>Scadenza</span><button type="button" id="scad" class="datebtn" data-sname="${esc(p.name)}" aria-haspopup="dialog"><span>${dli?esc(dli.dd):'Scegli una data'}</span><span aria-hidden="true">📅</span></button>${calOpen?calHTML(p.name):''}${dli?`<button class="btn small" data-scadclear="1">Rimuovi</button>`:'<span style="color:var(--muted)">nessuna</span>'}</div>
+    <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${PK_COLS.map(([c,l])=>`<button data-pkset="${c}" class="${pkCol(p)===c?'on':''}">${l}</button>`).join('')}</span></div>
     <div class="mrow"><span>Tipo</span><button class="btn small" data-tipo="${isDoc?'progetto':'documentazione'}">${isDoc?'Sposta tra i progetti':'Segna come documentazione'}</button></div>
   </div></div>`:'';
   return `<div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
-   ${done?'<span class="chip none">terminato</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">⏰ ${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">✏️ ${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}">${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
+   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${states[p.name]?.stato==='test'?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">⏰ ${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">✏️ ${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}">${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
    <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato">⚙ Modifica</button></div>
-  <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div>${body}${modal}`;
+  <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
 }
 function welcome(msg){
   $('#main').innerHTML=`<div class="welcome"><h2>Scegli la cartella dei progetti</h2>
@@ -768,7 +984,9 @@ function render(){
   $('#nav').hidden=false;$('#refresh').hidden=false;$('#setwrap').hidden=false;$('#burger').hidden=false;
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===view&&!detail));
   $('#home').classList.toggle('on',view==='progetti'&&!detail&&!gQ.trim());
-  $('#main').innerHTML=gQ.trim()?viewSearch():detail?viewDetail():view==='progetti'?viewProgetti():view==='documentazione'?viewDocumentazione():viewDaFare();
+  $('#main').innerHTML=(gQ.trim()?viewSearch():detail?viewDetail():view==='progetti'?viewProgetti():view==='documentazione'?viewDocumentazione():viewDaFare())+(newTask?newTaskHTML():'');
+  if(newTask&&!newTask.focused){newTask.focused=true;const el=$('#ntTitle');if(el)el.focus()}
+  $('#main').classList.toggle('wide',!gQ.trim()&&(detail?detailTab==='Kanban':view==='progetti'&&viewMode==='kanban'));
   highlight();
   $('#gq').hidden=false;
 }
@@ -802,8 +1020,8 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollChange
 
 /* ---------- navigazione con cronologia (tasto indietro del mouse) ---------- */
 const snap=()=>({view,detail,tab:detailTab,fs:filterState});
-const defTab=n=>{const p=projects.find(x=>x.name===n);return p&&tipoOf(n)==='documentazione'&&p.docs.length?'Documenti':'TODO'};
-function go(patch){calOpen=false;sortMenu=false;if('view'in patch)view=patch.view;if('detail'in patch)detail=patch.detail;if('tab'in patch)detailTab=patch.tab;showUtils=false;utilsEdit=false;utilsMode='';utilsErr='';docFile='';renaming=false;editOpen=false;storicoQ='';gQ='';tabPrio='';{const g=$('#gq');if(g)g.value=''}
+const defTab=n=>{const p=projects.find(x=>x.name===n);return p&&tipoOf(n)==='documentazione'&&p.docs.length?'Documenti':(p&&p.files['TODO.md']?'Kanban':'TODO')};
+function go(patch){calOpen=false;taskPop='';newTask=null;sortMenu=false;if('view'in patch)view=patch.view;if('detail'in patch)detail=patch.detail;if('tab'in patch)detailTab=patch.tab;showUtils=false;utilsEdit=false;utilsMode='';utilsErr='';docFile='';renaming=false;editOpen=false;storicoQ='';gQ='';tabPrio='';{const g=$('#gq');if(g)g.value=''}
   try{history.pushState(snap(),'')}catch(e){}render();window.scrollTo(0,0)}
 function keep(){try{history.replaceState(snap(),'')}catch(e){}}
 window.addEventListener('popstate',e=>{const s=e.state||{view:'progetti',detail:null,tab:'TODO'};
@@ -815,6 +1033,19 @@ document.addEventListener('click',e=>{if(!e.target.closest('#setwrap')){const m=
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=$('#setmenu');if(m)m.hidden=true;const b=$('#bmenu');if(b)b.hidden=true}});
 /* ---------- ordine manuale (drag & drop) ---------- */
 let dragName=null;
+document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.closest('.kcard');if(!c)return;if(c.dataset.kp)pkDrag=c.dataset.kp;else kbDrag=c.dataset.kk;kbDragPrio=c.dataset.prio||'';c.classList.add('dragging');try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',pkDrag||kbDrag)}catch(x){}});
+document.addEventListener('dragover',e=>{if(!kbDrag&&!pkDrag)return;const col=e.target.closest&&e.target.closest('.kcol');if(!col||(pkDrag?!col.dataset.pcol:!col.dataset.kmark))return;e.preventDefault();
+  document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));
+  if(kbDrag&&col.dataset.kmark!=='x'){const c=e.target.closest('.kcard[data-kk]');if(c&&c.dataset.kk!==kbDrag&&c.dataset.prio===kbDragPrio){const r=c.getBoundingClientRect();c.classList.add(e.clientY<r.top+r.height/2?'ovt':'ovb')}}
+  document.querySelectorAll('.kcol.over').forEach(x=>{if(x!==col)x.classList.remove('over')});col.classList.add('over')});
+document.addEventListener('dragend',()=>{kbDrag=null;pkDrag=null;document.querySelectorAll('.kcol.over,.kcard.dragging,.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('over','dragging','ovt','ovb'))});
+document.addEventListener('drop',async e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||(!kbDrag&&!pkDrag))return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(x=>x.classList.remove('over'));
+  if(pkDrag){const n=pkDrag;pkDrag=null;const c=col.dataset.pcol;if(!c)return;const p=projects.find(x=>x.name===n);if(p&&pkCol(p)!==c)await setProjectKb(n,c);return}
+  const key=kbDrag;kbDrag=null;const tc=e.target.closest('.kcard[data-kk]'),before=tc?tc.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));
+  const [p,i]=findItem(key);if(!p||!i)return;const mk=col.dataset.kmark;if(mk===undefined)return;
+  if(tc&&mk!=='x'&&tc.dataset.kk!==key&&tc.dataset.prio===i.prio){await moveTask(key,tc.dataset.kk,before,mk);return}
+  if(i.mark===mk){if(tc&&tc.dataset.kk!==key&&mk!=='x')toast('Si riordina solo tra attività con la stessa priorità ('+(i.prio==='none'?'senza priorità':i.prio)+')');return}
+  await setMark(p.name,i,mk)});
 const clrOv=()=>document.querySelectorAll('.card.ovl,.card.ovr').forEach(c=>c.classList.remove('ovl','ovr'));
 document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.closest('.card.dnd');if(!c)return;dragName=c.dataset.card;c.classList.add('dragging');try{e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',dragName)}catch(x){}});
 document.addEventListener('dragover',e=>{if(!dragName)return;const c=e.target.closest('.card.dnd');if(!c||c.dataset.card===dragName)return;e.preventDefault();clrOv();const r=c.getBoundingClientRect();const lst=c.parentElement.classList.contains('list');c.classList.add((lst?e.clientY<r.top+r.height/2:e.clientX<r.left+r.width/2)?'ovl':'ovr')});
@@ -869,15 +1100,17 @@ async function utilsAction(id){
     }
   }catch(err){utilsBusy=false;utilsErr='Operazione non riuscita: '+(err&&err.message||err);render()}
 }
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='upw'||e.target.id==='upw2')){e.preventDefault();const b=$('#uunlock')||$('#uencgo');if(b)b.click()}});
+document.addEventListener('keydown',e=>{if(newTask&&((e.key==='Enter'&&(e.target.id==='ntTitle'||e.target.id==='ntSecNew'))||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ntDetail'))){e.preventDefault();addTask();return}
+  if(e.key==='Enter'&&(e.target.id==='upw'||e.target.id==='upw2')){e.preventDefault();const b=$('#uunlock')||$('#uencgo');if(b)b.click()}});
 (()=>{const b=document.getElementById('totop');const upd=()=>b.classList.toggle('show',window.scrollY>400);window.addEventListener('scroll',upd,{passive:true});upd()})();
 document.addEventListener('click',async e=>{
   if(e.target.closest&&e.target.closest('#totop')){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return}
   if(calOpen&&!e.target.closest('.cal,#scad')){calOpen=false;render()}
   if(sortMenu&&!e.target.closest('.fpop,#fbtn')){sortMenu=false;render()}
-  const t=e.target.closest('button,h2[data-open],.proj-tag,.head[data-exp],[data-dledit],[data-gopen],[data-sort],[data-prioopen],[data-clrprio],#home');
+  if(ntDD&&!e.target.closest('.ddpop,.dd')){ntDD='';render();return}
+  const t=e.target.closest('button,h2[data-open],.proj-tag,.head[data-exp],.kcard[data-kk],[data-dledit],[data-gopen],[data-sort],[data-prioopen],[data-clrprio],#home');
   {const an=e.target.closest('a[data-anchor]');if(an){e.preventDefault();const el=document.getElementById('d-'+an.dataset.anchor);if(el){const hd=document.querySelector('header'),off=(hd?hd.getBoundingClientRect().height:0)+14;window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-off,behavior:'smooth'})}return}}
-  if(!t){if(e.target.classList.contains('mback')){editOpen=false;render();return}const c=e.target.closest('.card[data-card]');if(c&&!e.target.closest('input,a,label')){go({detail:c.dataset.card,tab:defTab(c.dataset.card)})}return}
+  if(!t){if(e.target.classList.contains('mback')){editOpen=false;taskPop='';newTask=null;ntDD='';render();return}const c=e.target.closest('.card[data-card]');if(c&&!e.target.closest('input,a,label')){go({detail:c.dataset.card,tab:defTab(c.dataset.card)})}const k=e.target.closest('.kcard[data-kp]');if(k&&!e.target.closest('input,a,label')){go({detail:k.dataset.kp,tab:defTab(k.dataset.kp)})}return}
   if(t.id==='pick'){try{root=await window.showDirectoryPicker({mode:'readwrite',id:'bacheca-projects'});await kvSet('root',root);await loadAll();render()}catch(err){if(err.name!=='AbortError')toast('Impossibile aprire la cartella')}return}
   if(t.id==='reconn'){const r=await root.requestPermission({mode:'readwrite'});if(r==='granted'){await loadAll();render()}else welcome('Permesso negato. Riprova.');return}
   if(t.id==='burger'){const m=$('#bmenu');m.hidden=!m.hidden;return}
@@ -915,7 +1148,7 @@ document.addEventListener('click',async e=>{
   if(t.id==='scad'){if(calOpen){calOpen=false}else{const v=(states[detail]&&states[detail].scadenza)||'';const d=/^\d{4}-\d{2}-\d{2}$/.test(v)?new Date(v+'T00:00:00'):new Date();calY=d.getFullYear();calM=d.getMonth();calOpen=true}render();return}
   if(t.dataset.gopen){const q=gQ.trim(),n=t.dataset.gopen,tab=t.dataset.gtab,df=t.dataset.gdoc;
     go({detail:n,tab});if(df)docFile=df;storicoQ=tab==='UTILS'?'':q;render();window.scrollTo(0,0);return}
-  if(t.dataset.prioopen){const n=t.dataset.pname;go({detail:n,tab:'TODO'});tabPrio=t.dataset.prioopen;render();return}
+  if(t.dataset.prioopen){const n=t.dataset.pname;go({detail:n,tab:defTab(n)});tabPrio=t.dataset.prioopen;render();return}
   if(t.dataset.clrprio){tabPrio='';render();return}
   if(t.dataset.doingfirst){doingFirst=!doingFirst;try{localStorage.setItem('bacheca-doingfirst',doingFirst?'1':'0')}catch(e){}render();return}
   if(t.id==='fbtn'){sortMenu=!sortMenu;render();return}
@@ -923,13 +1156,31 @@ document.addEventListener('click',async e=>{
   if(t.dataset.sort){sortMenu=false;sortKey=t.dataset.sort;try{localStorage.setItem('bacheca-sort',sortKey)}catch(e){}render();return}
   if(t.dataset.dledit){const n=t.dataset.dledit;if(detail!==n)go({detail:n,tab:defTab(n)});editOpen=true;render();return}
   if(t.dataset.medit){editOpen=true;render();return}
-  if(t.dataset.mclose){editOpen=false;calOpen=false;render();return}
+  if(t.dataset.mclose){editOpen=false;calOpen=false;taskPop='';newTask=null;ntDD='';render();return}
   if(t.dataset.rnsave){await setProjectNome(detail,$('#rnin').value);return}
   if(t.dataset.tipo){await setProjectTipo(detail,t.dataset.tipo);return}
   if(t.dataset.doc){docFile=t.dataset.doc;render();return}
   if(t.dataset.toggle){editOpen=false;const n=t.dataset.toggle;try{await setProjectState(n,!isDone(projects.find(p=>p.name===n)))}catch(err){toast('Scrittura non riuscita')}return}
   if(t.dataset.exp){const k=t.dataset.exp;openRows.has(k)?openRows.delete(k):openRows.add(k);render();return}
   if(t.dataset.expall){const on=t.dataset.expall==='1';projects.forEach(p=>p.todo.items.forEach(i=>{const k=rkey(p,i);on?openRows.add(k):openRows.delete(k)}));render();return}
+  if(t.dataset.pkmenu){pkMenu=pkMenu===t.dataset.pkmenu?'':t.dataset.pkmenu;render();return}
+  if(t.dataset.pkmove){const a=t.dataset.pkmove.split('|'),c=a.pop();pkMenu='';await setProjectKb(a.join('|'),c);return}
+  if(t.dataset.pkall){pkAllDone=!pkAllDone;render();return}
+  if(t.dataset.pkset){editOpen=false;await setProjectKb(detail,t.dataset.pkset);return}
+  if(t.dataset.dd){ntDD=ntDD===t.dataset.dd?'':t.dataset.dd;render();return}
+  if(t.dataset.ddv&&newTask){const [id,ix]=t.dataset.ddv.split('|'),o=(ddOpts[id]||[])[+ix];ntDD='';if(o){if(id==='ntSec')newTask.secSel=o[0];else if(id==='ntProj'){newTask.pname=o[0];const p=projects.find(x=>x.name===o[0]);newTask.secSel=p?ntDefSec(p):''}}render();return}
+  if(t.dataset.nt!==undefined){taskPop='';ntDD='';openNewTask(t.dataset.nt||' ',detail||'');return}
+  if(t.dataset.ntprio&&newTask){newTask.prio=t.dataset.ntprio;document.querySelectorAll('[data-ntprio]').forEach(b=>b.classList.toggle('on',b.dataset.ntprio===newTask.prio));return}
+  if(t.dataset.ntmark!==undefined&&newTask){newTask.mark=t.dataset.ntmark;document.querySelectorAll('[data-ntmark]').forEach(b=>b.classList.toggle('on',b.dataset.ntmark===newTask.mark));return}
+  if(t.id==='ntsave'){await addTask();return}
+  if(t.dataset.kk){taskPop=t.dataset.kk;kbMenu='';render();return}
+  if(t.dataset.kprio!==undefined){tabPrio=t.dataset.kprio;render();return}
+  if(t.dataset.kup||t.dataset.kdown){const key=t.dataset.kup||t.dataset.kdown,up=!!t.dataset.kup,el=document.querySelector('.kcard[data-kk="'+(window.CSS&&CSS.escape?CSS.escape(key):key)+'"]');
+    let nb=el&&(up?el.previousElementSibling:el.nextElementSibling);while(nb&&!(nb.classList.contains('kcard')&&nb.dataset.prio===el.dataset.prio))nb=up?nb.previousElementSibling:nb.nextElementSibling;
+    if(nb){kbMenu='';await moveTask(key,nb.dataset.kk,up)}else{toast(up?'È già il primo della sua priorità':'È già l\'ultimo della sua priorità')}return}
+  if(t.dataset.kall){kbAllDone=!kbAllDone;render();return}
+  if(t.dataset.kmenu){kbMenu=kbMenu===t.dataset.kmenu?'':t.dataset.kmenu;render();return}
+  if(t.dataset.kmove){const a=t.dataset.kmove.split('|'),mk=a.pop();kbMenu='';taskPop='';const [p,i]=findItem(a.join('|'));if(p&&i)await setMark(p.name,i,mk);else render();return}
   if(t.dataset.doing){const [p,i]=findItem(t.dataset.doing);await setMark(p.name,i,i.mark==='~'?' ':'~');return}
 });
 document.addEventListener('change',async e=>{
@@ -944,8 +1195,14 @@ document.addEventListener('keydown',e=>{if(e.target.id==='gq'&&e.key==='Escape')
   if(e.target.id==='rnin'){if(e.key==='Enter')setProjectNome(detail,e.target.value);if(e.key==='Escape'){editOpen=false;render()}}
   else if(e.key==='Escape'&&sortMenu){sortMenu=false;render()}
   else if(e.key==='Escape'&&calOpen){calOpen=false;render()}
+  else if(e.key==='Escape'&&ntDD){ntDD='';render()}
+  else if(e.key==='Escape'&&newTask){newTask=null;render()}
+  else if(e.key==='Escape'&&taskPop){taskPop='';render()}
   else if(e.key==='Escape'&&editOpen){editOpen=false;render()}});
 document.addEventListener('input',e=>{
+  if(newTask&&e.target.id==='ntTitle'){newTask.title=e.target.value;return}
+  if(newTask&&e.target.id==='ntDetail'){newTask.detail=e.target.value;return}
+  if(newTask&&e.target.id==='ntSecNew'){newTask.secNew=e.target.value;return}
   if(e.target.id==='gq'){gQ=e.target.value;render();return}
   if(e.target.id==='sq'){storicoQ=e.target.value;const pos=e.target.selectionStart;render();const s=$('#sq');s.focus();s.setSelectionRange(pos,pos)}
 });
