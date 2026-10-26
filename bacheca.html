@@ -724,13 +724,15 @@ function rowHTML(p,i,showProj){
 const KB_COLS=[['?','In attesa'],[' ','Da fare'],['~','In corso'],['t','Test'],['x','Fatto']], KB_WIP=3, KB_DAYS=14;
 let kbMenu='',kbAllDone=false,kbDrag=null,kbDragPrio='',taskPop='';
 function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);return Date.now()-new Date(y,m-1,g).getTime()<=KB_DAYS*DAY}
+/* il nome della sezione non si mostra se coincide con uno stato (la colonna lo dice già) */
+const secLbl=x=>x&&!/^(da fare|in corso|in attesa|test|fatto|fatte|completat\w*)$/i.test(x.trim())?x:'';
 function kbCard(p,i,mk){
   const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
   const menu=kbMenu===key?`<div class="kmv">${mk==='x'?'':`<button class="btn small" data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">↑ Su</button><button class="btn small" data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">↓ Giù</button>`}${KB_COLS.filter(c=>c[0]!==mk).map(c=>`<button class="btn small" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
   const dd=mk==='x'&&i.doneDate?`<span class="meta">✓ ${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
   return `<div class="kcard kp${i.prio}${mk==='x'?' kdone':''}" draggable="true" data-kk="${esc(key)}" data-prio="${i.prio}">
     <div class="head">${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span></div>
-    ${i.sec?`<div class="ksec">${esc(i.sec)}</div>`:''}
+    ${secLbl(i.sec)?`<div class="ksec">${esc(secLbl(i.sec))}</div>`:''}
     <div class="kfoot">${dd}<button class="btn small" data-kmenu="${esc(key)}" title="Sposta in un'altra colonna">Sposta ▾</button></div>${menu}</div>`;
 }
 
@@ -742,7 +744,7 @@ function taskPopHTML(p){
   const para=x=>{const m=x.match(/^([^:`*\n]{2,45}):\s+([\s\S]*)$/);if(!m)return `<p>${inline(x)}</p>`;const l=m[1],cls=/^aggiorn/i.test(l)?' upd':/^(da fare|prossim|azione|todo)/i.test(l)?' todo':'';return `<p class="lp${cls}"><strong class="lbl">${esc(l)}:</strong> ${inline(m[2])}</p>`};
   const moves=KB_COLS.filter(c=>c[0]!==it.mark).map(c=>`<button class="btn small" data-kmove="${esc(p.name+'|'+it.idx)}|${c[0]}">${c[1]}</button>`).join('');
   return `<div class="mback" data-mclose="1"><div class="modal tp" role="dialog" aria-label="Dettagli attività">
-    <div class="mhead"><span class="tpmeta">${it.prio!=='none'?`<span class="chip ${it.prio}">${it.prio}</span>`:''}<span class="chip tpst">${esc(col[1])}</span>${it.sec?`<span class="meta">${esc(it.sec)}</span>`:''}</span><button class="btn small" data-mclose="1" aria-label="Chiudi">✕</button></div>
+    <div class="mhead"><span class="tpmeta">${it.prio!=='none'?`<span class="chip ${it.prio}">${it.prio}</span>`:''}<span class="chip tpst">${esc(col[1])}</span>${secLbl(it.sec)?`<span class="meta">${esc(secLbl(it.sec))}</span>`:''}</span><button class="btn small" data-mclose="1" aria-label="Chiudi">✕</button></div>
     <h3 class="tpt">${inline(it.title)}</h3>
     <div class="tpb">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>
     ${it.mark==='x'&&it.doneDate?`<div class="meta">Completata il ${esc(it.doneDate.split('-').reverse().join('/'))}</div>`:''}
