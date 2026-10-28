@@ -97,7 +97,9 @@ main{max-width:1100px;margin:0 auto;padding:24px;min-height:calc(100vh - 90px)}
 .chip.test{background:#e8defa;color:#6b3fc2}@media (prefers-color-scheme:dark){.chip.test{background:#33264f;color:#cdb6ff}}
 .chip.wait{background:var(--p3s);color:var(--p3)}
 .kb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch;padding:2px 2px 8px}
-main.wide{max-width:2400px;padding-left:28px;padding-right:28px}
+main.wide{max-width:2400px}
+/* nel kanban del progetto intestazione e schede restano larghe e allineate come nelle altre schede */
+main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .kcard .head{flex-wrap:nowrap;align-items:flex-start}.kcard .head .chip{flex:none;margin-top:1px}.kcard .ttl{flex:1;min-width:0;overflow-wrap:anywhere}.kcard .det{overflow-wrap:anywhere}
 .pbar{position:sticky;top:var(--hh,52px);height:0;z-index:4}
 .pbi{position:absolute;left:-28px;right:-28px;top:0;display:flex;gap:10px;align-items:baseline;padding:6px 28px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.06);font-size:14px;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
@@ -806,7 +808,7 @@ function taskPopHTML(p){
 function renderKanban(p){
   if(!p.files['TODO.md'])return '<div class="empty">Nessun TODO.md: il kanban usa i TODO del progetto.</div>';
   const items=p.todo.items.filter(i=>!tabPrio||i.prio===tabPrio), rank={P1:0,P2:1,P3:2,none:3};
-  const flt=`<div class="filters" style="margin-bottom:12px"><span>Priorità:</span><span class="seg" style="margin:0">${[['','Tutte'],['P1','P1'],['P2','P2'],['P3','P3'],['none','Senza']].map(([k,l])=>`<button data-kprio="${k}" class="${tabPrio===k?'on':''}">${l}</button>`).join('')}</span><span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button></div>`;
+  const flt=`<div class="filters dtop" style="margin-bottom:12px"><span>Priorità:</span><span class="seg" style="margin:0">${[['','Tutte'],['P1','P1'],['P2','P2'],['P3','P3'],['none','Senza']].map(([k,l])=>`<button data-kprio="${k}" class="${tabPrio===k?'on':''}">${l}</button>`).join('')}</span><span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button></div>`;
   const cols=KB_COLS.map(([mk,name])=>{
     let list=items.filter(i=>i.mark===mk), hidden=0;
     if(mk==='x'){const rec=list.filter(i=>kbRecent(i.doneDate));hidden=list.length-rec.length;if(!kbAllDone)list=rec;list.sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')||a.idx-b.idx)}
@@ -1013,11 +1015,11 @@ function viewDetail(){
     <div class="mrow"><span>Tipo</span><button class="btn small" data-tipo="${isDoc?'progetto':'documentazione'}">${isDoc?'Sposta tra i progetti':'Segna come documentazione'}</button></div>
   </div></div>`:'';
   return `<div class="pbar" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
-  <div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
+  <div class="dtop"><div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 id="ptitle" style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
    ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${states[p.name]?.stato==='test'?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">⏰ ${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">✏️ ${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}">${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
    <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato">⚙ Modifica</button></div>
-  <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
+  <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div></div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
 }
 function welcome(msg){
   $('#main').innerHTML=`<div class="welcome"><h2>Scegli la cartella dei progetti</h2>
