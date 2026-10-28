@@ -96,9 +96,14 @@ main{max-width:1100px;margin:0 auto;padding:24px;min-height:calc(100vh - 90px)}
 .chip[data-prioopen]{transition:transform .25s ease,box-shadow .25s ease}.chip[data-prioopen]:hover{transform:translateY(-1px);box-shadow:0 0 0 3px color-mix(in srgb,currentColor 14%,transparent)}
 .chip.test{background:#e8defa;color:#6b3fc2}@media (prefers-color-scheme:dark){.chip.test{background:#33264f;color:#cdb6ff}}
 .chip.wait{background:var(--p3s);color:var(--p3)}
-.kb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start;padding:2px 2px 8px}
+.kb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch;padding:2px 2px 8px}
 main.wide{max-width:2400px;padding-left:28px;padding-right:28px}
 .kcard .head{flex-wrap:nowrap;align-items:flex-start}.kcard .head .chip{flex:none;margin-top:1px}.kcard .ttl{flex:1;min-width:0;overflow-wrap:anywhere}.kcard .det{overflow-wrap:anywhere}
+.pbar{position:sticky;top:var(--hh,52px);height:0;z-index:4}
+.pbi{position:absolute;left:-28px;right:-28px;top:0;display:flex;gap:10px;align-items:baseline;padding:6px 28px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 3px 8px rgba(0,0,0,.06);font-size:14px;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.pbar.show .pbi{opacity:1;transform:none}
+.kcol .khead{position:sticky;top:calc(var(--hh,52px) + var(--pb,34px));z-index:3;background:color-mix(in srgb,var(--accent) 5%,var(--panel));margin:2px -4px 6px;padding:6px 8px;border-radius:8px}
+.kcol.over .khead{background:color-mix(in srgb,var(--accent) 14%,var(--panel))}
 .kcol{background:color-mix(in srgb,var(--accent) 5%,var(--panel));border:1px solid var(--line);border-radius:14px;padding:10px;min-height:150px;transition:background-color .25s ease,border-color .25s ease}
 .kcol.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel))}
 .khead{display:flex;align-items:center;gap:8px;margin:2px 4px 10px;font-size:14px}
@@ -138,7 +143,7 @@ main.wide{max-width:2400px;padding-left:28px;padding-right:28px}
 .ddpop{left:0;right:auto;min-width:100%;max-height:230px;overflow:auto}.ddpop.up{top:auto;bottom:calc(100% + 6px)}
 .ntact{gap:10px}.ntact .meta{margin-left:auto;color:var(--muted);font-size:13px}
 .kempty{color:var(--muted);text-align:center;padding:14px 0;font-size:13px}.kfootc{text-align:center;margin-top:4px;font-size:12px}
-@media (max-width:900px){.kb,.kb.kb5{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(78%,1fr);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.kcol{scroll-snap-align:start}}
+@media (max-width:900px){.kcol .khead{position:static}.kb,.kb.kb5{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(78%,1fr);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.kcol{scroll-snap-align:start}}
 .chip.zero{background:var(--accent-soft);color:var(--done)}
 .empty{color:var(--muted);padding:40px;text-align:center;border:1px dashed var(--line);border-radius:14px}
 .crumb{margin-bottom:12px}
@@ -249,6 +254,7 @@ header .btn:hover,header nav button:hover{transform:translateY(-1px)}
   #burger:not([hidden]){order:2;margin-left:auto}
   #gq{order:3;flex:1 1 100%;max-width:none;width:100%;margin-left:0}
   main{padding:14px}
+  .pbi{left:-14px;right:-14px;padding:6px 14px}
   .tabs{overflow-x:auto;white-space:nowrap}
   .tabs button{padding:8px 12px}
   .toolbar{flex-wrap:nowrap!important;gap:8px!important}
@@ -283,6 +289,9 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
 #gq:focus::-webkit-search-cancel-button{background-color:var(--muted)}
 #gq::-webkit-search-cancel-button:hover,#gq:focus::-webkit-search-cancel-button:hover{background-color:#e5484d}
 #gq::-webkit-search-cancel-button:active,#gq:focus::-webkit-search-cancel-button:active{background-color:#b42318}
+/* lente fissa a sinistra nelle ricerche (i background abbreviati sopra la azzererebbero: per questo !important) */
+#gq,#sq{padding-left:36px!important;background-repeat:no-repeat!important;background-position:12px center!important;background-size:16px 16px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238a8f98' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6.8' cy='6.8' r='4.8'/%3E%3Cpath d='M10.4 10.4L14 14'/%3E%3C/svg%3E")!important}
+#gq:not(:focus){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6.8' cy='6.8' r='4.8'/%3E%3Cpath d='M10.4 10.4L14 14'/%3E%3C/svg%3E")!important}
 /* pulsante torna su */
 #totop{position:fixed;right:22px;bottom:22px;height:44px;padding:0 18px;border-radius:99px;border:0;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 18px rgba(0,0,0,.22);font:inherit;font-size:15px;font-weight:650;line-height:1;cursor:pointer;display:inline-flex;align-items:center;gap:8px;opacity:0;transform:translateY(10px);pointer-events:none;z-index:15;transition:opacity .3s ease,transform .3s ease,box-shadow .3s ease,filter .3s ease}
 #totop .ar{font-size:18px;transition:transform .25s ease}
@@ -324,7 +333,7 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
     <button data-v="documentazione">📄 Documentazione</button>
   </nav>
   <div class="spacer"></div>
-  <input type="search" id="gq" placeholder="🔍 Cerca in tutti i progetti…" autocomplete="off" hidden>
+  <input type="search" id="gq" placeholder="Cerca in tutti i progetti…" autocomplete="off" hidden>
   <button class="btn icon" id="refresh" hidden title="Aggiorna" aria-label="Aggiorna"><span class="ri">↻</span></button>
   <div class="setwrap" id="setwrap" hidden>
     <button class="btn icon" id="settings" title="Impostazioni" aria-label="Impostazioni">⚙</button>
@@ -489,6 +498,34 @@ async function setProjectKb(name,col){
     await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
     states=cur; toast(name+': '+(col==='terminato'?'terminato':col==='attesa'?'in attesa':col==='test'?'in test':'in corso')); render();
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
+}
+/* riordino dei progetti nel kanban: usa l'ordine manuale (__ordine); passa da solo a "Manuale" */
+async function reorderProject(name,dst,before,col){
+  try{
+    const cur=await readState();
+    const vis=[...document.querySelectorAll('.kcard.pk')].map(x=>x.dataset.kp).filter(n=>n!==name);
+    const at=vis.indexOf(dst); if(at<0)return;
+    vis.splice(at+(before?0:1),0,name);
+    const p=projects.find(x=>x.name===name);
+    if(col&&p&&pkCol(p)!==col){
+      const e=cur[name]||{}, d=new Date();
+      if(col==='terminato'){e.stato='terminato';e.data=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+      else if(col==='attesa'||col==='test'){e.stato=col;delete e.data}
+      else{delete e.stato;delete e.data}
+      if(Object.keys(e).length)cur[name]=e;else delete cur[name];
+    }
+    cur.__ordine=vis.concat((cur.__ordine||[]).filter(n=>!vis.includes(n)));
+    await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
+    states=cur;
+    if(sortKey!=='manual'){sortKey='manual';try{localStorage.setItem('bacheca-sort','manual')}catch(e){}toast('Ordine manuale attivo: puoi tornare a "Priorità" dal menu Ordina')}
+    render();
+  }catch(err){toast('Scrittura non riuscita (permesso?)')}
+}
+function nudgeProject(name,up){
+  const c=document.querySelector('.kcard.pk[data-kp="'+CSS.escape(name)+'"]'); if(!c)return;
+  const nb=up?c.previousElementSibling:c.nextElementSibling;
+  if(nb&&nb.classList.contains('pk'))return reorderProject(name,nb.dataset.kp,up);
+  toast(up?'È già il primo della colonna':'È già l\'ultimo della colonna');
 }
 async function setProjectState(name,terminato){
   const cur=await readState(); const e=cur[name]||{};
@@ -687,7 +724,7 @@ const pkCol=p=>{const s=states[p.name]&&states[p.name].stato;return s==='termina
 function pkCard(p,col){
   const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Apri il kanban del progetto con questa priorità" style="cursor:pointer">${k==='none'?'senza prio':k} · ${p.open[k]}</span>`).join('');
   const run=p.todo.items.filter(i=>i.mark==='~').length, st=states[p.name], d=dlInfo(p.name);
-  const menu=pkMenu===p.name?`<div class="kmv">${PK_COLS.filter(c=>c[0]!==col).map(c=>`<button class="btn small" data-pkmove="${esc(p.name)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
+  const menu=pkMenu===p.name?`<div class="kmv"><button class="btn small" data-pkup="${esc(p.name)}" title="Sposta più in alto nella colonna">↑ Su</button><button class="btn small" data-pkdown="${esc(p.name)}" title="Sposta più in basso nella colonna">↓ Giù</button>${PK_COLS.filter(c=>c[0]!==col).map(c=>`<button class="btn small" data-pkmove="${esc(p.name)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
   return `<div class="kcard pk" draggable="true" data-kp="${esc(p.name)}" style="border-left-color:${colOf(p.name)}">
     <div class="head"><span class="ttl" style="color:${colOf(p.name)}">${esc(label(p.name))}</span></div>
     <div class="pkchips">${p.openCount?chips:'<span class="chip zero">✓ Tutto fatto</span>'}${run?`<span class="chip run">▶ ${run} in corso</span>`:''}</div>
@@ -859,7 +896,7 @@ function viewDaFare(){
   if(!tot)html+='<div class="empty">Niente da fare con questi filtri 🎉</div>';
   return html;
 }
-const sBox=()=>`<input type="search" id="sq" placeholder="🔍 Cerca in questa scheda…" value="${esc(storicoQ)}">`;
+const sBox=()=>`<input type="search" id="sq" placeholder="Cerca in questa scheda…" value="${esc(storicoQ)}">`;
 const qNow=()=>storicoQ.trim().toLowerCase();
 function mdFiltered(text){
   const q=qNow(); if(!q)return `<div class="doc">${md(text)}</div>`;
@@ -975,8 +1012,9 @@ function viewDetail(){
     <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${PK_COLS.map(([c,l])=>`<button data-pkset="${c}" class="${pkCol(p)===c?'on':''}">${l}</button>`).join('')}</span></div>
     <div class="mrow"><span>Tipo</span><button class="btn small" data-tipo="${isDoc?'progetto':'documentazione'}">${isDoc?'Sposta tra i progetti':'Segna come documentazione'}</button></div>
   </div></div>`:'';
-  return `<div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
-  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
+  return `<div class="pbar" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
+  <div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 id="ptitle" style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
    ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${states[p.name]?.stato==='test'?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">⏰ ${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">✏️ ${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}">${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
    <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato">⚙ Modifica</button></div>
   <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
@@ -1054,10 +1092,11 @@ document.addEventListener('dragstart',e=>{const c=e.target.closest&&e.target.clo
 document.addEventListener('dragover',e=>{if(!kbDrag&&!pkDrag)return;const col=e.target.closest&&e.target.closest('.kcol');if(!col||(pkDrag?!col.dataset.pcol:!col.dataset.kmark))return;e.preventDefault();
   document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));
   if(kbDrag&&col.dataset.kmark!=='x'){const c=e.target.closest('.kcard[data-kk]');if(c&&c.dataset.kk!==kbDrag&&c.dataset.prio===kbDragPrio){const r=c.getBoundingClientRect();c.classList.add(e.clientY<r.top+r.height/2?'ovt':'ovb')}}
+  if(pkDrag){const c=e.target.closest('.kcard[data-kp]');if(c&&c.dataset.kp!==pkDrag){const r=c.getBoundingClientRect();c.classList.add(e.clientY<r.top+r.height/2?'ovt':'ovb')}}
   document.querySelectorAll('.kcol.over').forEach(x=>{if(x!==col)x.classList.remove('over')});col.classList.add('over')});
 document.addEventListener('dragend',()=>{kbDrag=null;pkDrag=null;document.querySelectorAll('.kcol.over,.kcard.dragging,.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('over','dragging','ovt','ovb'))});
 document.addEventListener('drop',async e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||(!kbDrag&&!pkDrag))return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(x=>x.classList.remove('over'));
-  if(pkDrag){const n=pkDrag;pkDrag=null;const c=col.dataset.pcol;if(!c)return;const p=projects.find(x=>x.name===n);if(p&&pkCol(p)!==c)await setProjectKb(n,c);return}
+  if(pkDrag){const n=pkDrag;pkDrag=null;const c=col.dataset.pcol;if(!c)return;const tp=e.target.closest('.kcard[data-kp]'),bf=tp?tp.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));if(tp&&tp.dataset.kp!==n){await reorderProject(n,tp.dataset.kp,bf,c);return}const p=projects.find(x=>x.name===n);if(p&&pkCol(p)!==c)await setProjectKb(n,c);return}
   const key=kbDrag;kbDrag=null;const tc=e.target.closest('.kcard[data-kk]'),before=tc?tc.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));
   const [p,i]=findItem(key);if(!p||!i)return;const mk=col.dataset.kmark;if(mk===undefined)return;
   if(tc&&mk!=='x'&&tc.dataset.kk!==key&&tc.dataset.prio===i.prio){await moveTask(key,tc.dataset.kk,before,mk);return}
@@ -1119,6 +1158,7 @@ async function utilsAction(id){
 }
 document.addEventListener('keydown',e=>{if(newTask&&((e.key==='Enter'&&(e.target.id==='ntTitle'||e.target.id==='ntSecNew'))||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ntDetail'))){e.preventDefault();addTask();return}
   if(e.key==='Enter'&&(e.target.id==='upw'||e.target.id==='upw2')){e.preventDefault();const b=$('#uunlock')||$('#uencgo');if(b)b.click()}});
+(()=>{const hdr=document.querySelector('header');const upd=()=>{const h=hdr.offsetHeight;document.documentElement.style.setProperty('--hh',h+'px');const t=document.getElementById('ptitle'),b=document.getElementById('pbar');if(t&&b)b.classList.toggle('show',t.getBoundingClientRect().bottom<h+4)};window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);new MutationObserver(upd).observe(document.getElementById('main')||document.body,{childList:true,subtree:true});upd()})();
 (()=>{const b=document.getElementById('totop');const upd=()=>b.classList.toggle('show',window.scrollY>400);window.addEventListener('scroll',upd,{passive:true});upd()})();
 document.addEventListener('click',async e=>{
   if(e.target.closest&&e.target.closest('#totop')){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return}
@@ -1181,6 +1221,7 @@ document.addEventListener('click',async e=>{
   if(t.dataset.exp){const k=t.dataset.exp;openRows.has(k)?openRows.delete(k):openRows.add(k);render();return}
   if(t.dataset.expall){const on=t.dataset.expall==='1';projects.forEach(p=>p.todo.items.forEach(i=>{const k=rkey(p,i);on?openRows.add(k):openRows.delete(k)}));render();return}
   if(t.dataset.pkmenu){pkMenu=pkMenu===t.dataset.pkmenu?'':t.dataset.pkmenu;render();return}
+  if(t.dataset.pkup||t.dataset.pkdown){const n=t.dataset.pkup||t.dataset.pkdown;pkMenu='';await nudgeProject(n,!!t.dataset.pkup);return}
   if(t.dataset.pkmove){const a=t.dataset.pkmove.split('|'),c=a.pop();pkMenu='';await setProjectKb(a.join('|'),c);return}
   if(t.dataset.pkall){pkAllDone=!pkAllDone;render();return}
   if(t.dataset.pkset){editOpen=false;await setProjectKb(detail,t.dataset.pkset);return}
