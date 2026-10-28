@@ -111,6 +111,7 @@ main.wide{max-width:2400px;padding-left:28px;padding-right:28px}
 .ksec{font-size:11.5px;color:var(--muted);margin-top:3px}
 .kfoot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;gap:8px}
 .kmv{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.kmv .kpr{flex:1 0 100%;display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding-bottom:5px;margin-bottom:2px;border-bottom:1px solid var(--line)}
 .chip.run{background:var(--accent-soft);color:var(--accent)}
 .kcard.pk{cursor:pointer}.pkchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.pkdl{margin-top:6px}
 @media (min-width:901px) and (max-width:1099px){.kb{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -603,6 +604,18 @@ async function moveTask(srcKey,dstKey,before,newMark){
     await refresh(true);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
 }
+async function setPrio(pname,item,np){
+  const p=projects.find(x=>x.name===pname);
+  try{
+    const cur=await readText(p.dir,'TODO.md'); if(!cur)throw 0;
+    const eol=cur.text.includes('\r\n')?'\r\n':'\n', lines=cur.text.split(/\r?\n/);
+    const idx=lineIdx(lines,item);
+    if(idx<0){toast('Il TODO è cambiato nel frattempo: ricarico');await refresh();return}
+    lines[idx]=lines[idx].replace(/^(\s*- \[(?: |~|x|X|\?|t|T)\]\s*)(?:\*\*P[123]\*\*\s*)?/,(m,a)=>a+(np&&np!=='none'?'**'+np+'** ':''));
+    await writeText(p.dir,'TODO.md',lines.join(eol));
+    await refresh(true);
+  }catch(e){toast('Scrittura non riuscita (permesso?)')}
+}
 async function setMark(pname,item,newMark){
   const p=projects.find(x=>x.name===pname);
   try{
@@ -728,7 +741,8 @@ function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);r
 const secLbl=x=>x&&!/^(da fare|in corso|in attesa|test|fatto|fatte|completat\w*)$/i.test(x.trim())?x:'';
 function kbCard(p,i,mk){
   const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
-  const menu=kbMenu===key?`<div class="kmv">${mk==='x'?'':`<button class="btn small" data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">↑ Su</button><button class="btn small" data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">↓ Giù</button>`}${KB_COLS.filter(c=>c[0]!==mk).map(c=>`<button class="btn small" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
+  const pbtn=(k,pre)=>['P1','P2','P3','none'].map(q=>`<button class="btn small${i.prio===q?' primary':''}" data-kpset="${esc(k)}|${q}">${q==='none'?'Nessuna':q}</button>`).join('');
+  const menu=kbMenu===key?`<div class="kmv"><div class="kpr"><span class="meta">Priorità</span>${pbtn(key)}</div>${mk==='x'?'':`<button class="btn small" data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">↑ Su</button><button class="btn small" data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">↓ Giù</button>`}${KB_COLS.filter(c=>c[0]!==mk).map(c=>`<button class="btn small" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
   const dd=mk==='x'&&i.doneDate?`<span class="meta">✓ ${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
   return `<div class="kcard kp${i.prio}${mk==='x'?' kdone':''}" draggable="true" data-kk="${esc(key)}" data-prio="${i.prio}">
     <div class="head">${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span></div>
@@ -748,6 +762,7 @@ function taskPopHTML(p){
     <h3 class="tpt">${inline(it.title)}</h3>
     <div class="tpb">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>
     ${it.mark==='x'&&it.doneDate?`<div class="meta">Completata il ${esc(it.doneDate.split('-').reverse().join('/'))}</div>`:''}
+    <div class="mrow tpmv"><span>Priorità</span>${['P1','P2','P3','none'].map(q=>`<button class="btn small${it.prio===q?' primary':''}" data-kpset="${esc(p.name+'|'+it.idx)}|${q}">${q==='none'?'Nessuna':q}</button>`).join('')}</div>
     <div class="mrow tpmv"><span>Sposta in</span>${moves}</div>
   </div></div>`;
 }
@@ -1182,6 +1197,7 @@ document.addEventListener('click',async e=>{
     if(nb){kbMenu='';await moveTask(key,nb.dataset.kk,up)}else{toast(up?'È già il primo della sua priorità':'È già l\'ultimo della sua priorità')}return}
   if(t.dataset.kall){kbAllDone=!kbAllDone;render();return}
   if(t.dataset.kmenu){kbMenu=kbMenu===t.dataset.kmenu?'':t.dataset.kmenu;render();return}
+  if(t.dataset.kpset){const a=t.dataset.kpset.split('|'),np=a.pop();const [p,i]=findItem(a.join('|'));if(p&&i&&i.prio!==np)await setPrio(p.name,i,np);return}
   if(t.dataset.kmove){const a=t.dataset.kmove.split('|'),mk=a.pop();kbMenu='';taskPop='';const [p,i]=findItem(a.join('|'));if(p&&i)await setMark(p.name,i,mk);else render();return}
   if(t.dataset.doing){const [p,i]=findItem(t.dataset.doing);await setMark(p.name,i,i.mark==='~'?' ':'~');return}
 });
