@@ -1,0 +1,11 @@
+{
+  "Sito-vetrina": {
+    "nome": "Sito vetrina",
+    "colore": "#2f80ed",
+    "scadenza": "2026-12-15"
+  },
+  "Manuale-utente": {
+    "nome": "Manuale utente",
+    "stato": "attesa"
+  }
+}

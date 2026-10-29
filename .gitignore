@@ -7,6 +7,11 @@ UTILS.enc
 *.enc
 _STATO-PROGETTI.json
 _MAPPA-PROGETTI.md
+# ...tranne i progetti finti della cartella esempio
+!esempio/*/SAL.md
+!esempio/*/STORICO.md
+!esempio/*/TODO.md
+!esempio/_STATO-PROGETTI.json
 
 # Credenziali e segreti
 *passw*

@@ -13,6 +13,9 @@ Pagina web locale, in un solo file (`bacheca.html`), per tenere sott'occhio i mi
 3. Chrome chiede di nuovo il permesso a ogni avvio: è un limite del browser. Scegli "Consenti a ogni visita".
 4. Dopo ogni modifica al codice della pagina fai Ctrl+F5, perché il browser tiene la vecchia versione.
 
+### Provarla con la cartella `esempio`
+Per vederla subito senza dati tuoi, al punto 2 scegli la cartella `esempio` di questo repository: contiene due progetti finti (`Sito-vetrina` con attività in tutti gli stati, `Manuale-utente` in attesa) e il loro `_STATO-PROGETTI.json`. La bacheca scrive nei file che apri: se sposti attività o cambi colori, `git checkout esempio` riporta tutto com'era.
+
 ## Struttura attesa della cartella
 ```
 <cartella progetti>/
@@ -34,6 +37,41 @@ Pagina web locale, in un solo file (`bacheca.html`), per tenere sott'occhio i mi
 - Spostare un'attività dalla bacheca modifica direttamente `TODO.md`. Quando passa a fatta viene aggiunta in fondo alla riga la data (`✓2026-10-21`), che si toglie se la riporti in un'altra colonna.
 - **Stato dei progetti**: `_STATO-PROGETTI.json` salva per ogni progetto `stato` (`attesa`, `test` o `terminato`; assente = in corso), colore, nome mostrato e scadenza.
 
+### Modello minimo di un progetto
+Basta una cartella con un `SAL.md`; gli altri file sono facoltativi (esempio completo in `esempio/Sito-vetrina`).
+
+`SAL.md`
+```markdown
+# Nome progetto — SAL
+
+_Ultimo aggiornamento: 2026-10-29_
+
+## Scopo
+Una o due righe su cosa è il progetto (la bacheca le mostra nella scheda).
+```
+
+`TODO.md`
+```markdown
+# Nome progetto — TODO
+
+_Ultimo aggiornamento: 2026-10-29_
+
+## Da fare
+- [ ] **P1** **Titolo breve** — dettagli
+- [~] **P2** **Attività in corso** — dettagli
+
+## Fatto
+- [x] **P3** **Attività chiusa** — dettagli ✓2026-10-28
+```
+
+`STORICO.md`
+```markdown
+# Nome progetto — STORICO
+
+## 2026-10-29
+- 10:15 Cosa è successo oggi (si aggiunge sempre in fondo).
+```
+
 ## Cosa fa
 - Elenco dei progetti in vista a blocchi, a elenco o **kanban** (In attesa / In corso / Test / Terminato), con ordinamento per priorità, alfabetico, ultima modifica o manuale (trascinando).
 - **Kanban del progetto**: scheda dedicata con le colonne In attesa / Da fare / In corso / Test / Fatto (ultimi 14 giorni). Si trascina o si usa "Sposta"; avviso se ci sono più di 3 attività in corso. Le colonne sono sempre ordinate per priorità (P1, P2, P3); dentro la stessa priorità si può cambiare l'ordine trascinando le schede (vale l'ordine delle righe del `TODO.md`).
@@ -49,4 +87,4 @@ Pagina web locale, in un solo file (`bacheca.html`), per tenere sott'occhio i mi
 - `utilscrypt.py` fa la stessa operazione da riga di comando: `dec(percorso, password)` restituisce il testo, `enc(testo, password, percorso)` scrive il file cifrato. Il formato è compatibile con quello della bacheca.
 
 ## Dati che non vanno nel repository
-Questo repository contiene solo lo strumento. I dati dei progetti (SAL, STORICO, TODO, UTILS, `_STATO-PROGETTI.json`) restano sul PC e sono esclusi dal `.gitignore`. Non committare mai file con credenziali: la cronologia di Git li conserva per sempre.
+Questo repository contiene solo lo strumento. I dati dei progetti (SAL, STORICO, TODO, UTILS, `_STATO-PROGETTI.json`) restano sul PC e sono esclusi dal `.gitignore`; fanno eccezione solo i progetti finti di `esempio/`. Non committare mai file con credenziali: la cronologia di Git li conserva per sempre.
