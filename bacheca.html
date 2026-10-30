@@ -56,13 +56,13 @@ main{max-width:1100px;margin:0 auto;padding:24px;min-height:calc(100vh - 90px)}
 .mrow{position:relative}
 .datebtn{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-width:170px;cursor:pointer;text-align:left}
 .datebtn:hover{border-color:var(--accent)!important;background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))!important}
-.cal{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:268px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:12px;animation:calin .18s ease}
+.cal{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:268px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:12px}
 @keyframes calin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .calh b{font-size:14px}
 .calg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
 .cw{font-size:11px;color:var(--muted);text-transform:uppercase;padding:4px 0}
-.cd{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;height:32px;border-radius:50%;cursor:pointer;transition:background-color .2s ease,color .2s ease}
+.cd{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;height:32px;border-radius:8px;cursor:pointer;transition:background-color .2s ease,color .2s ease}
 .cd:hover{background:color-mix(in srgb,var(--accent) 14%,var(--panel))}
 .cd.today{box-shadow:inset 0 0 0 1px var(--accent)}
 .cd.sel{background:var(--accent);color:var(--accent-ink);font-weight:650}
@@ -91,11 +91,12 @@ main{max-width:1100px;margin:0 auto;padding:24px;min-height:calc(100vh - 90px)}
 .card .meta{color:var(--muted);font-size:12.5px}
 .card p{margin:0;color:var(--ink);font-size:14px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .card .foot{display:flex;gap:8px;align-items:center;margin-top:auto;flex-wrap:wrap}
-.chip{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;display:inline-block}
+.chip{font-size:12px;font-weight:700;padding:2px 9px;border-radius:6px;display:inline-block}
 .chip.P1{background:var(--p1s);color:var(--p1)} .chip.P2{background:var(--p2s);color:var(--p2)} .chip.P3{background:var(--p3s);color:var(--p3)} .chip.none{background:var(--code);color:var(--muted)}
 .chip[data-prioopen]{transition:transform .25s ease,box-shadow .25s ease}.chip[data-prioopen]:hover{transform:translateY(-1px);box-shadow:0 0 0 3px color-mix(in srgb,currentColor 14%,transparent)}
-.chip.test{background:#e8defa;color:#6b3fc2}@media (prefers-color-scheme:dark){.chip.test{background:#33264f;color:#cdb6ff}}
-.chip.wait{background:var(--p3s);color:var(--p3)}
+.chip.test{--sh:268;background:hsl(var(--sh) 85% 95%);color:hsl(var(--sh) 72% 42%)}
+.chip.wait{--sh:46;background:hsl(var(--sh) 85% 95%);color:hsl(var(--sh) 72% 34%)}
+@media (prefers-color-scheme:dark){:root .chip.test,:root .chip.wait,:root .chip.run{background:hsl(var(--sh) 40% 17%);color:hsl(var(--sh) 80% 72%)}}
 .kb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:stretch;padding:2px 2px 8px}
 main.wide{max-width:2400px}
 /* nel kanban del progetto intestazione e schede restano larghe e allineate come nelle altre schede */
@@ -109,7 +110,7 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .kcol{background:color-mix(in srgb,var(--accent) 5%,var(--panel));border:1px solid var(--line);border-radius:14px;padding:10px;min-height:150px;transition:background-color .25s ease,border-color .25s ease}
 .kcol.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--panel))}
 .khead{display:flex;align-items:center;gap:8px;margin:2px 4px 10px;font-size:14px}
-.khead .kn{background:var(--code);color:var(--muted);border-radius:99px;padding:0 8px;font-size:12px;font-weight:700}
+.khead .kn{background:var(--code);color:var(--muted);border-radius:6px;padding:0 8px;font-size:12px;font-weight:700}
 .kcol.wip .kn{background:var(--p2s);color:var(--p2)}.kwip{font-size:12px;color:var(--p2);margin-left:auto}
 .kcard{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:9px 10px;margin-bottom:8px;cursor:grab;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease}
 .kcard:hover{transform:translateY(-1px)}.kcard.dragging{opacity:.4}
@@ -117,9 +118,16 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .kcard.kdone{opacity:.78}.kcard.kdone .ttl{text-decoration:line-through;color:var(--muted)}
 .ksec{font-size:11.5px;color:var(--muted);margin-top:3px}
 .kfoot{display:flex;justify-content:space-between;align-items:center;margin-top:7px;gap:8px}
-.kmv{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
-.kmv .kpr{flex:1 0 100%;display:flex;gap:4px;align-items:center;flex-wrap:wrap;padding-bottom:5px;margin-bottom:2px;border-bottom:1px solid var(--line)}
-.chip.run{background:var(--accent-soft);color:var(--accent)}
+/* menu della matita sulle schede kanban: fumetto sotto il pulsante, con la punta verso di lui */
+.kcard{position:relative}.kcard:has(.kmv){z-index:15}
+.kmv{position:absolute;right:6px;top:calc(100% - 4px);z-index:20;display:flex;flex-direction:column;gap:8px;width:max-content;max-width:calc(100vw - 32px);background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.22);padding:12px 14px;transform-origin:calc(100% - 16px) 0;cursor:default}
+.kmv::before{content:"";position:absolute;top:-7px;right:var(--ar,14px);width:12px;height:12px;background:var(--panel);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.kmv.in{animation:bub .2s cubic-bezier(.2,.7,.3,1)!important}
+.kmr{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;white-space:nowrap}.kmv .seg.sm button.dis{opacity:.4;cursor:not-allowed}.kmr+.kmr{border-top:1px solid var(--line);padding-top:8px}.kmv .meta,.kmr .meta{width:62px;flex:none}
+.kmb{width:28px;height:28px}
+.kmv .kpr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.kmv>.btn{align-self:flex-start}
+.chip.run{--sh:208;background:hsl(var(--sh) 85% 95%);color:hsl(var(--sh) 72% 42%)}
 .kcard.pk{cursor:pointer}.pkchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.pkdl{margin-top:6px}
 @media (min-width:901px) and (max-width:1099px){.kb{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:901px) and (max-width:1499px){.kb.kb5{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -132,7 +140,8 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .tpb p.lp{--lc:var(--accent);border-left:3px solid var(--lc);padding:3px 0 3px 12px;margin-bottom:.9em}.tpb p.lp.upd{--lc:var(--p3)}.tpb p.lp.todo{--lc:var(--p2)}.tpb .lbl{color:var(--lc);font-weight:700}
 .tpmv{border-top:1px solid var(--line);padding-top:12px}
 .kcard.ovt{box-shadow:0 -3px 0 0 var(--accent),var(--shadow)}.kcard.ovb{box-shadow:0 3px 0 0 var(--accent),var(--shadow)}
-.kadd{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);width:26px;height:26px;border-radius:8px;cursor:pointer;font-size:17px;line-height:1;padding:0;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.kadd:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}.kwip+.kadd{margin-left:8px}
+.kadd{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);width:26px;height:26px;flex:none;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.kadd:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}.kwip+.kadd{margin-left:8px}
+.kadd svg{display:block;transition:transform .25s ease}.kadd:hover svg{transform:rotate(90deg)}
 .modal.nt{width:min(700px,100%);max-height:calc(100vh - 32px);overflow:auto}
 .ntf{display:flex;flex-direction:column;gap:5px}.ntl{color:var(--muted);font-size:13px}.ntl .meta{font-size:12px}
 .modal.nt input,.modal.nt textarea,.modal.nt select{box-sizing:border-box;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease}
@@ -141,7 +150,7 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .modal.nt input:focus,.modal.nt textarea:focus,.modal.nt select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
 .ddw{position:relative;display:inline-block}
 .btn.dd{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-width:220px;height:38px;padding:0 12px;border-radius:10px;text-align:left}
-.btn.dd.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.ddc{color:var(--muted);font-size:12px}
+.btn.dd.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.ddc{color:var(--muted);font-size:12px;transition:transform .2s ease}.btn.dd.on .ddc{transform:rotate(180deg)}
 .ddpop{left:0;right:auto;min-width:100%;max-height:230px;overflow:auto}.ddpop.up{top:auto;bottom:calc(100% + 6px)}
 .ntact{gap:10px}.ntact .meta{margin-left:auto;color:var(--muted);font-size:13px}
 .kempty{color:var(--muted);text-align:center;padding:14px 0;font-size:13px}.kfootc{text-align:center;margin-top:4px;font-size:12px}
@@ -158,18 +167,18 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .sortlab{color:var(--muted);font-size:14px;display:flex;gap:8px;align-items:center;margin-bottom:18px}
 .sortlab select,#scad{font:inherit;padding:5px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
-.dl{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;display:inline-block;white-space:nowrap}
+.dl{font-size:12px;font-weight:700;padding:2px 9px;border-radius:6px;display:inline-block;white-space:nowrap}
 .dl.late{background:var(--p1s);color:var(--p1)}.dl.soon{background:var(--p2s);color:var(--p2)}.dl.near{background:var(--p3s);color:var(--p3)}mark{background:#ffe27a;color:#222;border-radius:3px;padding:0 2px}
 .dl[data-dledit]{cursor:pointer}
 .cardtags .dl{font-size:11.5px;padding:2px 8px}
 .dl.upd{background:var(--code);color:var(--muted);font-weight:600}.dl.far{background:var(--code);color:var(--muted)}
 .colrow{display:flex;gap:8px;align-items:center;margin-top:12px;color:var(--muted);font-size:13px;flex-wrap:wrap}
-.sw{width:24px;height:24px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0;display:inline-block;overflow:hidden;position:relative}
+.sw{width:24px;height:24px;border-radius:7px;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0;display:inline-block;overflow:hidden;position:relative}
 .sw.on{box-shadow:0 0 0 2px var(--ink)}
 .sw.custom{background:conic-gradient(#f66,#fc4,#6c6,#4cf,#86f,#f66)}
 .sw.custom input{opacity:0;position:absolute;inset:-6px;width:40px;height:40px;cursor:pointer}
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:14px 0 18px}
-.tabs button{border:0;background:none;font:inherit;color:var(--muted);padding:8px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button{border:0;background:none;font:inherit;color:var(--muted);padding:8px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;border-radius:8px 8px 0 0}
 .tabs button.on{color:var(--accent);border-color:var(--accent);font-weight:600}
 .doc{border-top:4px solid var(--hero2);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px 28px;max-width:900px}
 .doc h1{font-size:22px;margin:0 0 .6em} .doc h2{font-size:18px;margin:1.4em 0 .5em;padding-bottom:4px;border-bottom:1px solid var(--line)}
@@ -186,32 +195,30 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .li{display:flex;gap:8px;margin:.2em 0}.li .b{color:var(--muted);min-width:1.1em}
 .todo-row{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid var(--line)}
 .todo-row:last-child{border-bottom:0}
-.todo-row input{margin-top:5px;width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+.todo-row input[type=checkbox]{margin-top:3.5px}
 .todo-row .t{flex:1;min-width:0}
 .head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:1px 0}
 .head.exp{cursor:pointer;border-radius:6px}.head.exp:hover .ttl{color:var(--accent)}
 .ttl{font-weight:600}
-.chev{margin-left:auto;color:var(--muted);transition:transform .15s;font-size:13px;padding:0 4px}
+.chev{margin-left:auto;color:var(--muted);opacity:.75;transition:transform .2s ease,opacity .2s ease;padding:0 4px;display:inline-flex}.head.exp:hover .chev{opacity:1}.ddc{display:inline-flex}
 .todo-row.open .chev{transform:rotate(180deg)}
 .det{margin:6px 0 4px;padding:8px 12px;background:var(--code);border-radius:8px;color:var(--ink);font-size:14px;line-height:1.55;border-left:3px solid var(--accent)}
 .todo-row.done .t{color:var(--muted);text-decoration:line-through}
 /* badge di stato a destra della riga, con menu per cambiarlo */
-.stw{position:relative;flex:none;align-self:flex-start;margin-top:1px}
-.st{font:inherit;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:space-between;gap:6px;min-width:96px;height:24px;padding:0 8px 0 10px;border-radius:99px;border:1px solid var(--st-b,var(--line));background:var(--st-bg,transparent);color:var(--st-c,var(--muted));cursor:pointer;white-space:nowrap;transition:border-color .2s ease,background-color .2s ease,filter .2s ease}
+.stw{position:relative;flex:none;align-self:flex-start;margin-top:0}
+.st{font:inherit;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:96px;height:26px;padding:0 10px;border-radius:8px;border:1px solid var(--st-b,var(--line));background:var(--st-bg,transparent);color:var(--st-c,var(--muted));cursor:pointer;white-space:nowrap;transition:border-color .2s ease,background-color .2s ease,filter .2s ease}
 .st:hover,.st.on{filter:brightness(1.08);border-color:var(--st-c,var(--accent))}
-.st .ddc{font-size:10px;opacity:.8}
-.st-todo{--st-c:var(--muted);--st-b:var(--line)}
-.st-doing{--st-c:var(--accent);--st-b:var(--accent);--st-bg:color-mix(in srgb,var(--accent) 10%,transparent)}
-.st-wait{--st-c:var(--p3);--st-b:color-mix(in srgb,var(--p3) 45%,transparent);--st-bg:var(--p3s)}
-.st-test{--st-c:#6b3fc2;--st-b:#cbb6f2;--st-bg:#efe7fc}
-@media (prefers-color-scheme:dark){.st-test{--st-c:#cdb6ff;--st-b:#5b4590;--st-bg:#33264f}}
-.st-done{--st-c:#2e9e5b;--st-b:color-mix(in srgb,#2e9e5b 45%,transparent);--st-bg:color-mix(in srgb,#2e9e5b 10%,transparent)}
+.st .ddc{opacity:.75;transition:transform .2s ease}.st.on .ddc{transform:rotate(180deg)}
+/* colori degli stati: stessa saturazione e luminosità, cambia solo la tinta (da fare arancione, in corso azzurro, in attesa giallo chiaro, in test viola, fatta verde) */
+.st-todo{--sh:14;--sl:40%;--dl:68%}.st-doing{--sh:208}.st-wait{--sh:46;--sl:34%}.st-test{--sh:268}.st-done{--sh:145}
+:is(.st-todo,.st-doing,.st-wait,.st-test,.st-done){--st-c:hsl(var(--sh) 72% var(--sl,42%));--st-b:hsl(var(--sh) 62% 74%);--st-bg:hsl(var(--sh) 85% 95%)}
+@media (prefers-color-scheme:dark){:is(.st-todo,.st-doing,.st-wait,.st-test,.st-done){--st-c:hsl(var(--sh) 80% var(--dl,72%));--st-b:hsl(var(--sh) 42% 38%);--st-bg:hsl(var(--sh) 40% 17%)}}
 .stpop{min-width:170px;top:calc(100% + 6px)}
 .sdot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--st-c);border:1px solid var(--st-b)}
 .sec{font-weight:700;margin:20px 0 6px;font-size:15px;color:var(--accent)}
 .filters{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px;color:var(--muted);font-size:14px}
 .filters label{display:flex;gap:5px;align-items:center;cursor:pointer}
-.proj-tag{font-size:12px;color:var(--muted);background:var(--code);padding:1px 8px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.proj-tag{font-size:12px;color:var(--muted);background:var(--code);padding:1px 8px;border-radius:6px;cursor:pointer;white-space:nowrap}
 .proj-tag:hover{color:var(--accent)}
 input[type=search]{font:inherit;padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);min-width:240px}
 .entry{margin-bottom:14px}
@@ -225,9 +232,9 @@ input[type=search]{font:inherit;padding:6px 12px;border-radius:8px;border:1px so
 .hint{font-size:12.5px;color:var(--muted);margin-top:24px}
 /* interazioni uniformi: transizione morbida + leggera tinta al passaggio */
 .btn,nav button,.seg button,.tabs button,.ghit,.proj-tag,.head.exp,.sw,.dl[data-dledit],#home{transition:background-color .3s ease,color .3s ease,border-color .3s ease,transform .25s ease,box-shadow .25s ease}
-:is(main,.modal) .btn:not(.primary):hover,.seg button:not(.on):hover,.tabs button:not(.on):hover,.proj-tag:hover,.ghit:hover,.head.exp:hover{background-color:color-mix(in srgb,var(--accent) 9%,var(--panel));transform:translateY(-1px)}
+:is(main,.modal) .btn:not(.primary):hover,.proj-tag:hover,.ghit:hover,.head.exp:hover{background-color:color-mix(in srgb,var(--accent) 9%,var(--panel));transform:translateY(-1px)}
 :is(main,.modal) .btn.small:not(.primary):hover{color:var(--ink);border-color:var(--accent)}
-.tabs button:not(.on):hover{border-radius:8px 8px 0 0;color:var(--ink)}
+.tabs button:not(.on):hover{color:var(--ink)}
 .head.exp:hover{box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 9%,var(--panel))}
 header .btn:hover,header nav button:hover{transform:translateY(-1px)}
 .sw:hover{transform:scale(1.12)}
@@ -273,6 +280,23 @@ nav button.play .dl1{animation:draw .3s ease-out .1s backwards}nav button.play .
 @property --ly{syntax:'<length>';inherits:false;initial-value:0px}
 #gq:focus,#sq:focus{animation:lens .8s ease-in-out}
 @keyframes lens{0%,100%{--lx:0px;--ly:0px}25%{--lx:3px;--ly:-2px}50%{--lx:-2px;--ly:-1px}75%{--lx:1px;--ly:2px}}
+/* icone a linee dentro pulsanti, chip e testi (ico()) */
+.ic{display:inline-block;vertical-align:-2px;margin-right:5px;flex:none;overflow:visible}
+.ic.r{margin:0 0 0 6px}
+.ic.warn{color:#e69500}
+.dl .ic,.chip .ic,.meta .ic{vertical-align:-2px;margin-right:4px}
+.fitem .ic{margin-right:2px;color:var(--muted)}.fitem.on .ic{color:inherit}
+.datebtn .ic{margin:0}
+/* modifica del progetto: l'ingranaggio oscilla come quello delle impostazioni */
+svg.gi{transform-box:fill-box;transform-origin:center}.play svg.gi{animation:wig .8s ease-in-out}
+/* apri PDF: la freccia scatta verso l'alto a destra */
+.ic .pa{transition:transform .25s ease}a.btn:hover .ic .pa{transform:translate(1px,-1px)}.play .ic .pa{animation:pdfgo .6s ease-in-out}
+@keyframes pdfgo{0%,100%{transform:none}40%{transform:translate(3px,-3px)}70%{transform:translate(-1px,1px)}}
+/* torna ai progetti: la freccia si sporge a sinistra */
+#back .ar{transition:transform .25s ease}#back:hover .ar{transform:translateX(-2px)}
+/* menu ☰: le linee si stringono e si riaprono */
+#burger svg{display:block}#burger.play .bl1{animation:bl1 .6s ease-in-out}#burger.play .bl3{animation:bl3 .6s ease-in-out}#burger.play .bl2{animation:bl2 .6s ease-in-out}
+@keyframes bl1{50%{transform:translateY(3px)}}@keyframes bl3{50%{transform:translateY(-3px)}}@keyframes bl2{50%{d:path("M7 12h10")}}
 /* ordina: le tre linee si scambiano lunghezza, come elementi che si riordinano */
 #fbtn.play .fl1{animation:fs1 .8s ease-in-out}#fbtn.play .fl2{animation:fs2 .8s ease-in-out}#fbtn.play .fl3{animation:fs3 .8s ease-in-out}
 @keyframes fs1{0%,100%{d:path("M2 3.5h12")}35%{d:path("M5.6 3.5h4.8")}70%{d:path("M3.8 3.5h8.4")}}
@@ -378,8 +402,12 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
 /* lente fissa a sinistra nelle ricerche (i background abbreviati sopra la azzererebbero: per questo !important) */
 #gq,#sq{padding-left:36px!important;background-repeat:no-repeat!important;background-position:calc(12px + var(--lx)) calc(50% + var(--ly))!important;background-size:16px 16px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%238a8f98' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6.8' cy='6.8' r='4.8'/%3E%3Cpath d='M10.4 10.4L14 14'/%3E%3C/svg%3E")!important}
 #gq:not(:focus){background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6.8' cy='6.8' r='4.8'/%3E%3Cpath d='M10.4 10.4L14 14'/%3E%3C/svg%3E")!important}
+/* ricerca in alto e ricerca di scheda: da selezionate sono identiche (stesso sfondo, bordo, alone e tinta al passaggio) */
+#gq:focus,#sq:focus{background-color:var(--panel)!important;color:var(--ink);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+#gq:focus:hover,#sq:focus:hover{background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))!important}
+/* nel tema scuro la ricerca in alto è circondata dalla barra luminosa e a parità di colore sembra più scura (quasi come lo sfondo pagina): la schiarisco un poco perché appaia uguale alle altre */
 /* pulsante torna su */
-#totop{position:fixed;right:22px;bottom:22px;height:44px;padding:0 18px;border-radius:99px;border:0;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 18px rgba(0,0,0,.22);font:inherit;font-size:15px;font-weight:650;line-height:1;cursor:pointer;display:inline-flex;align-items:center;gap:8px;opacity:0;transform:translateY(10px);pointer-events:none;z-index:15;transition:opacity .3s ease,transform .3s ease,box-shadow .3s ease,filter .3s ease}
+#totop{position:fixed;right:22px;bottom:22px;height:44px;padding:0 18px;border-radius:12px;border:0;background:var(--accent);color:var(--accent-ink);box-shadow:0 6px 18px rgba(0,0,0,.22);font:inherit;font-size:15px;font-weight:650;line-height:1;cursor:pointer;display:inline-flex;align-items:center;gap:8px;opacity:0;transform:translateY(10px);pointer-events:none;z-index:15;transition:opacity .3s ease,transform .3s ease,box-shadow .3s ease,filter .3s ease}
 #totop .ar{font-size:18px;transition:transform .25s ease}
 #totop.show{opacity:1;transform:none;pointer-events:auto}
 #totop.show:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.28);filter:brightness(1.07)}
@@ -400,6 +428,229 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
 .fitem.on{color:var(--accent);font-weight:650}
 .fitem .ck{width:14px;text-align:center;flex:none}
 @media (max-width:480px){.fbtn .fl{display:none}.fbtn{padding:0 11px}}
+.fitem .ck{display:inline-flex;justify-content:center}
+/* ===== feedback uniforme di tutti i controlli: stesso passaggio del mouse, stessa pressione, stesso focus da tastiera ===== */
+:is(.btn,nav button,.seg button,.tabs button,.fitem,.mitem,.st,.kadd,.datebtn,.sw,.proj-tag,.chip[data-prioopen],.dl[data-dledit],#totop){transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease,transform .15s ease,filter .2s ease}
+/* pressione: tutto si "schiaccia" un attimo, come i tasti dell'intestazione */
+:is(.btn,nav button,.st,.kadd,.datebtn,.sw,.chip[data-prioopen],.dl[data-dledit]):active{filter:brightness(.96)}
+/* niente scala su :active: la pressione la fa solo l animazione .press, così non ci sono due scatti */
+/* pulsanti principali (Aggiungi, + Nuova attività, filtri attivi): si illuminano e si alzano come gli altri */
+:is(main,.modal) .btn.primary:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 12px color-mix(in srgb,var(--accent) 35%,transparent)}
+/* scelte a segmenti (Priorità, Stato, filtri): la voce scelta si colora con una transizione, non di colpo */
+/* segmenti e schede: niente transizione di sfondo o bordo (la voce nuova nascerebbe colorata e sbiadirebbe mentre arriva la pastiglia = lampo). !important perché la regola comune del feedback ha specificità più alta */
+.seg button,.tabs button{transition:color .15s ease!important}
+.seg button.on{box-shadow:inset 0 0 0 1px color-mix(in srgb,#000 8%,transparent)}
+/* menu a tendina: voce sotto il mouse leggermente spostata, come le voci del menu Ordina */
+/* voci dei menu: al passaggio solo lo sfondo, così lo spazio a destra e a sinistra resta uguale */
+/* caselle di spunta */
+/* caselle di spunta nello stile dell'app (non quella blu del browser): angoli arrotondati, colore della bacheca, spunta che entra con un rimbalzo */
+input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;margin:0;border:1.5px solid color-mix(in srgb,var(--muted) 55%,var(--line));border-radius:5px;background:var(--panel);display:inline-grid;place-content:center;cursor:pointer;flex:none;vertical-align:middle;transition:background-color .2s ease,border-color .2s ease,transform .15s ease,box-shadow .2s ease}
+input[type=checkbox]::before{content:'';width:12px;height:12px;background:var(--accent-ink);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;transform:scale(0);transition:transform .22s cubic-bezier(.3,.7,.3,1.5)}
+input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+input[type=checkbox]:checked::before{transform:scale(1)}
+input[type=checkbox]:hover{border-color:var(--accent);transform:scale(1.08)}
+input[type=checkbox]:active{transform:scale(.88)}
+input[type=checkbox]:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+.struck input[type=checkbox]::before{animation:ckin .3s cubic-bezier(.3,.7,.3,1.5)}
+@keyframes ckin{from{transform:scale(0)}}
+/* focus da tastiera uguale ovunque */
+:is(.btn,nav button,.seg button,.tabs button,.fitem,.mitem,.st,.kadd,.datebtn,.sw,#totop,#home):focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 40%,transparent)}
+/* clic: piccolo rimbalzo uguale per tutti, ripetuto anche sul pulsante ridisegnato (voce già scelta, stato, calendario, schede…) */
+.press{animation:press .26s cubic-bezier(.2,.8,.3,1)}
+@keyframes press{0%{transform:scale(1)}35%{transform:scale(.95)}100%{transform:scale(1)}}
+/* elementi larghi (righe, schede kanban, risultati): rimbalzo più leggero */
+:is(.head,.kcard,.ghit,h2,#home).press{animation-name:press-s}
+@keyframes press-s{0%{transform:scale(1)}30%{transform:scale(.98)}100%{transform:scale(1)}}
+/* anche le voci già selezionate reagiscono al mouse */
+/* schede e segmenti: al passaggio cambia solo il colore del testo (uno sfondo sparirebbe e riapparirebbe quando la pagina si ridisegna sotto il mouse) */
+.seg button:not(.on):hover{color:var(--accent)}.tabs button:not(.on):hover{color:var(--ink)}
+.chip[data-prioopen]:hover,.dl[data-dledit]:hover{filter:brightness(.96);transform:translateY(-1px)}
+.cd:active{transform:scale(.88)}
+/* + Nuova attività: il più ruota al passaggio e al clic */
+.ic.pl{transition:transform .25s ease}.btn:hover .ic.pl{transform:rotate(90deg)}.press .ic.pl{animation:plspin .5s ease}
+@keyframes plspin{from{transform:rotate(-90deg)}}
+/* espandi/comprimi: le due scritte stanno nella stessa cella, si vede solo quella attiva, così il pulsante è sempre largo quanto la più lunga e non si ridimensiona */
+.exl{display:inline-grid}.exl>span{grid-area:1/1;transition:opacity .2s ease}.exl>.hid{visibility:hidden;opacity:0}
+.exp-all.play .exl>span:not(.hid){animation:fadein .25s ease}
+/* in corso in alto / ordine normale: la freccia si gira come quella di Espandi/Comprimi */
+/* acceso: si vede che il filtro è attivo (bordo e tinta come Ordina aperto) */
+.btn.df.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--panel));color:var(--accent)}
+.df .ic.au{transition:transform .25s ease}.df.on .ic.au{transform:rotate(180deg)}
+.df.press .ic.au,.btn.df:hover .ic.au{animation:none}.btn.df:hover:not(.on) .ic.au{transform:translateY(-1.5px)}
+.df.play .ic.au{animation:dfup .35s ease}.df.on.play .ic.au{animation-name:dfdown}
+@keyframes dfup{from{transform:rotate(180deg)}}@keyframes dfdown{from{transform:rotate(0)}}
+.df.play .exl>span:not(.hid){animation:fadein .25s ease}
+/* espandi/comprimi in un solo pulsante: la freccia si gira */
+.exp-all .ic.ex{transition:transform .25s ease}.exp-all.on .ic.ex{transform:rotate(180deg)}
+.exp-all.play .ic.ex{animation:exup .35s ease}.exp-all.on.play .ic.ex{animation-name:exdown}
+@keyframes exup{from{transform:rotate(180deg)}}@keyframes exdown{from{transform:rotate(0)}}
+/* gruppi a segmenti (Priorità, Stato, filtri): le voci sono "pastiglie" arrotondate dentro il gruppo,
+   così selezione, pressione e contorno da tastiera sono tondi; al passaggio nessuna voce si alza da sola */
+.seg{padding:3px;gap:2px;background:var(--panel);transition:border-color .2s ease}
+.seg:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.seg button{border-radius:7px}
+.seg button:hover,.tabs button:hover{transform:none!important}
+.seg button.on{box-shadow:none}
+/* segmenti e schede: niente lampo al clic, il riscontro è la pastiglia (o la sottolineatura) che scivola */
+.seg button.press,.tabs button.press{animation:none}
+@keyframes segpress{0%{filter:brightness(1)}35%{filter:brightness(.88)}100%{filter:brightness(1)}}
+/* icona calendario del pulsante data: il foglio si solleva come una pagina */
+/* icona calendario: gli anelli scattano come una pagina strappata e i giorni ricompaiono uno dopo l'altro */
+.datebtn .ic{transition:transform .25s ease}.datebtn:hover .ic{transform:translateY(-1px)}
+.datebtn.press .ic .cr{animation:rings .5s ease}
+@keyframes rings{0%,100%{transform:none}35%{transform:translateY(-3px)}65%{transform:translateY(1px)}}
+.datebtn.press .ic .cdy{animation:dayin .3s ease-out backwards}
+.datebtn.press .ic .cd1{animation-delay:.1s}.datebtn.press .ic .cd2{animation-delay:.18s}.datebtn.press .ic .cd3{animation-delay:.26s}.datebtn.press .ic .cd4{animation-delay:.34s}.datebtn.press .ic .cd5{animation-delay:.42s}
+@keyframes dayin{from{opacity:0}}
+/* lucchetto di Blocca: l'archetto si apre e si richiude */
+.ic .sh{transition:transform .2s ease}.btn:hover .ic .sh{transform:translateY(-1.5px)}.press .ic .sh{animation:shut .45s ease}
+@keyframes shut{0%{transform:translateY(-3px)}60%{transform:translateY(.5px)}100%{transform:none}}
+/* menu Sposta: le frecce indicano la direzione, la scheda spostata atterra nel nuovo posto */
+/* frecce Su/Giù ferme: il movimento lo fa la scheda stessa, che vola al nuovo posto (flipFirst/flipPlay) */
+/* orologio della scadenza: le lancette fanno un giro al passaggio e al clic */
+.ic .ch{transform-box:view-box;transform-origin:12px 12px}
+.dl:hover .ic .ch,.press .ic .ch{animation:tick .6s cubic-bezier(.3,.7,.3,1)}
+@keyframes tick{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.landed{animation:landed 1s ease-out}
+@keyframes landed{0%,30%{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 55%,transparent)}100%{box-shadow:0 0 0 3px transparent}}
+.todo-row.landed{border-radius:8px}
+/* pannello "altri colori": stessi quadratini e stesso campo di testo del resto dell'app */
+.colw{position:relative;display:inline-flex}
+.colpop{left:0;right:auto;top:calc(100% + 8px);padding:12px;min-width:0;width:max-content;z-index:21;animation:none}.colpop.in{animation:calin .18s ease}
+.colgrid{display:grid;grid-template-columns:repeat(8,24px);gap:8px;margin-top:12px}
+/* riquadro sfumato e barra delle tinte, angoli come il resto dell'app */
+.colsv{position:relative;height:140px;border-radius:8px;cursor:crosshair;touch-action:none;background:linear-gradient(to top,#000,transparent),linear-gradient(to right,#fff,hsl(var(--hue) 100% 50%));box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.colhue{position:relative;height:12px;margin-top:12px;border-radius:6px;cursor:pointer;touch-action:none;background:linear-gradient(to right,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00)}
+.colknob{position:absolute;width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.3);transform:translate(-50%,-50%);pointer-events:none;transition:transform .15s ease}
+.colhue .colknob{top:50%}
+.drag .colknob{transform:translate(-50%,-50%) scale(1.25)}
+.colhex{display:flex;gap:8px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.sw.prev{cursor:default;flex:none}.sw.prev:hover{transform:none}
+#colhex{box-sizing:border-box;width:110px;height:32px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:13px Consolas,monospace;outline:none;transition:border-color .2s ease,box-shadow .2s ease,background-color .2s ease}
+#colhex:hover{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))}
+#colhex:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+/* pastiglia che scivola nei gruppi a segmenti: le voci sono trasparenti sopra lo sfondo del gruppo, la pastiglia passa sotto il testo */
+.seg{position:relative;isolation:isolate}
+.seg button{position:relative;z-index:1;background:transparent}
+.seg button.on.segwait{background:transparent}
+/* schede del progetto: la sottolineatura scivola dalla scheda vecchia alla nuova */
+.tabs{position:relative}
+.tabthumb{position:absolute;z-index:2;background:var(--accent);border-radius:2px;pointer-events:none}
+.tabs button.on.segwait{border-color:transparent}
+/* la tinta del passaggio del mouse resta anche sulla voce appena scelta, così cliccando non sparisce di colpo (era il "lampo") */
+.segthumb{position:absolute;z-index:0;border-radius:7px;background:var(--accent);pointer-events:none;box-shadow:0 2px 6px color-mix(in srgb,var(--accent) 35%,transparent)}
+.seg.sm{margin:0;padding:2px}.seg.sm button{padding:3px 10px;font-size:13px;border-radius:6px}.seg.sm .segthumb{border-radius:6px}
+/* scritta del badge di stato e del chip di priorità che scorre come un contatore */
+.st,.todo-row .head .chip{overflow:hidden}
+.stl{display:inline-block}
+.stl.roll-up{animation:rollup .38s cubic-bezier(.3,.7,.3,1)}
+.stl.roll-down{animation:rolldown .38s cubic-bezier(.3,.7,.3,1)}
+@keyframes rollup{from{transform:translateY(110%);opacity:0}}
+@keyframes rolldown{from{transform:translateY(-110%);opacity:0}}
+/* chip di priorità che entra o esce: larghezza, spazio e trasparenza insieme, così il titolo si sposta morbido */
+.chipin{animation:chipin .3s cubic-bezier(.3,.7,.3,1)}
+.chipout{animation:chipout .28s ease-in forwards;pointer-events:none}
+@keyframes chipin{from{max-width:0;opacity:0;padding-left:0;padding-right:0;margin-right:-8px;transform:scale(.6)}to{max-width:60px}}
+@keyframes chipout{from{max-width:60px}to{max-width:0;opacity:0;padding-left:0;padding-right:0;margin-right:-8px;transform:scale(.6)}}
+.chip.chipin,.chip.chipout{overflow:hidden;white-space:nowrap}
+/* P barrata (senza priorità) */
+.pno{display:inline-flex;vertical-align:-2px;opacity:.85}
+/* revisione animazioni: dettagli delle righe che si chiudono morbidi e freccetta che ruota anche dopo il ridisegno */
+.det.out{animation:detout .17s ease-in forwards}@keyframes detout{to{opacity:0;transform:translateY(-4px)}}
+.chev.chevin .ic{animation:chevspin .25s ease}@keyframes chevspin{from{transform:rotate(-180deg)}}
+.todo-row.open .chev.chevout{transform:none}
+/* bottoni di link (Apri PDF) senza sottolineatura e con la stessa pressione */
+a.btn{text-decoration:none}
+/* icone dei menu (Vista, menu ☰, rotellina): si ingrandiscono un poco al passaggio */
+.fitem .ic,.mitem .mi{transition:transform .2s ease}.fitem:hover .ic,.mitem:hover .mi{transform:scale(1.15)}
+/* etichette con matita (ultima modifica) e foglio (documentazione): l'icona si muove al passaggio sulla scheda */
+.ic.wig-h{transform-box:fill-box;transform-origin:20% 80%}
+.dl.upd:hover .ic{animation:scribble .6s ease}
+@keyframes scribble{0%,100%{transform:none}25%{transform:rotate(-12deg) translateX(-1px)}50%{transform:rotate(6deg) translateX(1px)}75%{transform:rotate(-4deg)}}
+.c-x:hover .ic{animation:docnod .5s ease}
+@keyframes docnod{0%,100%{transform:none}40%{transform:translateY(-2px) rotate(-6deg)}}
+/* Segna terminato / Riapri: l'icona si disegna o gira al clic */
+.ic.tgl{transition:transform .2s ease}.btn:hover .ic.tgl{transform:scale(1.12)}
+.play .ic.tgl{animation:tglpop .5s cubic-bezier(.3,.7,.3,1.4)}@keyframes tglpop{0%{transform:scale(.6) rotate(-90deg)}100%{transform:none}}
+/* opzioni non disponibili nei fumetti (es. progetto bloccato In corso) */
+.btn.dis{opacity:.45;cursor:not-allowed}.btn.dis:hover{transform:none!important;background-color:var(--panel)!important}
+/* conteggi per stato nelle schede progetto: colori degli stati, icone animate al passaggio e al clic */
+.chip.scnt{background:var(--st-bg);color:var(--st-c)}
+.sci{display:inline-flex;margin-right:4px;vertical-align:-2px}
+.cardprio .scbr{flex-basis:100%;height:0}.grid.list .scbr{display:none}
+.scrow{margin-top:6px}
+.sci .ic{transform-box:fill-box;transform-origin:center}.sci .bub{transform-box:fill-box}
+.scnt:hover.st-doing .sci .ic,.press .st-doing .sci .ic{animation:playgo .6s cubic-bezier(.3,.7,.3,1)}
+.scnt:hover.st-test .sci .ic,.press .st-test .sci .ic{animation:flaskshake .6s ease}
+.scnt:hover.st-test .sci .bub,.press .st-test .sci .bub{animation:bubble .6s ease}
+.scnt:hover.st-wait .sci .ic,.press .st-wait .sci .ic{animation:hgturn .7s cubic-bezier(.4,0,.2,1)}
+.sci .tck{stroke-dasharray:10;stroke-dashoffset:10}
+.scnt:hover.st-todo .sci .tck,.press .st-todo .sci .tck{animation:todochk .9s ease}
+@keyframes todochk{0%{stroke-dashoffset:10;opacity:1}45%,75%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes playgo{0%,100%{transform:none}40%{transform:translateX(2px) scale(1.15)}70%{transform:translateX(-1px)}}
+@keyframes flaskshake{0%,100%{transform:none}25%{transform:rotate(-10deg)}50%{transform:rotate(8deg)}75%{transform:rotate(-4deg)}}
+@keyframes bubble{0%,100%{transform:none;opacity:1}50%{transform:translateY(-3px);opacity:.3}}
+@keyframes hgturn{from{transform:rotate(0)}to{transform:rotate(180deg)}}
+/* scheda che non si può spostare (progetto con attività in corso, o riordino in un ordinamento automatico): fa "no" */
+.deny{animation:deny .45s ease}
+@keyframes deny{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+/* schede del kanban: al passaggio si tingono del loro colore (progetto o priorità), come le schede dei blocchi */
+.kcard.kpP1{--kc:var(--p1)}.kcard.kpP2{--kc:var(--p2)}.kcard.kpP3{--kc:var(--p3)}.kcard.kpnone{--kc:var(--muted)}
+.kcard{transition:transform .2s ease,box-shadow .2s ease,background-color .25s ease}
+.kcard:hover{background-color:color-mix(in srgb,var(--kc,var(--accent)) 8%,var(--panel))}
+/* Ordina: accanto alla parola c'è la modalità attiva */
+.fmode{color:var(--accent);font-weight:650}.fmode::before{content:"·";color:var(--muted);margin-right:6px;font-weight:400}
+.fbtn.play .fmode{animation:fadein .3s ease}
+@media (max-width:480px){.fmode::before{display:none}}
+/* icone delle priorità (stessa famiglia della lampadina): più marcate quando la voce è scelta, ognuna con la sua animazione al passaggio e al clic */
+.pic{display:inline-flex;vertical-align:-2px;margin-right:5px}
+/* colori delle priorità anche sulle icone (come i chip P1/P2/P3); sulla voce selezionata prendono il colore del testo per restare leggibili */
+.pic-P1{color:var(--p1)}.pic-P2{color:var(--p2)}.pic-P3{color:var(--p3)}.pic-all{color:var(--accent)}.pno{color:var(--muted)}
+:is(.on,.primary) :is(.pic,.pno){color:inherit}
+.chip .pic{margin-right:3px}.chip .pic .ic,.chip .pno .ic{width:12px;height:12px}
+.pic .ic{transition:stroke-width .2s ease}.on .pic .ic,.primary .pic .ic{stroke-width:2.8}
+.pic-P1 .ic{transform-origin:50% 90%}.pic .stm,.pic .ly1,.pic .ly3{transform-box:fill-box}
+:is(button,.chip,label):hover .pic-P1 .ic,.press .pic-P1 .ic{animation:flame .7s ease}
+:is(button,.chip,label):hover .pic-P2 .ic,.press .pic-P2 .ic{animation:fwdgo .5s cubic-bezier(.3,.7,.3,1)}
+:is(button,.chip,label):hover .pic-P3 .stm,.press .pic-P3 .stm{animation:steam .9s ease}
+:is(button,.chip,label):hover .pic-P3 .s2,.press .pic-P3 .s2{animation-delay:.12s}
+:is(button,.chip,label):hover .pic-P3 .s3,.press .pic-P3 .s3{animation-delay:.24s}
+:is(button,.chip,label):hover .pic-all .ly1,.press .pic-all .ly1{animation:lyup .5s ease}
+:is(button,.chip,label):hover .pic-all .ly3,.press .pic-all .ly3{animation:lydown .5s ease}
+@keyframes flame{0%,100%{transform:none;color:inherit;filter:none}20%{transform:scaleY(1.14) rotate(-5deg);color:#f76b15;filter:drop-shadow(0 0 3px rgba(247,107,21,.8))}45%{transform:scaleY(.93) rotate(4deg);color:#e5484d;filter:drop-shadow(0 0 3px rgba(229,72,77,.7))}70%{transform:scaleY(1.08) rotate(-2deg);color:#f76b15}}
+@keyframes fwdgo{0%,100%{transform:none}40%{transform:translateX(3px)}70%{transform:translateX(-1px)}}
+@keyframes steam{0%{transform:none;opacity:1}45%{transform:translateY(-3px);opacity:0}55%{transform:translateY(2px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes lyup{50%{transform:translateY(-2px)}}@keyframes lydown{50%{transform:translateY(2px)}}
+/* lampadina: al passaggio e al clic si accende un attimo (idea che si illumina) e si rispegne, come le lancette dell orologio */
+.pno .ic{transition:color .2s ease}
+:is(button,.chip,label):hover .pno .ic,.press .pno .ic{animation:bulbon .7s ease}
+@keyframes bulbon{0%{color:inherit;filter:none}25%,55%{color:#f5c542;filter:drop-shadow(0 0 3px rgba(245,197,66,.85))}100%{color:inherit;filter:none}}
+.pno .ic{transition:transform .2s ease,stroke-width .2s ease}.on .pno,.primary .pno{opacity:1}.on .pno .ic,.primary .pno .ic,.fitem.on .pno .ic{stroke-width:2.8}
+/* In corso in alto: la freccia sale */
+.ic.au{transition:transform .2s ease}.btn:hover .ic.au{transform:translateY(-1.5px)}.press .ic.au{animation:arrowup .45s cubic-bezier(.3,.7,.3,1)}
+@keyframes arrowup{0%{transform:none}40%{transform:translateY(-4px)}70%{transform:translateY(1px)}100%{transform:none}}
+/* chiusura dei popup (X, clic sullo sfondo, Esc) */
+.mback.out{animation:fadeout .17s ease-in forwards;pointer-events:none}.mback.out .modal{animation:modalout .17s ease-in forwards}
+@keyframes fadeout{to{opacity:0}}@keyframes modalout{to{opacity:0;transform:translateY(8px) scale(.97)}}
+/* fatta / annullata: la riga di barrato si disegna da sinistra o si ritira verso destra, la spunta rimbalza */
+.struck .ttl,.revived .ttl{position:relative;display:inline-block}
+.struck .t,.struck .ttl{text-decoration:none!important}
+.struck .ttl::after,.revived .ttl::after{content:'';position:absolute;left:0;right:0;top:54%;height:1.5px;background:currentColor;pointer-events:none}
+.struck .ttl::after{transform-origin:left;animation:strike .45s ease-out both}
+.revived .ttl::after{transform-origin:right;animation:unstrike .45s ease-in both}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes unstrike{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+:is(.struck,.revived) input[type=checkbox]{animation:picked .42s cubic-bezier(.3,.7,.3,1.4)}
+/* il badge Annulla esce scivolando come è entrato */
+#undo.out{animation:undoout .2s ease-in forwards}
+@keyframes undoout{to{opacity:0;transform:translateX(-16px)}}
+/* voce appena scelta: si gonfia un attimo e si posa */
+.picked{animation:picked .42s cubic-bezier(.3,.7,.3,1.4)}
+@keyframes picked{0%{transform:scale(.88)}55%{transform:scale(1.07)}100%{transform:none}}
+/* calendario della scadenza: compare solo all'apertura, non a ogni cambio mese */
+.cal.in{animation:calin .18s ease}
+.ic.solo{margin:0;vertical-align:-3px}
+@media (prefers-reduced-motion:reduce){:is(.btn,nav button,.seg button,.st,.kadd,.datebtn,.fitem,.mitem,input[type=checkbox]):is(:hover,:active){transform:none!important}.press,.landed,.picked,.stl,.pno .ic,.pic .ic,.pic .ic *,.sci .ic,.sci .ic *,.deny,.det.out,.chev .ic,.dl .ic,.c-x .ic,.ic.tgl,.datebtn.press .ic,.struck *,.revived *,.struck .ttl::after,.revived .ttl::after,#undo.out{animation:none!important}.struck .ttl::after,.revived .ttl::after{display:none}.struck .t{text-decoration:line-through!important}}
 </style>
 </head>
 <body>
@@ -413,7 +664,7 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
     <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
   </svg>
   <h1 id="home" class="anim" title="Torna alla home" style="cursor:pointer"><span class="hi"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path class="kb1" d="M8 7v7"/><path class="kb2" d="M12 7v4"/><path class="kb3" d="M16 7v9"/></svg></span>Bacheca progetti</h1>
-  <button class="btn icon" id="burger" hidden title="Menu" aria-label="Menu">☰</button>
+  <button class="btn icon anim" id="burger" hidden title="Menu" aria-label="Menu"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="bl1" d="M4 6h16"/><path class="bl2" d="M4 12h16"/><path class="bl3" d="M4 18h16"/></svg></button>
   <div class="bmenu" id="bmenu" hidden>
     <button class="mitem" data-v="progetti"><svg class="mi"><use href="#i-board"/></svg>Progetti</button>
     <button class="mitem" data-v="dafare"><svg class="mi"><use href="#i-check"/></svg>Da fare</button>
@@ -440,7 +691,7 @@ input[type=search]::-webkit-search-cancel-button:active{background-color:#b42318
 <main id="main"></main>
 <div id="toast"></div>
 <div id="undo" role="status" aria-live="polite" hidden></div>
-<button id="totop" type="button" title="Torna su" aria-label="Torna all'inizio della pagina">Torna su <span class="ar" aria-hidden="true">↑</span></button>
+<button id="totop" type="button" title="Torna su" aria-label="Torna all'inizio della pagina">Torna su <span class="ar" aria-hidden="true"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="m5 12 7-7 7 7M12 19V5"/></svg></span></button>
 
 <script>
 'use strict';
@@ -578,12 +829,20 @@ async function loadAll(){
 }
 const updShort=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
 const updLabel=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT')+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
-const isDone=p=>states[p.name]?.stato==='terminato';
+/* un progetto con attività in corso è per forza "in corso": non risulta né terminato né in attesa né in test finché le ha */
+const hasDoing=p=>!!(p&&p.todo&&p.todo.items.some(i=>i.mark==='~'));
+const isDone=p=>states[p.name]?.stato==='terminato'&&!hasDoing(p);
 
 /* ---------- scritture ---------- */
 async function readState(){const s=await readText(root,STATE_FILE);let cur={};try{cur=s?JSON.parse(s.text):{}}catch(e){}return cur}
-const isWait=p=>states[p.name]?.stato==='attesa';
+const isWait=p=>states[p.name]?.stato==='attesa'&&!hasDoing(p);
+const isTest=p=>states[p.name]?.stato==='test'&&!hasDoing(p);
+/* blocco: un progetto con attività in corso resta In corso; la scheda fa "no" e compare un avviso */
+function deny(name,msg){const el=document.querySelector('.kcard[data-kp="'+CSS.escape(name)+'"]')||document.querySelector('.card[data-card="'+CSS.escape(name)+'"]');if(el){el.classList.remove('deny');void el.offsetWidth;el.classList.add('deny');setTimeout(()=>el.classList.remove('deny'),500)}toast(msg)}
+function denyMove(name,col){const p=projects.find(x=>x.name===name);if(col==='corso'||!hasDoing(p))return false;const n=p.todo.items.filter(i=>i.mark==='~').length;deny(name,label(name)+' ha '+n+(n===1?' attività':' attività')+' in corso: resta In corso finché non le chiudi o le sposti');return true}
 async function setProjectKb(name,col){
+  if(denyMove(name,col))return;
+  landProj=name;flipFirst('p:'+name);
   try{
     const cur=await readState(); const e=cur[name]||{}; const d=new Date();
     if(col==='terminato'){e.stato='terminato';e.data=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -594,8 +853,11 @@ async function setProjectKb(name,col){
     states=cur; toast(name+': '+(col==='terminato'?'terminato':col==='attesa'?'in attesa':col==='test'?'in test':'in corso')); render();
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
-/* riordino dei progetti nel kanban: usa l'ordine manuale (__ordine); passa da solo a "Manuale" */
+/* riordino dei progetti nel kanban: solo in modalità Manuale (ordine in __ordine); negli ordinamenti automatici il trascinamento cambia solo la colonna */
 async function reorderProject(name,dst,before,col){
+  if(col&&denyMove(name,col))return;
+  if(sortKey!=='manual'){const p=projects.find(x=>x.name===name);if(col&&p&&pkCol(p)!==col)return setProjectKb(name,col);deny(name,'Per riordinare a mano scegli "Manuale" in Ordina');return}
+  landProj=name;flipFirst('p:'+name);
   try{
     const cur=await readState();
     const vis=[...document.querySelectorAll('.kcard.pk')].map(x=>x.dataset.kp).filter(n=>n!==name);
@@ -612,23 +874,52 @@ async function reorderProject(name,dst,before,col){
     cur.__ordine=vis.concat((cur.__ordine||[]).filter(n=>!vis.includes(n)));
     await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
     states=cur;
-    if(sortKey!=='manual'){sortKey='manual';try{localStorage.setItem('bacheca-sort','manual')}catch(e){}toast('Ordine manuale attivo: puoi tornare a "Priorità" dal menu Ordina')}
     render();
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
 function nudgeProject(name,up){
+  landProj=name;flipFirst('p:'+name);
   const c=document.querySelector('.kcard.pk[data-kp="'+CSS.escape(name)+'"]'); if(!c)return;
   const nb=up?c.previousElementSibling:c.nextElementSibling;
   if(nb&&nb.classList.contains('pk'))return reorderProject(name,nb.dataset.kp,up);
   toast(up?'È già il primo della colonna':'È già l\'ultimo della colonna');
 }
 async function setProjectState(name,terminato){
+  if(terminato&&denyMove(name,'terminato'))return;
   const cur=await readState(); const e=cur[name]||{};
   if(terminato){e.stato='terminato';e.data=new Date().toISOString().slice(0,10);cur[name]=e}
   else{delete e.stato;delete e.data;if(Object.keys(e).length)cur[name]=e;else delete cur[name]}
   await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
   states=cur; toast(terminato?name+' segnato come terminato':name+' riaperto'); render();
 }
+/* altri colori: pannello nello stile dell'app (griglia + codice esadecimale) al posto del selettore nativo del browser */
+let colPop=false;
+const COLS2=['#e5484d','#f76b15','#ffb224','#e2c400','#99d52a','#46a758','#12a594','#0f9d94','#05a2c2','#0090ff','#3e63dd','#6e56cf','#8e4ec6','#ab4aba','#d6409f','#e93d82','#8d6e63','#6b7280','#b42318','#a35b00','#2e7d32','#1565c0','#4527a0','#283c46'];
+/* conversioni per il riquadro sfumato (tinta, saturazione, luminosità tipo HSV) */
+function hexToHsv(hex){const n=parseInt(hex.slice(1),16),r=(n>>16&255)/255,g=(n>>8&255)/255,b=(n&255)/255,mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let h=0;if(d){h=mx===r?((g-b)/d)%6:mx===g?(b-r)/d+2:(r-g)/d+4;h*=60;if(h<0)h+=360}return {h,s:mx?d/mx:0,v:mx}}
+function hsvToHex(h,s,v){const f=n=>{const k=(n+h/60)%6;return Math.round(255*(v-v*s*Math.max(0,Math.min(k,4-k,1))))};return '#'+[f(5),f(3),f(1)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+let colHSV=null;
+function colPopHTML(p){
+  const cur=colOf(p.name).toLowerCase(),c=colHSV=hexToHsv(cur);
+  return `<div class="fpop colpop" role="dialog" aria-label="Altri colori">
+    <div class="colsv" style="--hue:${Math.round(c.h)}"><span class="colknob" style="left:${c.s*100}%;top:${(1-c.v)*100}%"></span></div>
+    <div class="colhue"><span class="colknob" style="left:${c.h/3.6}%"></span></div>
+    <div class="colgrid">${COLS2.slice(0,16).map(x=>`<button class="sw${cur===x?' on':''}" style="background:${x}" data-color="${x}" title="${x}"></button>`).join('')}</div>
+    <div class="colhex"><span class="sw prev" id="colprev" style="background:${cur}"></span><input id="colhex" value="${cur}" maxlength="7" spellcheck="false" autocomplete="off" aria-label="Codice colore"><button class="btn small primary" id="colapply">Applica</button></div></div>`;
+}
+/* trascinamento nel riquadro e sulla barra delle tinte: aggiorna anteprima e codice dal vivo, salva al rilascio */
+function colPaint(){const c=colHSV,hex=hsvToHex(c.h,c.s,c.v),sv=$('.colsv'),hu=$('.colhue'),pv=$('#colprev'),hx=$('#colhex');
+  if(sv){sv.style.setProperty('--hue',Math.round(c.h));sv.firstElementChild.style.left=c.s*100+'%';sv.firstElementChild.style.top=(1-c.v)*100+'%'}
+  if(hu)hu.firstElementChild.style.left=c.h/3.6+'%';if(pv)pv.style.background=hex;if(hx)hx.value=hex;return hex}
+document.addEventListener('pointerdown',e=>{
+  const area=e.target.closest('.colsv,.colhue');if(!area||!colHSV)return;e.preventDefault();
+  const isSv=area.classList.contains('colsv');area.setPointerCapture(e.pointerId);area.classList.add('drag');
+  const upd=ev=>{const r=area.getBoundingClientRect(),x=Math.min(1,Math.max(0,(ev.clientX-r.left)/r.width)),y=Math.min(1,Math.max(0,(ev.clientY-r.top)/r.height));if(isSv){colHSV.s=x;colHSV.v=1-y}else colHSV.h=x*359.9;colPaint()};
+  upd(e);
+  const mv=ev=>upd(ev),up=async()=>{area.removeEventListener('pointermove',mv);area.removeEventListener('pointerup',up);area.classList.remove('drag');await setProjectColor(detail,colPaint())};
+  area.addEventListener('pointermove',mv);area.addEventListener('pointerup',up);
+});
+async function applyHex(){const v=($('#colhex')||{}).value||'',m=v.trim().match(/^#?([0-9a-f]{6})$/i);if(!m){toast('Scrivi un colore come #2f80ed');return}colPop=false;await setProjectColor(detail,'#'+m[1].toLowerCase())}
 async function setProjectColor(name,hex){
   try{
     const cur=await readState(); const e=cur[name]||{};
@@ -671,13 +962,15 @@ function sortProjects(list){
     return (b.open.P1-a.open.P1)||(b.open.P2-a.open.P2)||az(a,b)});
 }
 let sortMenu=false;
-const SORTS=[['prio','Priorità'],['az','A–Z'],['agg','Aggiornamento'],['manual','Manuale']];
+const SORTS=[['prio','Scadenza, poi priorità'],['az','A–Z'],['agg','Aggiornamento'],['manual','Manuale']];
+/* nome corto della modalità mostrato sul pulsante Ordina */
+const SORT_SHORT={prio:'Scadenza',az:'A–Z',agg:'Aggiornamento',manual:'Manuale'};
 const ICON_FILTER='<svg class="ficon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><g stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"><path class="fl1" d="M2 3.5h12"/><path class="fl2" d="M3.8 8h8.4"/><path class="fl3" d="M5.6 12.5h4.8"/></g></svg>';
 const sortBar=()=>{
   const cs=(SORTS.find(x=>x[0]===sortKey)||SORTS[0])[1], vm=viewMode==='kanban'&&view==='documentazione'?'grid':viewMode, cv=vm==='list'?'Elenco':vm==='kanban'?'Kanban':'Blocchi';
-  const it=(attr,k,txt,on)=>`<button role="menuitemradio" aria-checked="${on}" data-${attr}="${k}" class="fitem ${on?'on':''}"><span class="ck">${on?'✓':''}</span>${txt}</button>`;
-  const pop=sortMenu?`<div class="fpop" role="menu"><div class="fsec">Vista</div>${it('view','grid','▦ Blocchi',vm==='grid')}${it('view','list','☰ Elenco',vm==='list')}${view==='documentazione'?'':it('view','kanban','▥ Kanban',vm==='kanban')}<div class="fsep"></div><div class="fsec">Ordina per</div>${SORTS.map(([k,l])=>it('sort',k,l,sortKey===k)).join('')}</div>`:'';
-  return `<span class="spacer"></span><span class="fmenu"><button class="btn fbtn ${sortMenu?'on':''}" id="fbtn" aria-haspopup="menu" aria-expanded="${sortMenu}" title="Vista: ${cv} · Ordine: ${esc(cs)}">${ICON_FILTER}<span class="fl">Ordina</span></button>${pop}</span>`;
+  const it=(attr,k,txt,on)=>`<button role="menuitemradio" aria-checked="${on}" data-${attr}="${k}" class="fitem ${on?'on':''}"><span class="ck">${on?ico('check',13):''}</span>${txt}</button>`;
+  const pop=sortMenu?`<div class="fpop" role="menu"><div class="fsec">Vista</div>${it('view','grid',ico('grid',14)+'Blocchi',vm==='grid')}${it('view','list',ico('list',14)+'Elenco',vm==='list')}${view==='documentazione'?'':it('view','kanban',ico('board',14)+'Kanban',vm==='kanban')}<div class="fsep"></div><div class="fsec">Ordina per</div>${SORTS.map(([k,l])=>it('sort',k,l,sortKey===k)).join('')}</div>`:'';
+  return `<span class="spacer"></span><span class="fmenu"><button class="btn fbtn ${sortMenu?'on':''}" id="fbtn" data-ak="sort" aria-haspopup="menu" aria-expanded="${sortMenu}" title="Vista: ${cv} · Ordine: ${esc(cs)}">${ICON_FILTER}<span class="fl">Ordina</span><span class="fmode">${esc(SORT_SHORT[sortKey]||cs)}</span></button>${pop}</span>`;
 };
 const label=n=>(states[n]&&states[n].nome)||n;
 let calOpen=false,calY=0,calM=0;
@@ -687,7 +980,7 @@ function calHTML(name){
   const first=new Date(calY,calM,1), lead=(first.getDay()+6)%7, n=new Date(calY,calM+1,0).getDate();
   let cells='';for(let i=0;i<lead;i++)cells+='<span></span>';
   for(let d=1;d<=n;d++){const v=iso(calY,calM,d);cells+=`<button type="button" class="cd${v===cur?' sel':''}${v===today?' today':''}" data-cday="${v}">${d}</button>`}
-  return `<div class="cal" role="dialog" aria-label="Scegli la scadenza"><div class="calh"><button type="button" class="btn small" data-cnav="-1" aria-label="Mese precedente">‹</button><b>${MESI[calM]} ${calY}</b><button type="button" class="btn small" data-cnav="1" aria-label="Mese successivo">›</button></div>
+  return `<div class="cal" role="dialog" aria-label="Scegli la scadenza"><div class="calh"><button type="button" class="btn small" data-cnav="-1" aria-label="Mese precedente">${ico('prev',14,'solo')}</button><b>${MESI[calM]} ${calY}</b><button type="button" class="btn small" data-cnav="1" aria-label="Mese successivo">${ico('next',14,'solo')}</button></div>
   <div class="calg">${['Lu','Ma','Me','Gi','Ve','Sa','Do'].map(x=>`<span class="cw">${x}</span>`).join('')}${cells}</div>
   <div class="calf"><button type="button" class="btn small" data-cday="${today}">Oggi</button></div></div>`;
 }
@@ -707,7 +1000,7 @@ async function setProjectNome(name,nome){
     if(nome&&nome!==name)e.nome=nome;else delete e.nome;
     if(Object.keys(e).length)cur[name]=e;else delete cur[name];
     await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
-    states=cur;renaming=false;editOpen=false;toast('Nome aggiornato');render();
+    states=cur;renaming=false;toast('Nome aggiornato');closeAnim(()=>{editOpen=false;render()});
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
 function applyMark(line,newMark){
@@ -733,7 +1026,7 @@ async function moveTask(srcKey,dstKey,before,newMark){
     const bb=b>a?b-1:b;
     lines.splice(before?bb:bb+1,0,ln);
     await writeText(p.dir,'TODO.md',lines.join(eol));
-    await refresh(true);
+    land={p:p.name,t:si.title};flipFirst(p.name+'|'+si.idx);await refresh(true);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
 }
 async function setPrio(pname,item,np){
@@ -745,7 +1038,7 @@ async function setPrio(pname,item,np){
     if(idx<0){toast('Il TODO è cambiato nel frattempo: ricarico');await refresh();return}
     lines[idx]=lines[idx].replace(/^(\s*- \[(?: |~|x|X|\?|t|T)\]\s*)(?:\*\*P[123]\*\*\s*)?/,(m,a)=>a+(np&&np!=='none'?'**'+np+'** ':''));
     await writeText(p.dir,'TODO.md',lines.join(eol));
-    await refresh(true);
+    land={p:pname,t:item.title,pfrom:item.prio,pto:np,oldChip:chipNow(pname+'|'+item.idx),oldPop:((document.querySelector('.modal.tp .tpmeta .chip:not(.tpst)')||{}).outerHTML||'')};flipFirst(pname+'|'+item.idx);await refresh(true);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
 }
 async function setMark(pname,item,newMark){
@@ -756,9 +1049,11 @@ async function setMark(pname,item,newMark){
     let idx=lines[item.idx]===item.raw?item.idx:-1;
     if(idx<0){const f=lines.map((l,i)=>l===item.raw?i:-1).filter(i=>i>=0);if(f.length===1)idx=f[0]}
     if(idx<0){toast('Il TODO è cambiato nel frattempo: ricarico');await refresh();return}
+    /* se togli a mano la spunta all attività del badge Annulla, il badge non serve più */
+    if(item.mark==='x'&&newMark!=='x'&&undoInfo&&undoInfo.pname===pname&&undoInfo.line===item.raw)hideUndo();
     lines[idx]=applyMark(lines[idx],newMark);
     await writeText(p.dir,'TODO.md',lines.join(eol));
-    await refresh(true);
+    land={p:pname,t:item.title,from:item.mark,to:newMark,dir:newMark==='x'?'struck':(item.mark==='x'?'revived':'')};flipFirst(pname+'|'+item.idx);await refresh(true);
     if(newMark==='x'&&item.mark!=='x')showUndo(pname,lines[idx],item.mark,item.title);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
 }
@@ -769,10 +1064,10 @@ function showUndo(pname,line,oldMark,title){
   undoInfo={pname,line,oldMark};
   const u=$('#undo');
   u.innerHTML=`<div class="ut"><span class="uck">${svgI('<path d="M20 6 9 17l-5-5"/>')}</span><span class="umsg">Fatta: <b>${esc(title)}</b></span><button class="btn small" id="undobtn">Annulla</button></div><div class="ubar"><span></span></div>`;
-  u.hidden=false;u.classList.remove('in');void u.offsetWidth;u.classList.add('in');
+  clearTimeout(u._ht);u.classList.remove('out');u.hidden=false;u.classList.remove('in');void u.offsetWidth;u.classList.add('in');
   u.querySelector('.ubar span').addEventListener('animationend',hideUndo,{once:true});
 }
-function hideUndo(){undoInfo=null;$('#undo').hidden=true}
+function hideUndo(){undoInfo=null;const u=$('#undo');if(u.hidden)return;u.classList.add('out');u._ht=setTimeout(()=>{u.hidden=true;u.classList.remove('out')},200)}
 /* riporta la riga al marcatore di prima (setMark toglie anche la data ✓) */
 async function doUndo(){
   const u=undoInfo;hideUndo();if(!u)return;
@@ -785,16 +1080,16 @@ async function doUndo(){
 const PAL=['#0f9d94','#ff6b57','#7c5cff','#e69500','#2f80ed','#d6409f','#2e9e5b'];
 const colOf=n=>{const c=states[n]&&states[n].colore;if(c&&/^#[0-9a-f]{6}$/i.test(c))return c;let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))>>>0;return PAL[h%PAL.length]};
 function cardHTML(p,i){
-  const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Mostra solo queste attività nel progetto" style="cursor:pointer">${k==='none'?'senza prio':k} · ${p.open[k]}</span>`).join('');
+  const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Mostra solo queste attività nel progetto" style="cursor:pointer">${k==='none'?PNO:plab(k)} · ${p.open[k]}</span>`).join('');
   const done=isDone(p), st=states[p.name];
   const d=dlInfo(p.name);
-  const tags=(d?`<span class="dl c-dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} (${esc(d.txt)}) — clicca per modificare">⏰ ${esc(d.short)} · ${d.dd.slice(0,5)}</span>`:'<span class="c-dl nodl">—</span>')
-    +`<span class="dl upd c-upd" title="Ultimo aggiornamento ${esc(updLabel(p))}">✏️ ${esc(updShort(p))}</span>`
-    +(tipoOf(p.name)==='documentazione'?'<span class="c-x">📄 Documentazione</span>':'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'')+(isWait(p)?'<span class="c-x chip wait">in attesa</span>':'')+(states[p.name]?.stato==='test'?'<span class="c-x chip test">in test</span>':'');
+  const tags=(d?`<span class="dl c-dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} (${esc(d.txt)}) — clicca per modificare">${ico('clock',13)}${esc(d.short)} · ${d.dd.slice(0,5)}</span>`:'<span class="c-dl nodl">—</span>')
+    +`<span class="dl upd c-upd" title="Ultimo aggiornamento ${esc(updLabel(p))}">${ico('pencil',13)}${esc(updShort(p))}</span>`
+    +(tipoOf(p.name)==='documentazione'?`<span class="c-x">${ico('doc',13)}Documentazione</span>`:'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'')+(isWait(p)?'<span class="c-x chip wait">in attesa</span>':'')+(isTest(p)?'<span class="c-x chip test">in test</span>':'');
   return `<div class="card${sortKey==='manual'?' dnd':''}"${sortKey==='manual'?' draggable="true" title="Trascina per riordinare"':''} data-card="${esc(p.name)}" style="--c:${colOf(p.name)}">
     <span class="rank">${i+1}</span>
     <h2 data-open="${esc(p.name)}" title="${esc(p.excerpt||'')}">${esc(label(p.name))}</h2>
-    <div class="cardprio">${p.openCount?chips:'<span class="chip zero">✓ Tutto fatto</span>'}</div>
+    <div class="cardprio">${p.openCount?chips:`<span class="chip zero">${ico('check',12)}Tutto fatto</span>`}${stChips(p,true)}</div>
     <div class="foot cardtags meta">${tags}</div></div>`;
 }
 function reEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
@@ -825,7 +1120,7 @@ function viewSearch(){
       total+=s.hits.length;
       html+=`<div class="gsrc">${esc(s.name)} · ${s.hits.length}</div>`+s.hits.slice(0,5).map(l=>`<div class="ghit" data-gopen="${esc(p.name)}" data-gtab="${esc(s.tab)}" data-gdoc="${esc(s.doc||'')}">${snippet(l,q)}</div>`).join('')+(s.hits.length>5?`<div class="meta" style="padding-left:10px">…e altri ${s.hits.length-5}: apri la scheda per vederli tutti</div>`:'');
     }
-    if(uh){total+=uh;html+=`<div class="gsrc">UTILS · ${uh}</div><div class="ghit" data-gopen="${esc(p.name)}" data-gtab="UTILS" data-gdoc="">🔒 ${uh} ${uh===1?'riga trovata':'righe trovate'} in UTILS (contenuto riservato: apri e clicca "Mostra" per vederle)</div>`}
+    if(uh){total+=uh;html+=`<div class="gsrc">UTILS · ${uh}</div><div class="ghit" data-gopen="${esc(p.name)}" data-gtab="UTILS" data-gdoc="">${ico('lock',14)}${uh} ${uh===1?'riga trovata':'righe trovate'} in UTILS (contenuto riservato: apri e clicca "Mostra" per vederle)</div>`}
     html+='</div>';
   }
   return `<h2 style="margin-top:0">Risultati per “${esc(gQ.trim())}” <span class="meta" style="font-weight:400">· ${total}</span></h2>${html||'<div class="empty">Nessun risultato.</div>'}`;
@@ -834,16 +1129,16 @@ function viewSearch(){
 /* ---------- Kanban dei progetti ---------- */
 const PK_COLS=[['attesa','In attesa'],['corso','In corso'],['test','Test'],['terminato','Terminato']], PK_DAYS=30;
 let pkMenu='',pkAllDone=false,pkDrag=null;
-const pkCol=p=>{const s=states[p.name]&&states[p.name].stato;return s==='terminato'||s==='attesa'||s==='test'?s:'corso'};
+const pkCol=p=>{if(hasDoing(p))return 'corso';const s=states[p.name]&&states[p.name].stato;return s==='terminato'||s==='attesa'||s==='test'?s:'corso'};
 function pkCard(p,col){
-  const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Apri il kanban del progetto con questa priorità" style="cursor:pointer">${k==='none'?'senza prio':k} · ${p.open[k]}</span>`).join('');
+  const chips=['P1','P2','P3','none'].filter(k=>p.open[k]).map(k=>`<span class="chip ${k}" data-prioopen="${k}" data-pname="${esc(p.name)}" title="Apri il kanban del progetto con questa priorità" style="cursor:pointer">${k==='none'?PNO:plab(k)} · ${p.open[k]}</span>`).join('');
   const run=p.todo.items.filter(i=>i.mark==='~').length, st=states[p.name], d=dlInfo(p.name);
-  const menu=pkMenu===p.name?`<div class="kmv"><button class="btn small" data-pkup="${esc(p.name)}" title="Sposta più in alto nella colonna">↑ Su</button><button class="btn small" data-pkdown="${esc(p.name)}" title="Sposta più in basso nella colonna">↓ Giù</button>${PK_COLS.filter(c=>c[0]!==col).map(c=>`<button class="btn small" data-pkmove="${esc(p.name)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
-  return `<div class="kcard pk" draggable="true" data-kp="${esc(p.name)}" style="border-left-color:${colOf(p.name)}">
+  const menu=pkMenu===p.name?`<div class="kmv" role="dialog" aria-label="Sposta progetto">${sortKey==='manual'?`<div class="kmr"><span class="meta">Ordine</span><span class="seg sm"><button data-pkup="${esc(p.name)}" title="Sposta più in alto nella colonna">${ico('up',13,'au')}Su</button><button data-pkdown="${esc(p.name)}" title="Sposta più in basso nella colonna">${ico('down',13,'ad')}Giù</button></span></div>`:''}<div class="kmr"><span class="meta">Sposta in</span><span class="seg sm">${PK_COLS.map(c=>{const blk=hasDoing(p)&&c[0]!=='corso';return `<button class="${c[0]===col?'on':''}${blk?' dis':''}" data-pkmove="${esc(p.name)}|${c[0]}"${blk?' aria-disabled="true" title="Ha attività in corso: resta In corso"':''}>${c[1]}</button>`}).join('')}</span></div></div>`:'';
+  return `<div class="kcard pk" draggable="true" data-kp="${esc(p.name)}" style="border-left-color:${colOf(p.name)};--kc:${colOf(p.name)}">
     <div class="head"><span class="ttl" style="color:${colOf(p.name)}">${esc(label(p.name))}</span></div>
-    <div class="pkchips">${p.openCount?chips:'<span class="chip zero">✓ Tutto fatto</span>'}${run?`<span class="chip run">▶ ${run} in corso</span>`:''}</div>
-    ${d&&col!=='terminato'?`<div class="pkdl"><span class="dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} — clicca per modificare">⏰ ${esc(d.short)} · ${d.dd.slice(0,5)}</span></div>`:''}
-    <div class="kfoot">${col==='terminato'&&st&&st.data?`<span class="meta">✓ ${esc(st.data.slice(8)+'/'+st.data.slice(5,7))}</span>`:'<span></span>'}<button class="btn small" data-pkmenu="${esc(p.name)}" title="Sposta in un'altra colonna">Sposta ▾</button></div>${menu}</div>`;
+    <div class="pkchips">${p.openCount?chips:`<span class="chip zero">${ico('check',12)}Tutto fatto</span>`}</div>${stChips(p)}
+    ${d&&col!=='terminato'?`<div class="pkdl"><span class="dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} — clicca per modificare">${ico('clock',13)}${esc(d.short)} · ${d.dd.slice(0,5)}</span></div>`:''}
+    <div class="kfoot">${col==='terminato'&&st&&st.data?`<span class="meta">${ico('check',12)}${esc(st.data.slice(8)+'/'+st.data.slice(5,7))}</span>`:'<span></span>'}<button class="btn ib kmb${pkMenu===p.name?' on':''}" data-pkmenu="${esc(p.name)}" title="Sposta" aria-label="Sposta" aria-expanded="${pkMenu===p.name}">${IC_EDIT}</button></div>${menu}</div>`;
 }
 function viewProgettiKanban(){
   const pr=projects.filter(p=>tipoOf(p.name)==='progetto');
@@ -864,14 +1159,15 @@ function viewProgetti(){
   const fs=filterState==='terminati'?'terminati':'in corso';
   const list=sortProjects(fs==='terminati'?fin:inc);
   return `<div class="toolbar"><div class="seg"><button data-fs="in corso" class="${fs==='in corso'?'on':''}">In corso (${inc.length})</button><button data-fs="terminati" class="${fs==='terminati'?'on':''}">Terminati (${fin.length})</button></div>${sortBar()}</div>
-  ${list.length?`${viewMode==='list'?'<div class="listhead on"><span></span><span>Progetto</span><span>Priorità</span><span>Scadenza</span><span>Ultima modifica</span></div>':''}<div class="grid${viewMode==='list'?' list':''}">${list.map(cardHTML).join('')}</div>`:`<div class="empty">${fs==='in corso'?'Nessun progetto in corso.':'Nessun progetto terminato, per ora 🙂'}</div>`}`;
+  ${list.length?`${viewMode==='list'?'<div class="listhead on"><span></span><span>Progetto</span><span>Priorità</span><span>Scadenza</span><span>Ultima modifica</span></div>':''}<div class="grid${viewMode==='list'?' list':''}">${list.map(cardHTML).join('')}</div>`:`<div class="empty">${fs==='in corso'?'Nessun progetto in corso.':'Nessun progetto terminato, per ora.'}</div>`}`;
 }
 function viewDocumentazione(){
   const list=sortProjects(projects.filter(p=>tipoOf(p.name)==='documentazione'));
   return list.length?`<div class="toolbar"><span class="spacer"></span>${sortBar().replace('<span class="spacer"></span>','')}</div>${viewMode==='list'?'<div class="listhead on"><span></span><span>Progetto</span><span>Priorità</span><span>Scadenza</span><span>Ultima modifica</span></div>':''}<div class="grid${viewMode==='list'?' list':''}">${list.map(cardHTML).join('')}</div>`:'<div class="empty">Nessuna documentazione. Da un progetto puoi usare "Segna come documentazione".</div>';
 }
 let doingFirst=false;try{doingFirst=localStorage.getItem('bacheca-doingfirst')==='1'}catch(e){}
-const dfBtn=n=>`<button class="btn small ${doingFirst?'primary':''}" data-doingfirst="1" title="Porta in alto i TODO segnati 'in corso'">▲ In corso in alto${n?` · ${n}`:''}</button>`;
+/* un solo pulsante a due stati come Espandi/Comprimi: porta in alto le attività in corso oppure torna all'ordine normale; larghezza fissa, freccia che si gira */
+const dfBtn=n=>`<button class="btn small df${doingFirst?' on':''}" data-doingfirst="1" data-ak="df" title="${doingFirst?'Torna all’ordine per priorità':'Porta in alto i TODO segnati in corso'}">${ico('up',13,'au')}<span class="exl"><span class="${doingFirst?'hid':''}">In corso in alto${n?` · ${n}`:''}</span><span class="${doingFirst?'':'hid'}">Ordine normale</span></span></button>`;
 const openRows=new Set();
 const rkey=(p,i)=>p.name+'|'+i.raw.slice(0,60);
 function rowHTML(p,i,showProj){
@@ -879,7 +1175,7 @@ function rowHTML(p,i,showProj){
   return `<div class="todo-row ${done?'done':''} ${isOpen?'open':''}">
     <input type="checkbox" ${done?'checked':''} data-chk="${esc(p.name)}|${i.idx}">
     <div class="t"><div class="head ${has?'exp':''}" ${has?`data-exp="${esc(k)}"`:''}>
-      ${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span>${showProj?`<span class="proj-tag" data-open="${esc(p.name)}">${esc(label(p.name))}</span>`:''}${has?'<span class="chev">▾</span>':''}</div>
+      ${i.prio!=='none'?`<span class="chip ${i.prio}"><span class="stl">${i.prio}</span></span>`:''}<span class="ttl">${inline(i.title)}</span>${showProj?`<span class="proj-tag" data-open="${esc(p.name)}">${esc(label(p.name))}</span>`:''}${has?`<span class="chev">${ico('chev',12,'solo')}</span>`:''}</div>
       ${isOpen?`<div class="det">${inline(i.detail)}</div>`:''}</div>
     ${stHTML(p,i)}</div>`;
 }
@@ -888,13 +1184,56 @@ const ST=[[' ','da fare','todo'],['~','in corso','doing'],['?','in attesa','wait
 let stMenu='';
 function stHTML(p,i){
   const k=p.name+'|'+i.idx, cur=ST.find(s=>s[0]===i.mark)||ST[0], on=stMenu===k;
-  return `<span class="stw"><button class="st st-${cur[2]}${on?' on':''}" data-st="${esc(k)}" title="Cambia stato" aria-haspopup="listbox" aria-expanded="${on}">${cur[1]}<span class="ddc">▾</span></button>${on?`<div class="fpop stpop" role="listbox">${ST.map(s=>`<button class="fitem${s[0]===i.mark?' on':''}" role="option" aria-selected="${s[0]===i.mark}" data-stset="${esc(k)}|${s[0]}"><span class="ck">${s[0]===i.mark?'✓':''}</span><span class="sdot st-${s[2]}"></span>${s[1]}</button>`).join('')}</div>`:''}</span>`;
+  return `<span class="stw"><button class="st st-${cur[2]}${on?' on':''}" data-st="${esc(k)}" title="Cambia stato" aria-haspopup="listbox" aria-expanded="${on}"><span class="stl">${cur[1]}</span><span class="ddc">${ico('chev',12,'solo')}</span></button>${on?`<div class="fpop stpop" role="listbox">${ST.map(s=>`<button class="fitem${s[0]===i.mark?' on':''}" role="option" aria-selected="${s[0]===i.mark}" data-stset="${esc(k)}|${s[0]}"><span class="ck">${s[0]===i.mark?ico('check',13):''}</span><span class="sdot st-${s[2]}"></span>${s[1]}</button>`).join('')}</div>`:''}</span>`;
 }
 
 /* ---------- Kanban dei task del progetto ---------- */
 const KB_COLS=[['?','In attesa'],[' ','Da fare'],['~','In corso'],['t','Test'],['x','Fatto']], KB_WIP=3, KB_DAYS=14;
 let kbMenu='',kbAllDone=false,kbDrag=null,kbDragPrio='',taskPop='',taskEdit=false;
 const svgI=d=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+/* icone a linee usate nel testo di pulsanti e chip, stesso tratto di quelle dell'intestazione */
+const GEAR_D='<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>';
+const ICO={
+  pencil:'<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><path class="ch" d="M12 6v6l4 2"/>',
+  doc:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M8 13h8M8 17h8M8 9h2"/>',
+  pdf:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path class="pa" d="m9 16 5-5m-4 0h4v4"/>',
+  lock:'<rect width="18" height="11" x="3" y="11" rx="2"/><path class="sh" d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  alert:'<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
+  cal:'<path class="cr" d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path class="cdy cd1" d="M8 14h.01"/><path class="cdy cd2" d="M12 14h.01"/><path class="cdy cd3" d="M16 14h.01"/><path class="cdy cd4" d="M8 18h.01"/><path class="cdy cd5" d="M12 18h.01"/>',
+  left:'<path class="ar" d="m12 19-7-7 7-7M19 12H5"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  todo:'<rect width="18" height="18" x="3" y="3" rx="2"/><path class="tck" d="m9 12 2 2 4-4"/>',
+  ref:'<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>',
+  flask:'<path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2M8.5 2h7"/><path class="bub" d="M7 16h10"/>',
+  hglass:'<path d="M5 22h14M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/>',
+  layers:'<path class="ly1" d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path class="ly2" d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/><path class="ly3" d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  fwd:'<path d="M5 12h14M12 5l7 7-7 7"/>',
+  coffee:'<path class="stm s1" d="M6 2v2"/><path class="stm s2" d="M10 2v2"/><path class="stm s3" d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/>',
+  bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/>',
+  chev:'<path d="m6 9 6 6 6-6"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  prev:'<path d="m15 18-6-6 6-6"/>',
+  next:'<path d="m9 18 6-6-6-6"/>',
+  up:'<path d="m5 12 7-7 7 7M12 19V5"/>',
+  down:'<path d="M12 5v14M19 12l-7 7-7-7"/>',
+  play:'<path d="M7 4v16l13-8z"/>',
+  x:'<path d="M18 6 6 18M6 6l12 12"/>',
+  grid:'<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>',
+  list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
+  board:'<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 7v7M12 7v4M16 7v9"/>',
+  gear:GEAR_D
+};
+const ico=(n,s=14,cls='')=>`<svg class="ic${cls?' '+cls:''}" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICO[n]}</svg>`;
+/* senza priorità: una lampadina spenta, cioè un'idea non ancora concretizzata */
+const PNO=`<span class="pno" title="Senza priorità (idea da concretizzare)" aria-label="Senza priorità">${ico('bulb',13,'solo')}</span>`;
+/* icone delle priorità, della stessa famiglia della lampadina: tutte = pila di fogli, P1 = fiamma (urgente), P2 = freccia (da portare avanti), P3 = tazza di caffè (con calma) */
+const PIC={'':['layers','Tutte le priorità'],P1:['flame','Urgente'],P2:['fwd','Da portare avanti'],P3:['coffee','Con calma']};
+const plab=(k,txt)=>`<span class="pic pic-${k||'all'}" title="${PIC[k][1]}">${ico(PIC[k][0],13,'solo')}</span>${txt||k}`;
+/* conteggi per stato delle attività di un progetto (in corso, in test, in attesa), con i colori degli stati e icone animate */
+const ST_CNT=[[' ','da fare','todo','todo'],['~','in corso','doing','play'],['t','in test','test','flask'],['?','in attesa','wait','hglass']];
+function stChips(p,inline){const c=ST_CNT.map(([m,l,cls,ic])=>{const n=p.todo.items.filter(i=>i.mark===m).length;return n?`<span class="chip scnt st-${cls}" title="${n} ${n===1?'attività':'attività'} ${l}"><span class="sci">${ico(ic,12,'solo')}</span>${n} ${l}</span>`:''}).join('');return c?(inline?`<span class="scbr"></span>${c}`:`<div class="pkchips scrow">${c}</div>`):''}
 const IC_X=svgI('<path d="M18 6 6 18M6 6l12 12"/>'), IC_EDIT=svgI('<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>');
 const closeBtn=()=>`<button class="btn ib cls" data-mclose="1" title="Chiudi" aria-label="Chiudi">${IC_X}</button>`;
 function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);return Date.now()-new Date(y,m-1,g).getTime()<=KB_DAYS*DAY}
@@ -902,13 +1241,13 @@ function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);r
 const secLbl=x=>x&&!/^(da fare|in corso|in attesa|test|fatto|fatte|completat\w*)$/i.test(x.trim())?x:'';
 function kbCard(p,i,mk){
   const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
-  const pbtn=(k,pre)=>['P1','P2','P3','none'].map(q=>`<button class="btn small${i.prio===q?' primary':''}" data-kpset="${esc(k)}|${q}">${q==='none'?'Nessuna':q}</button>`).join('');
-  const menu=kbMenu===key?`<div class="kmv"><div class="kpr"><span class="meta">Priorità</span>${pbtn(key)}</div>${mk==='x'?'':`<button class="btn small" data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">↑ Su</button><button class="btn small" data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">↓ Giù</button>`}${KB_COLS.filter(c=>c[0]!==mk).map(c=>`<button class="btn small" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</div>`:'';
-  const dd=mk==='x'&&i.doneDate?`<span class="meta">✓ ${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
+  const pbtn=(k,pre)=>`<span class="seg sm">${['P1','P2','P3','none'].map(q=>`<button class="${i.prio===q?'on':''}" data-kpset="${esc(k)}|${q}">${q==='none'?PNO:plab(q)}</button>`).join('')}</span>`;
+  const menu=kbMenu===key?`<div class="kmv" role="dialog" aria-label="Priorità e spostamenti"><div class="kmr"><span class="meta">Priorità</span>${pbtn(key)}</div>${mk==='x'?'':`<div class="kmr"><span class="meta">Ordine</span><span class="seg sm"><button data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">${ico('up',13,'au')}Su</button><button data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">${ico('down',13,'ad')}Giù</button></span></div>`}<div class="kmr"><span class="meta">Sposta in</span><span class="seg sm">${KB_COLS.map(c=>`<button class="${c[0]===mk?'on':''}" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</span></div></div>`:'';
+  const dd=mk==='x'&&i.doneDate?`<span class="meta">${ico('check',12)}${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
   return `<div class="kcard kp${i.prio}${mk==='x'?' kdone':''}" draggable="true" data-kk="${esc(key)}" data-prio="${i.prio}">
     <div class="head">${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span></div>
     ${secLbl(i.sec)?`<div class="ksec">${esc(secLbl(i.sec))}</div>`:''}
-    <div class="kfoot">${dd}<button class="btn small" data-kmenu="${esc(key)}" title="Sposta in un'altra colonna">Sposta ▾</button></div>${menu}</div>`;
+    <div class="kfoot">${dd}<button class="btn ib kmb${kbMenu===key?' on':''}" data-kmenu="${esc(key)}" title="Priorità e spostamenti" aria-label="Priorità e spostamenti" aria-expanded="${kbMenu===key}">${IC_EDIT}</button></div>${menu}</div>`;
 }
 
 function taskPopHTML(p){
@@ -923,21 +1262,21 @@ function taskPopHTML(p){
     <h3 class="tpt">${inline(it.title)}</h3>
     <div class="tpb">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>
     ${it.mark==='x'&&it.doneDate?`<div class="meta">Completata il ${esc(it.doneDate.split('-').reverse().join('/'))}</div>`:''}
-    ${taskEdit?`<div class="tpop" role="dialog" aria-label="Modifica attività"><div class="mrow"><span>Priorità</span>${['P1','P2','P3','none'].map(q=>`<button class="btn small${it.prio===q?' primary':''}" data-kpset="${esc(p.name+'|'+it.idx)}|${q}">${q==='none'?'Nessuna':q}</button>`).join('')}</div>
+    ${taskEdit?`<div class="tpop" role="dialog" aria-label="Modifica attività"><div class="mrow"><span>Priorità</span><span class="seg sm">${['P1','P2','P3','none'].map(q=>`<button class="${it.prio===q?'on':''}" data-kpset="${esc(p.name+'|'+it.idx)}|${q}">${q==='none'?PNO:plab(q)}</button>`).join('')}</span></div>
     <div class="mrow"><span>Sposta in</span>${moves}</div></div>`:''}
   </div></div>`;
 }
 function renderKanban(p){
   if(!p.files['TODO.md'])return '<div class="empty">Nessun TODO.md: il kanban usa i TODO del progetto.</div>';
   const items=p.todo.items.filter(i=>!tabPrio||i.prio===tabPrio), rank={P1:0,P2:1,P3:2,none:3};
-  const flt=`<div class="filters dtop" style="margin-bottom:12px"><span>Priorità:</span><span class="seg" style="margin:0">${[['','Tutte'],['P1','P1'],['P2','P2'],['P3','P3'],['none','Senza']].map(([k,l])=>`<button data-kprio="${k}" class="${tabPrio===k?'on':''}">${l}</button>`).join('')}</span><span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button></div>`;
+  const flt=`<div class="filters dtop" style="margin-bottom:12px"><span>Priorità:</span><span class="seg" style="margin:0">${[['',plab('','Tutte')],['P1',plab('P1')],['P2',plab('P2')],['P3',plab('P3')],['none',PNO]].map(([k,l])=>`<button data-kprio="${k}" class="${tabPrio===k?'on':''}">${l}</button>`).join('')}</span><span class="spacer"></span><button class="btn small primary" data-nt=" ">${ico('plus',13,'pl')}Nuova attività</button></div>`;
   const cols=KB_COLS.map(([mk,name])=>{
     let list=items.filter(i=>i.mark===mk), hidden=0;
     if(mk==='x'){const rec=list.filter(i=>kbRecent(i.doneDate));hidden=list.length-rec.length;if(!kbAllDone)list=rec;list.sort((a,b)=>(b.doneDate||'').localeCompare(a.doneDate||'')||a.idx-b.idx)}
     else list.sort((a,b)=>rank[a.prio]-rank[b.prio]||a.idx-b.idx);
     const wip=mk==='~'&&list.length>KB_WIP;
     const foot=mk==='x'?(hidden||kbAllDone?`<div class="kfootc"><button class="btn small" data-kall="1">${kbAllDone?`Solo ultimi ${KB_DAYS} giorni`:`Mostra anche i più vecchi · ${hidden}`}</button></div>`:`<div class="kfootc meta">ultimi ${KB_DAYS} giorni</div>`):'';
-    return `<div class="kcol${wip?' wip':''}" data-kmark="${mk}"><div class="khead"><b>${name}</b><span class="kn">${list.length}</span>${wip?`<span class="kwip" title="Troppe attività contemporaneamente">⚠ oltre ${KB_WIP}</span>`:''}${mk==='x'?'':`<button class="kadd" data-nt="${esc(mk)}" title="Nuova attività in ${esc(name)}" aria-label="Nuova attività in ${esc(name)}">+</button>`}</div>${list.map(i=>kbCard(p,i,mk)).join('')||'<div class="kempty">—</div>'}${foot}</div>`;
+    return `<div class="kcol${wip?' wip':''}" data-kmark="${mk}"><div class="khead"><b>${name}</b><span class="kn">${list.length}</span>${wip?`<span class="kwip" title="Troppe attività contemporaneamente">${ico('alert',12)}oltre ${KB_WIP}</span>`:''}${mk==='x'?'':`<button class="kadd" data-nt="${esc(mk)}" title="Nuova attività in ${esc(name)}" aria-label="Nuova attività in ${esc(name)}">${svgI('<path d="M12 5v14M5 12h14"/>')}</button>`}</div>${list.map(i=>kbCard(p,i,mk)).join('')||'<div class="kempty">—</div>'}${foot}</div>`;
   }).join('');
   return `${flt}<div class="kb kb5">${cols}</div>`;
 }
@@ -946,7 +1285,7 @@ function renderKanban(p){
 let newTask=null,ntDD='';const ddOpts={};
 function ddHTML(id,opts,val,ph,up){
   ddOpts[id]=opts; const cur=opts.find(o=>o[0]===val), on=ntDD===id;
-  return `<span class="ddw"><button type="button" class="btn dd${on?' on':''}" data-dd="${id}" aria-haspopup="listbox" aria-expanded="${on}"><span class="ddl">${esc(cur?cur[1]:ph||'Scegli…')}</span><span class="ddc">▾</span></button>${on?`<div class="fpop ddpop${up?' up':''}" role="listbox">${opts.map((o,i)=>`<button type="button" role="option" aria-selected="${o[0]===val}" class="fitem${o[0]===val?' on':''}" data-ddv="${id}|${i}"><span class="ck">${o[0]===val?'✓':''}</span>${esc(o[1])}</button>`).join('')}</div>`:''}</span>`;
+  return `<span class="ddw"><button type="button" class="btn dd${on?' on':''}" data-dd="${id}" aria-haspopup="listbox" aria-expanded="${on}"><span class="ddl">${esc(cur?cur[1]:ph||'Scegli…')}</span><span class="ddc">${ico('chev',12,'solo')}</span></button>${on?`<div class="fpop ddpop${up?' up':''}" role="listbox">${opts.map((o,i)=>`<button type="button" role="option" aria-selected="${o[0]===val}" class="fitem${o[0]===val?' on':''}" data-ddv="${id}|${i}"><span class="ck">${o[0]===val?ico('check',13):''}</span>${esc(o[1])}</button>`).join('')}</div>`:''}</span>`;
 }
 const NT_MARKS=[[' ','Da fare'],['?','In attesa'],['~','In corso'],['t','Test']];
 function ntSections(p){const out=[];(p&&p.files['TODO.md']?p.files['TODO.md'].text.split(/\r?\n/):[]).forEach(l=>{const h=l.match(/^#{2,3}\s+(.*)/);if(h&&!out.includes(h[1]))out.push(h[1])});return out}
@@ -962,7 +1301,7 @@ function newTaskHTML(){
     ${projRow}
     <div class="ntf"><span class="ntl">Titolo</span><input id="ntTitle" maxlength="70" placeholder="Titolo breve (max 5 parole)" value="${esc(n.title)}" autocomplete="off"></div>
     <div class="ntf"><span class="ntl">Dettagli <span class="meta">(facoltativi · ogni riga diventa un paragrafo; inizia una riga con <i>Aggiornamento …:</i> o <i>Da fare:</i> per metterla in evidenza)</span></span><textarea id="ntDetail" rows="6">${esc(n.detail)}</textarea></div>
-    <div class="mrow"><span>Priorità</span><span class="seg" style="margin:0">${[['P1','P1'],['P2','P2'],['P3','P3'],['none','Nessuna']].map(([k,l])=>`<button data-ntprio="${k}" class="${n.prio===k?'on':''}">${l}</button>`).join('')}</span></div>
+    <div class="mrow"><span>Priorità</span><span class="seg" style="margin:0">${[['P1',plab('P1')],['P2',plab('P2')],['P3',plab('P3')],['none',PNO]].map(([k,l])=>`<button data-ntprio="${k}" class="${n.prio===k?'on':''}">${l}</button>`).join('')}</span></div>
     <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${NT_MARKS.map(([k,l])=>`<button data-ntmark="${esc(k)}" class="${n.mark===k?'on':''}">${l}</button>`).join('')}</span></div>
     ${secRow}
     <div class="mrow ntact"><button class="btn primary" id="ntsave">Aggiungi</button><button class="btn" data-mclose="1">Annulla</button><span class="meta">Ctrl+Invio per aggiungere</span></div>
@@ -998,13 +1337,19 @@ async function addTask(){
       out=lines.join(eol).replace(/(_Ultimo aggiornamento:\s*)\d{4}-\d{2}-\d{2}/,'$1'+today);
     }
     await writeText(p.dir,'TODO.md',out);
-    newTask=null; await refresh(true); toast('Attività aggiunta a '+label(p.name));
+    /* il modale si chiude svanendo e la nuova attività compare "atterrando" nel suo posto */
+    closeAnim(async()=>{newTask=null;land={p:p.name,t:title};flipFirst('');await refresh(true);toast('Attività aggiunta a '+label(p.name))});
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
+}
+/* un solo pulsante Espandi/Comprimi: se nella vista c'è almeno un dettaglio aperto propone di chiudere tutto */
+function expBtn(list){
+  const any=list.some(p=>p.todo.items.some(i=>i.detail&&i.detail!==i.title&&openRows.has(rkey(p,i))));
+  return `<button class="btn small exp-all${any?' on':''}" data-expall="${any?0:1}" data-ak="expall">${ico('chev',13,'ex')}<span class="exl"><span class="${any?'':'hid'}">Comprimi tutto</span><span class="${any?'hid':''}">Espandi tutto</span></span></button>`;
 }
 function findItem(key){const [n,ix]=key.split('|');const p=projects.find(x=>x.name===n);return [p,p.todo.items.find(i=>i.idx==ix)]}
 function viewDaFare(){
   const act=projects.filter(p=>!isDone(p));
-  const fl=`<div class="filters"><span>Mostra:</span>${['P1','P2','P3','none'].map(k=>`<label><input type="checkbox" data-prio="${k}" ${todoPrio[k]?'checked':''}> ${k==='none'?'senza priorità':k}</label>`).join('')}<span class="spacer"></span><button class="btn small primary" data-nt=" ">+ Nuova attività</button>DFBTN<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div>`;
+  const fl=`<div class="filters"><span>Mostra:</span>${['P1','P2','P3','none'].map(k=>`<label><input type="checkbox" data-prio="${k}" ${todoPrio[k]?'checked':''}> ${k==='none'?PNO:plab(k)}</label>`).join('')}<span class="spacer"></span><button class="btn small primary" data-nt=" ">${ico('plus',13,'pl')}Nuova attività</button>DFBTN${expBtn(act)}</div>`;
   let html=fl, tot=0, nDoing=0;
   if(doingFirst){
     const rows=[];sortProjects(act).forEach(p=>p.todo.items.filter(i=>i.mark==='~'&&todoPrio[i.prio]).forEach(i=>rows.push(rowHTML(p,i,true))));
@@ -1017,7 +1362,7 @@ function viewDaFare(){
     const rows=[];sortProjects(act).forEach(p=>p.todo.items.filter(i=>i.mark!=='x'&&!(doingFirst&&i.mark==='~')&&i.prio===k).forEach(i=>rows.push(rowHTML(p,i,true))));
     if(rows.length){tot+=rows.length;html+=`<div class="sec">${k==='none'?'Senza priorità':k} · ${rows.length}</div><div class="doc" style="padding:8px 18px">${rows.join('')}</div>`}
   }
-  if(!tot)html+='<div class="empty">Niente da fare con questi filtri 🎉</div>';
+  if(!tot)html+='<div class="empty">Niente da fare con questi filtri.</div>';
   return html;
 }
 const sBox=()=>`<input type="search" id="sq" placeholder="Cerca in questa scheda…" value="${esc(storicoQ)}">`;
@@ -1064,7 +1409,7 @@ function renderTodoDoc(p){
   if(open)html+='</div>';
   if((q||tabPrio)&&!found)html='<div class="empty">Nessun risultato.</div>';
   html=top+html;
-  return `<div class="filters" style="margin-bottom:8px">${sBox()}<button class="btn small primary" data-nt=" ">+ Nuova attività</button>${dfBtn(nDoing)}${tabPrio?`<button class="btn small primary" data-clrprio="1" title="Togli il filtro">Priorità: ${tabPrio==='none'?'senza prio':tabPrio} ✕</button>`:''}<button class="btn small" data-expall="1">Espandi tutto</button><button class="btn small" data-expall="0">Comprimi</button></div><div class="doc">${html}</div>`;
+  return `<div class="filters" style="margin-bottom:8px">${sBox()}<button class="btn small primary" data-nt=" ">${ico('plus',13,'pl')}Nuova attività</button>${dfBtn(nDoing)}${tabPrio?`<button class="btn small primary" data-clrprio="1" title="Togli il filtro">Priorità: ${tabPrio==='none'?PNO:plab(tabPrio)}${ico('x',12,'r')}</button>`:''}${expBtn([p])}</div><div class="doc">${html}</div>`;
 }
 function renderStorico(p){
   const f=p.files['STORICO.md']; if(!f)return '<div class="empty">Nessuno STORICO.md.</div>';
@@ -1084,8 +1429,8 @@ function renderDocs(p){
   const chips=p.docs.length>1?`<div class="filters">${p.docs.map(x=>`<button class="btn small ${x.name===docFile?'primary':''}" data-doc="${esc(x.name)}">${esc(x.name)}</button>`).join('')}</div>`:'';
   const isMd=/\.md$/i.test(d.name);
   const pdf=(p.pdfs||[]).find(x=>x.toLowerCase()===d.name.replace(/\.md$/i,'.pdf').toLowerCase());
-  const pdfBtn=pdf?`<a class="btn small" href="${esc(new URL('../'+p.name+'/'+pdf,location.href).href)}" target="_blank" rel="noopener" style="text-decoration:none">📄 Apri PDF</a>`:'';
-  const meta=`<div class="meta" style="color:var(--muted);margin:0 0 10px">📄 ${esc(d.name)} · modificato il ${new Date(d.mtime).toLocaleDateString('it-IT')}</div>`;
+  const pdfBtn=pdf?`<a class="btn small anim" href="${esc(new URL('../'+p.name+'/'+pdf,location.href).href)}" target="_blank" rel="noopener" style="text-decoration:none">${ico('pdf',14)}Apri PDF</a>`:'';
+  const meta=`<div class="meta" style="color:var(--muted);margin:0 0 10px">${ico('doc',13)}${esc(d.name)} · modificato il ${new Date(d.mtime).toLocaleDateString('it-IT')}</div>`;
   if(isMd)return `${chips}<div class="filters" style="margin-bottom:8px">${sBox()}${pdfBtn}</div>${meta}${mdFiltered(d.text)}`;
   return `${chips}<div class="doc">${meta}<pre style="white-space:pre-wrap;font:13.5px/1.55 Consolas,monospace;margin:0">${esc(d.text)}</pre></div>`;
 }
@@ -1099,16 +1444,16 @@ function renderUtils(p){
   if(p.enc){
     const plain=utilsPlain[p.name];
     if(plain==null||!showUtils){
-      return `<div class="doc lock"><p>🔒 UTILS cifrato. Il contenuto si legge solo con la password; resta sbloccato fino a 5 minuti di inattività.</p>
+      return `<div class="doc lock"><p>${ico('lock',15)}UTILS cifrato. Il contenuto si legge solo con la password; resta sbloccato fino a 5 minuti di inattività.</p>
       ${utilsPw?'':`<p><input type="password" id="upw" placeholder="Password" autocomplete="current-password" style="min-width:220px"></p>`}
       ${utilsErr?`<p style="color:#c0392b">${esc(utilsErr)}</p>`:''}
       <button class="btn primary" id="uunlock" ${utilsBusy?'disabled':''}>${utilsBusy?'Sblocco…':'Mostra contenuto riservato'}</button></div>`;
     }
     if(utilsEdit)return `<div class="filters" style="margin-bottom:10px"><button class="btn small primary" id="usave" ${utilsBusy?'disabled':''}>Salva cifrato</button><button class="btn small" id="ucancel">Annulla</button></div><textarea id="utext" spellcheck="false" style="width:100%;min-height:380px;font:13px/1.5 ui-monospace,Consolas,monospace;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink)">${esc(plain)}</textarea>`;
-    return `<div class="filters" style="margin-bottom:10px">${sBox()}<button class="btn small" id="uedit">Modifica</button><button class="btn small" id="ulock">🔒 Blocca</button></div>${mdFiltered(plain)}`;
+    return `<div class="filters" style="margin-bottom:10px">${sBox()}<button class="btn small" id="uedit">${ico('pencil',13)}Modifica</button><button class="btn small" id="ulock">${ico('lock',13)}Blocca</button></div>${mdFiltered(plain)}`;
   }
   if(p.files['UTILS.md']){
-    const warn=`<div class="doc lock" style="margin-bottom:12px"><p>⚠️ Questo UTILS.md è <b>in chiaro</b>.</p><button class="btn primary" id="uencrypt">Cifra UTILS con una password</button></div>`;
+    const warn=`<div class="doc lock" style="margin-bottom:12px"><p>${ico('alert',15,'warn')}Questo UTILS.md è <b>in chiaro</b>.</p><button class="btn primary" id="uencrypt">Cifra UTILS con una password</button></div>`;
     if(!showUtils)return warn+`<div class="doc lock"><p>Questo file può contenere password e accessi.</p><button class="btn" id="showutils">Mostra contenuto riservato</button></div>`;
     return warn+`<div class="filters" style="margin-bottom:10px">${sBox()}<button class="btn small" id="hideutils">Nascondi</button></div>${mdFiltered(p.files['UTILS.md'].text)}`;
   }
@@ -1131,16 +1476,16 @@ function viewDetail(){
     <div class="mhead"><b>Modifica progetto</b>${closeBtn()}</div>
     <div class="mrow"><span>Nome mostrato</span><input id="rnin" class="rn" value="${esc(label(p.name))}" maxlength="60" placeholder="${esc(p.name)}"><button class="btn small primary" data-rnsave="1">Salva</button></div>
     <div class="mrow"><span>Cartella</span><span class="meta" style="color:var(--muted)">${esc(p.name)} (non viene rinominata)</span></div>
-    <div class="mrow"><span>Colore</span>${PAL.map(c=>`<button class="sw ${colOf(p.name).toLowerCase()===c?'on':''}" style="background:${c}" data-color="${c}" title="${c}"></button>`).join('')}<label class="sw custom" title="Colore a scelta"><input type="color" id="colcustom" value="${colOf(p.name)}" data-cname="${esc(p.name)}"></label>${states[p.name]&&states[p.name].colore?`<button class="btn small" data-color="">Automatico</button>`:''}</div>
-    <div class="mrow"><span>Scadenza</span><button type="button" id="scad" class="datebtn" data-sname="${esc(p.name)}" aria-haspopup="dialog"><span>${dli?esc(dli.dd):'Scegli una data'}</span><span aria-hidden="true">📅</span></button>${calOpen?calHTML(p.name):''}${dli?`<button class="btn small" data-scadclear="1">Rimuovi</button>`:'<span style="color:var(--muted)">nessuna</span>'}</div>
+    <div class="mrow"><span>Colore</span>${PAL.map(c=>`<button class="sw ${colOf(p.name).toLowerCase()===c?'on':''}" style="background:${c}" data-color="${c}" title="${c}"></button>`).join('')}<span class="colw"><button class="sw custom${colPop?' on':''}" data-colpop="1" title="Altri colori" aria-label="Altri colori" aria-expanded="${colPop}"></button>${colPop?colPopHTML(p):''}</span>${(()=>{const c=states[p.name]&&states[p.name].colore;return `<button class="btn small" data-color=""${c?'':' style="visibility:hidden" tabindex="-1" aria-hidden="true"'}>Automatico</button>`})()}</div>
+    <div class="mrow"><span>Scadenza</span><button type="button" id="scad" class="datebtn" data-sname="${esc(p.name)}" aria-haspopup="dialog"><span>${dli?esc(dli.dd):'Scegli una data'}</span>${ico('cal',15)}</button>${calOpen?calHTML(p.name):''}${dli?`<button class="btn small" data-scadclear="1">Rimuovi</button>`:'<span style="color:var(--muted)">nessuna</span>'}</div>
     <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${PK_COLS.map(([c,l])=>`<button data-pkset="${c}" class="${pkCol(p)===c?'on':''}">${l}</button>`).join('')}</span></div>
     <div class="mrow"><span>Tipo</span><button class="btn small" data-tipo="${isDoc?'progetto':'documentazione'}">${isDoc?'Sposta tra i progetti':'Segna come documentazione'}</button></div>
   </div></div>`:'';
-  return `<div class="pbar" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
-  <div class="dtop"><div class="crumb"><button class="btn small" id="back">← Progetti</button></div>
+  return `<div class="pbar${pbShow?' show':''}" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
+  <div class="dtop"><div class="crumb"><button class="btn small" id="back">${ico('left',13)}Progetti</button></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 id="ptitle" style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
-   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${states[p.name]?.stato==='test'?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">⏰ ${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">✏️ ${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}">${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
-   <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato">⚙ Modifica</button></div>
+   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${isTest(p)?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">${ico('clock',13)}${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">${ico('pencil',13)}${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}" data-ak="toggle">${done?ico('ref',13,'tgl'):ico('check',13,'tgl')}${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
+   <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato" data-ak="medit">${ico('gear',14,'gi')}Modifica</button></div>
   <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div></div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
 }
 function welcome(msg){
@@ -1165,8 +1510,20 @@ function render(){
   $('#home').classList.toggle('on',view==='progetti'&&!detail&&!gQ.trim());
   $('#main').innerHTML=(gQ.trim()?viewSearch():detail?viewDetail():view==='progetti'?viewProgetti():view==='documentazione'?viewDocumentazione():viewDaFare())+(newTask?newTaskHTML():'');
   if(enterAnim){pageEnter(enterAnim);enterAnim=''}
-  if(fbtnPlay){fbtnPlay=false;const b=$('#fbtn');if(b)b.classList.add('play')}
+  if(playKey){const el=document.querySelector('[data-ak="'+CSS.escape(playKey)+'"]');playKey='';if(el)play(el)}
+  if(pressKey){const k=pressKey,d=performance.now()-pressT;pressKey='';if(!(pressEl&&pressEl.isConnected)&&d<600){let el=null;try{el=document.querySelector(k)}catch(e){}
+    /* voce appena scelta (priorità, stato, colore, giorno): piccolo "pop" che si vede anche se il file si salva in un attimo */
+    if(el&&el.matches(PICK_AFTER)){el.classList.add('picked');setTimeout(()=>el.classList.remove('picked'),450)}
+    else if(el&&d<260)press(el,d)}}
+  /* la scheda o la riga appena spostata "atterra" nel nuovo posto */
+  if(land){const land0=land,{p,t,dir,from,to,pfrom,pto}=land;land=null;const pr=projects.find(x=>x.name===p),it=pr&&pr.todo.items.find(i=>i.title===t);if(it){const k=CSS.escape(p+'|'+it.idx),c=document.querySelector('input[data-chk="'+k+'"]'),el=document.querySelector('.kcard[data-kk="'+k+'"]')||(c&&c.closest('.todo-row'));if(el){el.classList.add('landed');if(dir){el.classList.add(dir);setTimeout(()=>el.classList.remove(dir),700)}if(from!==undefined&&from!==to)roll(el.querySelector('.st .stl'),ST.findIndex(s=>s[0]===to)>ST.findIndex(s=>s[0]===from));if(pfrom!==undefined&&pfrom!==pto)chipChange(el,pfrom,pto,land0.oldChip);if(pfrom!==undefined&&pfrom!==pto){const tm=document.querySelector('.modal.tp .tpmeta');if(tm)chipChange(tm,pfrom,pto,land0.oldPop)}}}}
+  if(landProj){const el=document.querySelector('.kcard[data-kp="'+CSS.escape(landProj)+'"]');landProj='';if(el)el.classList.add('landed')}
+  flipPlay();
+  segTry();
   openAnims();placeTpop();
+  /* fumetto della matita più largo della scheda: se esce dalla finestra a sinistra lo sposto dentro (la punta resta sulla matita) */
+  {const km=$('.kmv');if(km){const l=km.getBoundingClientRect().left;if(l<8){const sh=8-l;km.style.right=(6-sh)+'px';km.style.setProperty('--ar',(14+sh)+'px')}}}
+  {const cp=$('.colpop');if(cp){const over=cp.getBoundingClientRect().right-(document.documentElement.clientWidth-8);if(over>0)cp.style.left=(-over)+'px'}}
   if(newTask&&!newTask.focused){newTask.focused=true;const el=$('#ntTitle');if(el)el.focus()}
   $('#main').classList.toggle('wide',!gQ.trim()&&(detail?detailTab==='Kanban':view==='progetti'&&viewMode==='kanban'));
   highlight();
@@ -1177,12 +1534,14 @@ async function refresh(silent){await loadAll();render();if(!silent)toast('Aggior
 /* ---------- animazioni d'apertura: partono solo quando popup, fumetto, menu o dettagli compaiono, non a ogni render ---------- */
 let lastOpen={},expAnim='';
 function openAnims(){
-  const now={modal:taskPop?'tp'+taskPop:newTask?'nt':editOpen?'ed':'',tpop:taskEdit&&taskPop?taskPop:'',kmv:kbMenu+'|'+pkMenu};
+  const now={modal:taskPop?'tp'+taskPop:newTask?'nt':editOpen?'ed':'',tpop:taskEdit&&taskPop?taskPop:'',kmv:kbMenu+'|'+pkMenu,cal:calOpen?'1':'',col:colPop?'1':''};
   const on=sel=>{const el=document.querySelector(sel);if(el)el.classList.add('in')};
   if(now.modal&&now.modal!==lastOpen.modal)on('#main .mback');
   if(now.tpop&&now.tpop!==lastOpen.tpop)on('.tpop');
   if(now.kmv!=='|'&&now.kmv!==lastOpen.kmv)on('.kmv');
-  if(expAnim){const h=document.querySelector(`.head[data-exp="${CSS.escape(expAnim)}"]`),r=h&&h.closest('.todo-row'),d=r&&r.querySelector('.det');if(d)d.classList.add('in');expAnim=''}
+  if(now.cal&&!lastOpen.cal)on('.cal');
+  if(now.col&&!lastOpen.col)on('.colpop');
+  if(expAnim){const h=document.querySelector(`.head[data-exp="${CSS.escape(expAnim)}"]`),r=h&&h.closest('.todo-row'),d=r&&r.querySelector('.det'),cv=r&&r.querySelector('.chev');if(d)d.classList.add('in');if(cv)cv.classList.add('chevin');expAnim=''}
   lastOpen=now;
 }
 /* il fumetto di modifica è fisso sotto la matita (dentro il popup scorrevole verrebbe tagliato) */
@@ -1190,7 +1549,87 @@ function placeTpop(){const p=$('.tpop'),b=$('[data-tedit]');if(!p||!b)return;con
 window.addEventListener('resize',placeTpop);document.addEventListener('scroll',placeTpop,true);
 
 /* ---------- entrata animata al cambio pagina: i blocchi compaiono a cascata (solo con go/indietro/schede, non con l'aggiornamento automatico) ---------- */
-let enterAnim='',fbtnPlay=false;
+let enterAnim='',playKey='',land=null,landProj='';
+/* ---------- schede che volano al nuovo posto: si memorizzano le posizioni prima del ridisegno e poi ogni scheda parte da lì ---------- */
+let flipRects=null,flipMover='';
+const FLIP_SEL='.kcard[data-kk],.kcard[data-kp],.todo-row,.card[data-card]';
+function flipId(el){
+  if(el.dataset.kp)return 'p:'+el.dataset.kp;
+  if(el.dataset.card)return 'c:'+el.dataset.card;
+  const k=el.dataset.kk||(el.querySelector('[data-chk]')||{dataset:{}}).dataset.chk||'', t=el.querySelector('.ttl');
+  return t?k.split('|').slice(0,-1).join('|')+'|'+t.textContent:'';
+}
+function flipFirst(moverKey){
+  flipRects=new Map();document.querySelectorAll(FLIP_SEL).forEach(el=>{const id=flipId(el);if(id)flipRects.set(id,el.getBoundingClientRect())});
+  const k=CSS.escape(moverKey.replace(/^[pc]:/,'')), m=moverKey.startsWith('c:')?document.querySelector('.card[data-card="'+k+'"]'):moverKey.startsWith('p:')?document.querySelector('.kcard[data-kp="'+k+'"]'):(document.querySelector('.kcard[data-kk="'+k+'"]')||(document.querySelector('input[data-chk="'+k+'"]')||{closest:()=>null}).closest('.todo-row'));
+  flipMover=m?flipId(m):'';
+}
+function flipPlay(){
+  if(!flipRects)return;const first=flipRects,mover=flipMover;flipRects=null;flipMover='';
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.querySelectorAll(FLIP_SEL).forEach(el=>{
+    const id=flipId(el),r0=first.get(id);if(!r0){el.animate([{opacity:0},{opacity:1}],{duration:260,easing:'ease-out'});return}
+    const r=el.getBoundingClientRect(),dx=r0.left-r.left,dy=r0.top-r.top;if(Math.abs(dx)<1&&Math.abs(dy)<1)return;
+    if(id===mover){
+      /* la scheda spostata si solleva, passa sopra le altre e si posa */
+      el.style.position='relative';el.style.zIndex='6';
+      el.animate([{transform:`translate(${dx}px,${dy}px)`,boxShadow:'0 2px 6px rgba(0,0,0,.12)'},{transform:`translate(${dx*.5}px,${dy*.5}px) scale(1.05)`,boxShadow:'0 18px 36px rgba(0,0,0,.28)',offset:.5},{transform:'none',boxShadow:'0 2px 6px rgba(0,0,0,.12)'}],{duration:480,easing:'cubic-bezier(.3,.7,.3,1)'}).onfinish=()=>{el.style.position='';el.style.zIndex=''};
+    }else el.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:320,easing:'cubic-bezier(.2,.7,.3,1)'});
+  });
+}
+function play(el){el.classList.remove('play');void el.offsetWidth;el.classList.add('play');clearTimeout(el._play);el._play=setTimeout(()=>el.classList.remove('play'),900)}
+/* pressione uguale per ogni controllo cliccato; il selettore permette di ripeterla sull'elemento ridisegnato dal render */
+let pressKey='',pressEl=null,pressT=0;
+const PICK_SEL='.seg button.on,.sw.on,.cd.sel,.fitem.on,.st';
+/* dopo il ridisegno: nei gruppi a segmenti il movimento lo fa la pastiglia che scivola, quindi niente "pop" */
+const PICK_AFTER='.sw.on,.cd.sel,.fitem.on,.st';
+/* scritta che scorre (stato o priorità cambiati): sale se si va avanti nell'ordine, scende se si torna indietro, come Su/Giù */
+const PORD=['P1','P2','P3','none'];
+function roll(lbl,fwd){if(!lbl)return;lbl.classList.add(fwd?'roll-up':'roll-down');setTimeout(()=>lbl.classList.remove('roll-up','roll-down'),450)}
+/* chip di priorità di una riga o scheda: si apre quando arriva, si chiude quando la togli (il titolo scivola al suo posto), fa il "pop" quando cambia */
+function chipNow(k){const e=CSS.escape(k),c=document.querySelector('input[data-chk="'+e+'"]'),el=document.querySelector('.kcard[data-kk="'+e+'"]')||(c&&c.closest('.todo-row')),ch=el&&el.querySelector('.head .chip');return ch?ch.outerHTML:''}
+function chipChange(el,from,to,oldHTML){
+  const head=el.matches('.tpmeta')?el:el.querySelector('.head');if(!head)return;
+  const ch=head.querySelector('.chip:not(.tpst)');
+  if(to!=='none'&&from==='none'){if(ch)ch.classList.add('chipin');return}
+  if(to!=='none'){if(ch){ch.classList.add('picked');setTimeout(()=>ch.classList.remove('picked'),450)}return}
+  if(!oldHTML||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const tmp=document.createElement('div');tmp.innerHTML=oldHTML;const g=tmp.firstElementChild;if(!g)return;
+  g.classList.add('chipout');head.prepend(g);g.addEventListener('animationend',()=>g.remove(),{once:true});setTimeout(()=>g.remove(),400);
+}
+/* gruppi a segmenti: la pastiglia colorata scivola dalla voce vecchia a quella nuova */
+let segFirst=null;
+function segCapture(btn){
+  const seg=btn.closest('.seg,.tabs'),on=seg&&seg.querySelector('button.on');if(!on||on===btn){segFirst=null;return}
+  const sr=seg.getBoundingClientRect(),r=on.getBoundingClientRect();
+  segFirst={key:keyOf(btn),x:r.left-sr.left,y:r.top-sr.top,w:r.width,t:performance.now()};
+}
+function segSlide(seg,f){
+  const on=seg.querySelector('button.on');if(!on)return false;
+  const sr=seg.getBoundingClientRect(),r=on.getBoundingClientRect(),x=r.left-sr.left,y=r.top-sr.top;
+  if(Math.abs(x-f.x)<1&&Math.abs(y-f.y)<1)return false;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return true;
+  const tab=seg.classList.contains('tabs'),th=document.createElement('span');th.className=tab?'tabthumb':'segthumb';th.style.cssText=tab?`left:${x}px;top:${y+r.height-2}px;width:${r.width}px;height:2px`:`left:${x}px;top:${y}px;width:${r.width}px;height:${r.height}px`;
+  seg.prepend(th);on.classList.add('segwait');
+  th.animate([{transform:`translate(${f.x-x}px,${f.y-y}px)`,width:f.w+'px'},{transform:'none',width:r.width+'px'}],{duration:300,easing:'cubic-bezier(.3,.7,.3,1)'}).onfinish=()=>{th.remove();on.classList.remove('segwait')};
+  return true;
+}
+/* il gruppo può essere ridisegnato (render) oppure aggiornato sul posto: si prova subito dopo il clic e poi dopo il ridisegno */
+function segTry(){if(!segFirst)return;const f=segFirst;if(performance.now()-f.t>700){segFirst=null;return}let el=null;try{el=document.querySelector(f.key)}catch(e){}const seg=el&&el.closest('.seg,.tabs');if(seg&&segSlide(seg,f))segFirst=null}
+/* chiusura dei popup: sfondo e finestra svaniscono prima del ridisegno, così anche la X dà un riscontro */
+function closeAnim(fn){
+  const b=document.querySelector('#main .mback');
+  if(!b||b.classList.contains('out')||matchMedia('(prefers-reduced-motion: reduce)').matches){fn();return}
+  b.classList.add('out');setTimeout(fn,170);
+}
+/* from: millisecondi già trascorsi, per continuare la stessa pressione sul pulsante ridisegnato invece di ricominciarla */
+function press(el,from=0){el.classList.remove('press');void el.offsetWidth;el.style.animationDelay=from?(-from)+'ms':'';el.classList.add('press');clearTimeout(el._press);el._press=setTimeout(()=>{el.classList.remove('press');el.style.animationDelay=''},800-from)}
+function keyOf(el){
+  if(el.dataset.ak)return '[data-ak="'+CSS.escape(el.dataset.ak)+'"]';
+  if(el.id)return '#'+CSS.escape(el.id);
+  const ds=[...el.attributes].filter(a=>a.name.startsWith('data-'));
+  return ds.length?el.tagName.toLowerCase()+ds.map(a=>'['+a.name+'="'+CSS.escape(a.value)+'"]').join(''):'';
+}
 function pageEnter(kind){
   const m=$('#main'),list=[];let n=0;
   const at=(el,ms)=>list.push([el,ms]), step=()=>Math.min(n++,14)*35;
@@ -1234,7 +1673,7 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollChange
 /* ---------- navigazione con cronologia (tasto indietro del mouse) ---------- */
 const snap=()=>({view,detail,tab:detailTab,fs:filterState});
 const defTab=n=>{const p=projects.find(x=>x.name===n);return p&&tipoOf(n)==='documentazione'&&p.docs.length?'Documenti':(p&&p.files['TODO.md']?'Kanban':'TODO')};
-function go(patch){calOpen=false;taskPop='';newTask=null;sortMenu=false;if('view'in patch)view=patch.view;if('detail'in patch)detail=patch.detail;if('tab'in patch)detailTab=patch.tab;showUtils=false;utilsEdit=false;utilsMode='';utilsErr='';docFile='';renaming=false;editOpen=false;storicoQ='';gQ='';tabPrio='';{const g=$('#gq');if(g)g.value=''}
+function go(patch){calOpen=false;colPop=false;taskPop='';newTask=null;sortMenu=false;if('view'in patch)view=patch.view;if('detail'in patch)detail=patch.detail;if('tab'in patch)detailTab=patch.tab;showUtils=false;utilsEdit=false;utilsMode='';utilsErr='';docFile='';renaming=false;editOpen=false;storicoQ='';gQ='';tabPrio='';{const g=$('#gq');if(g)g.value=''}
   try{history.pushState(snap(),'')}catch(e){}enterAnim='page';render();window.scrollTo(0,0)}
 function keep(){try{history.replaceState(snap(),'')}catch(e){}}
 window.addEventListener('popstate',e=>{const s=e.state||{view:'progetti',detail:null,tab:'TODO'};
@@ -1254,7 +1693,10 @@ document.addEventListener('dragover',e=>{if(!kbDrag&&!pkDrag)return;const col=e.
   document.querySelectorAll('.kcol.over').forEach(x=>{if(x!==col)x.classList.remove('over')});col.classList.add('over')});
 document.addEventListener('dragend',()=>{kbDrag=null;pkDrag=null;document.querySelectorAll('.kcol.over,.kcard.dragging,.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('over','dragging','ovt','ovb'))});
 document.addEventListener('drop',async e=>{const col=e.target.closest&&e.target.closest('.kcol');if(!col||(!kbDrag&&!pkDrag))return;e.preventDefault();document.querySelectorAll('.kcol.over').forEach(x=>x.classList.remove('over'));
-  if(pkDrag){const n=pkDrag;pkDrag=null;const c=col.dataset.pcol;if(!c)return;const tp=e.target.closest('.kcard[data-kp]'),bf=tp?tp.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));if(tp&&tp.dataset.kp!==n){await reorderProject(n,tp.dataset.kp,bf,c);return}const p=projects.find(x=>x.name===n);if(p&&pkCol(p)!==c)await setProjectKb(n,c);return}
+  if(pkDrag){const n=pkDrag;pkDrag=null;const c=col.dataset.pcol;if(!c)return;const tp=e.target.closest('.kcard[data-kp]'),bf=tp?tp.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));if(tp&&tp.dataset.kp!==n){await reorderProject(n,tp.dataset.kp,bf,c);return}
+    /* rilasciato nello spazio vuoto della colonna: va in fondo a quella colonna (prima cambiava solo lo stato e tornava alla vecchia posizione) */
+    const last=[...col.querySelectorAll('.kcard.pk')].filter(x=>x.dataset.kp!==n).pop();if(last){await reorderProject(n,last.dataset.kp,false,c);return}
+    const p=projects.find(x=>x.name===n);if(p&&pkCol(p)!==c)await setProjectKb(n,c);return}
   const key=kbDrag;kbDrag=null;const tc=e.target.closest('.kcard[data-kk]'),before=tc?tc.classList.contains('ovt'):false;document.querySelectorAll('.kcard.ovt,.kcard.ovb').forEach(x=>x.classList.remove('ovt','ovb'));
   const [p,i]=findItem(key);if(!p||!i)return;const mk=col.dataset.kmark;if(mk===undefined)return;
   if(tc&&mk!=='x'&&tc.dataset.kk!==key&&tc.dataset.prio===i.prio){await moveTask(key,tc.dataset.kk,before,mk);return}
@@ -1268,6 +1710,7 @@ document.addEventListener('drop',async e=>{
   const c=e.target.closest&&e.target.closest('.card.dnd');if(!dragName||!c)return;e.preventDefault();
   const before=c.classList.contains('ovl'), from=dragName, to=c.dataset.card; dragName=null; clrOv();
   if(from===to)return;
+  flipFirst('c:'+from);landProj='';
   const vis=[...document.querySelectorAll('.card.dnd')].map(x=>x.dataset.card).filter(n=>n!==from);
   vis.splice(vis.indexOf(to)+(before?0:1),0,from);
   try{
@@ -1316,21 +1759,32 @@ async function utilsAction(id){
 }
 document.addEventListener('keydown',e=>{if(newTask&&((e.key==='Enter'&&(e.target.id==='ntTitle'||e.target.id==='ntSecNew'))||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ntDetail'))){e.preventDefault();addTask();return}
   if(e.key==='Enter'&&(e.target.id==='upw'||e.target.id==='upw2')){e.preventDefault();const b=$('#uunlock')||$('#uencgo');if(b)b.click()}});
-(()=>{const hdr=document.querySelector('header');const upd=()=>{const h=hdr.offsetHeight;document.documentElement.style.setProperty('--hh',h+'px');const t=document.getElementById('ptitle'),b=document.getElementById('pbar');if(t&&b)b.classList.toggle('show',t.getBoundingClientRect().bottom<h+4)};window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);new MutationObserver(upd).observe(document.getElementById('main')||document.body,{childList:true,subtree:true});upd()})();
+/* barra del titolo: si ricorda se era visibile, così ridisegnando la pagina non lampeggia */
+let pbShow=false;
+(()=>{const hdr=document.querySelector('header');const upd=()=>{const h=hdr.offsetHeight;document.documentElement.style.setProperty('--hh',h+'px');const t=document.getElementById('ptitle'),b=document.getElementById('pbar');if(t&&b){pbShow=t.getBoundingClientRect().bottom<h+4;b.classList.toggle('show',pbShow)}};window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);new MutationObserver(upd).observe(document.getElementById('main')||document.body,{childList:true,subtree:true});upd()})();
 (()=>{const b=document.getElementById('totop');const upd=()=>b.classList.toggle('show',window.scrollY>400);window.addEventListener('scroll',upd,{passive:true});upd()})();
 document.addEventListener('click',async e=>{
   if(e.target.closest&&e.target.closest('#totop')){window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return}
   if(calOpen&&!e.target.closest('.cal,#scad')){calOpen=false;render()}
   if(sortMenu&&!e.target.closest('.fpop,#fbtn')){sortMenu=false;render()}
   if(ntDD&&!e.target.closest('.ddpop,.dd')){ntDD='';render();return}
-  const t=e.target.closest('button,h2[data-open],.proj-tag,.head[data-exp],.kcard[data-kk],[data-dledit],[data-gopen],[data-sort],[data-prioopen],[data-clrprio],#home');
+  const t=e.target.closest('button,h2[data-open],.proj-tag,.head[data-exp],.kcard[data-kk],[data-dledit],[data-gopen],[data-sort],[data-prioopen],[data-clrprio],a.anim,#home');
   {const an=e.target.closest('a[data-anchor]');if(an){e.preventDefault();const el=document.getElementById('d-'+an.dataset.anchor);if(el){const hd=document.querySelector('header'),off=(hd?hd.getBoundingClientRect().height:0)+14;window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-off,behavior:'smooth'})}return}}
+  /* clic fuori dal pannello dei colori: lo chiude senza ridisegnare */
+  if(colPop&&!e.target.closest('.colw')){colPop=false;const cp=$('.colpop'),cb=$('[data-colpop]');if(cp)cp.remove();if(cb){cb.classList.remove('on');cb.setAttribute('aria-expanded','false')}}
+  /* clic fuori dal fumetto della matita di una scheda kanban: lo chiude senza ridisegnare */
+  if((kbMenu||pkMenu)&&!e.target.closest('.kmv,[data-kmenu],[data-pkmenu]')){kbMenu='';pkMenu='';document.querySelectorAll('.kmv').forEach(x=>x.remove());document.querySelectorAll('.kmb.on').forEach(b=>{b.classList.remove('on');b.setAttribute('aria-expanded','false')})}
   /* clic fuori dal menu dello stato: lo chiude senza ridisegnare */
   if(stMenu&&!e.target.closest('.stw')){stMenu='';const sp=$('.stpop'),sb=$('.st.on');if(sp)sp.remove();if(sb){sb.classList.remove('on');sb.setAttribute('aria-expanded','false')}}
   /* clic fuori dal fumetto di modifica: lo chiude senza ridisegnare il popup */
   if(taskEdit&&!e.target.closest('.tpop,[data-tedit]')){taskEdit=false;const tp=$('.tpop'),eb=$('[data-tedit]');if(tp)tp.remove();if(eb){eb.classList.remove('on');eb.setAttribute('aria-expanded','false')}}
-  if(!t){if(e.target.classList.contains('mback')){editOpen=false;taskPop='';newTask=null;ntDD='';render();return}const c=e.target.closest('.card[data-card]');if(c&&!e.target.closest('input,a,label')){go({detail:c.dataset.card,tab:defTab(c.dataset.card)})}const k=e.target.closest('.kcard[data-kp]');if(k&&!e.target.closest('input,a,label')){go({detail:k.dataset.kp,tab:defTab(k.dataset.kp)})}return}
-  if(t.classList.contains('anim')){t.classList.remove('play');void t.offsetWidth;t.classList.add('play');clearTimeout(t._play);t._play=setTimeout(()=>t.classList.remove('play'),900)}  if(t.id==='undobtn'){await doUndo();return}
+  if(!t){if(e.target.classList.contains('mback')){closeAnim(()=>{editOpen=false;taskPop='';newTask=null;ntDD='';render()});return}const c=e.target.closest('.card[data-card]');if(c&&!e.target.closest('input,a,label')){go({detail:c.dataset.card,tab:defTab(c.dataset.card)})}const k=e.target.closest('.kcard[data-kp]');if(k&&!e.target.closest('input,a,label')){go({detail:k.dataset.kp,tab:defTab(k.dataset.kp)})}return}
+  /* animazione al clic; con data-ak la ripete sull'elemento ridisegnato dal render */
+  pressKey=keyOf(t);pressEl=t;pressT=performance.now();press(t);
+  if(t.closest('.seg,.tabs')){segCapture(t);queueMicrotask(segTry)}
+  if(t.matches(PICK_SEL)){t.classList.remove('picked');void t.offsetWidth;t.classList.add('picked');setTimeout(()=>t.classList.remove('picked'),450)}
+  if(t.classList.contains('anim')||t.dataset.ak){playKey=t.dataset.ak||'';play(t)}
+  if(t.id==='undobtn'){await doUndo();return}
   if(t.id==='pick'){try{root=await window.showDirectoryPicker({mode:'readwrite',id:'bacheca-projects'});await kvSet('root',root);await loadAll();render()}catch(err){if(err.name!=='AbortError')toast('Impossibile aprire la cartella')}return}
   if(t.id==='reconn'){const r=await root.requestPermission({mode:'readwrite'});if(r==='granted'){await loadAll();render()}else welcome('Permesso negato. Riprova.');return}
   if(t.id==='burger'){const m=$('#bmenu');m.hidden=!m.hidden;return}
@@ -1355,12 +1809,14 @@ document.addEventListener('click',async e=>{
   if(t.id==='ulock'){utilsLock('UTILS bloccati');render();return}
   if(t.id==='uedit'){utilsEdit=true;render();return}
   if(t.id==='uunlock'||t.id==='uencgo'||t.id==='usave'){await utilsAction(t.id);return}
-  if(t.id==='showutils'){showUtils=true;render();return}
-  if(t.id==='hideutils'){showUtils=false;render();return}
+  if(t.id==='showutils'){showUtils=true;enterAnim='tab';render();return}
+  if(t.id==='hideutils'){showUtils=false;enterAnim='tab';render();return}
   if(t.dataset.v){$('#bmenu').hidden=true;go({view:t.dataset.v,detail:null});return}
-  if(t.dataset.fs){filterState=t.dataset.fs;keep();render();return}
+  if(t.dataset.fs){filterState=t.dataset.fs;keep();flipFirst('');render();return}
   if(t.dataset.open){go({detail:t.dataset.open,tab:defTab(t.dataset.open)});return}
   if(t.dataset.tab){detailTab=t.dataset.tab;showUtils=false;keep();enterAnim='tab';render();return}
+  if(t.dataset.colpop){colPop=!colPop;render();return}
+  if(t.id==='colapply'){await applyHex();return}
   if(t.dataset.color!==undefined&&t.classList.contains('sw')||t.dataset.color===''){await setProjectColor(detail,t.dataset.color||null);return}
   if(t.dataset.scadclear){calOpen=false;await setProjectScadenza(detail,'');return}
   if(t.dataset.cnav){calM+=+t.dataset.cnav;if(calM<0){calM=11;calY--}if(calM>11){calM=0;calY++}render();return}
@@ -1370,24 +1826,24 @@ document.addEventListener('click',async e=>{
     go({detail:n,tab});if(df)docFile=df;storicoQ=tab==='UTILS'?'':q;render();window.scrollTo(0,0);return}
   if(t.dataset.prioopen){const n=t.dataset.pname;go({detail:n,tab:defTab(n)});tabPrio=t.dataset.prioopen;render();return}
   if(t.dataset.clrprio){tabPrio='';render();return}
-  if(t.dataset.doingfirst){doingFirst=!doingFirst;enterAnim='tab';try{localStorage.setItem('bacheca-doingfirst',doingFirst?'1':'0')}catch(e){}render();return}
-  if(t.id==='fbtn'){sortMenu=!sortMenu;fbtnPlay=true;render();return}
-  if(t.dataset.view){sortMenu=false;fbtnPlay=true;enterAnim='tab';viewMode=t.dataset.view;try{localStorage.setItem('bacheca-view',viewMode)}catch(e){}render();return}
-  if(t.dataset.sort){sortMenu=false;fbtnPlay=true;enterAnim='tab';sortKey=t.dataset.sort;try{localStorage.setItem('bacheca-sort',sortKey)}catch(e){}render();return}
+  if(t.dataset.doingfirst){doingFirst=!doingFirst;flipFirst('');try{localStorage.setItem('bacheca-doingfirst',doingFirst?'1':'0')}catch(e){}render();return}
+  if(t.id==='fbtn'){sortMenu=!sortMenu;render();return}
+  if(t.dataset.view){sortMenu=false;playKey='sort';flipFirst('');viewMode=t.dataset.view;try{localStorage.setItem('bacheca-view',viewMode)}catch(e){}render();return}
+  if(t.dataset.sort){sortMenu=false;playKey='sort';flipFirst('');sortKey=t.dataset.sort;try{localStorage.setItem('bacheca-sort',sortKey)}catch(e){}render();return}
   if(t.dataset.dledit){const n=t.dataset.dledit;if(detail!==n)go({detail:n,tab:defTab(n)});editOpen=true;render();return}
   if(t.dataset.medit){editOpen=true;render();return}
-  if(t.dataset.mclose){editOpen=false;calOpen=false;taskPop='';newTask=null;ntDD='';render();return}
+  if(t.dataset.mclose){closeAnim(()=>{editOpen=false;calOpen=false;taskPop='';newTask=null;ntDD='';render()});return}
   if(t.dataset.rnsave){await setProjectNome(detail,$('#rnin').value);return}
   if(t.dataset.tipo){await setProjectTipo(detail,t.dataset.tipo);return}
-  if(t.dataset.doc){docFile=t.dataset.doc;render();return}
+  if(t.dataset.doc){docFile=t.dataset.doc;enterAnim='tab';render();return}
   if(t.dataset.toggle){editOpen=false;const n=t.dataset.toggle;try{await setProjectState(n,!isDone(projects.find(p=>p.name===n)))}catch(err){toast('Scrittura non riuscita')}return}
-  if(t.dataset.exp){const k=t.dataset.exp;if(openRows.has(k))openRows.delete(k);else{openRows.add(k);expAnim=k}render();return}
+  if(t.dataset.exp){const k=t.dataset.exp;if(openRows.has(k)){const h=t.closest('.todo-row'),d=h&&h.querySelector('.det'),cv=h&&h.querySelector('.chev');if(d&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('out');if(cv)cv.classList.add('chevout');setTimeout(()=>{openRows.delete(k);render()},170)}else{openRows.delete(k);render()}}else{openRows.add(k);expAnim=k;render()}return}
   if(t.dataset.expall){const on=t.dataset.expall==='1';projects.forEach(p=>p.todo.items.forEach(i=>{const k=rkey(p,i);on?openRows.add(k):openRows.delete(k)}));render();return}
   if(t.dataset.pkmenu){pkMenu=pkMenu===t.dataset.pkmenu?'':t.dataset.pkmenu;render();return}
-  if(t.dataset.pkup||t.dataset.pkdown){const n=t.dataset.pkup||t.dataset.pkdown;pkMenu='';await nudgeProject(n,!!t.dataset.pkup);return}
-  if(t.dataset.pkmove){const a=t.dataset.pkmove.split('|'),c=a.pop();pkMenu='';await setProjectKb(a.join('|'),c);return}
-  if(t.dataset.pkall){pkAllDone=!pkAllDone;render();return}
-  if(t.dataset.pkset){editOpen=false;await setProjectKb(detail,t.dataset.pkset);return}
+  if(t.dataset.pkup||t.dataset.pkdown){const n=t.dataset.pkup||t.dataset.pkdown;await nudgeProject(n,!!t.dataset.pkup);return}
+  if(t.dataset.pkmove){const a=t.dataset.pkmove.split('|'),c=a.pop(),n=a.join('|'),p=projects.find(x=>x.name===n);if(p&&pkCol(p)===c)return;await setProjectKb(n,c);return}
+  if(t.dataset.pkall){pkAllDone=!pkAllDone;flipFirst('');render();return}
+  if(t.dataset.pkset){const c=t.dataset.pkset,st=(states[detail]&&states[detail].stato)||'corso';if(c===st)return;await setProjectKb(detail,c);return}
   if(t.dataset.dd){ntDD=ntDD===t.dataset.dd?'':t.dataset.dd;render();return}
   if(t.dataset.ddv&&newTask){const [id,ix]=t.dataset.ddv.split('|'),o=(ddOpts[id]||[])[+ix];ntDD='';if(o){if(id==='ntSec')newTask.secSel=o[0];else if(id==='ntProj'){newTask.pname=o[0];const p=projects.find(x=>x.name===o[0]);newTask.secSel=p?ntDefSec(p):''}}render();return}
   if(t.dataset.nt!==undefined){taskPop='';ntDD='';openNewTask(t.dataset.nt||' ',detail||'');return}
@@ -1400,10 +1856,11 @@ document.addEventListener('click',async e=>{
   if(t.dataset.kup||t.dataset.kdown){const key=t.dataset.kup||t.dataset.kdown,up=!!t.dataset.kup,el=document.querySelector('.kcard[data-kk="'+(window.CSS&&CSS.escape?CSS.escape(key):key)+'"]');
     let nb=el&&(up?el.previousElementSibling:el.nextElementSibling);while(nb&&!(nb.classList.contains('kcard')&&nb.dataset.prio===el.dataset.prio))nb=up?nb.previousElementSibling:nb.nextElementSibling;
     if(nb){kbMenu='';await moveTask(key,nb.dataset.kk,up)}else{toast(up?'È già il primo della sua priorità':'È già l\'ultimo della sua priorità')}return}
-  if(t.dataset.kall){kbAllDone=!kbAllDone;render();return}
+  if(t.dataset.kall){kbAllDone=!kbAllDone;flipFirst('');render();return}
   if(t.dataset.kmenu){kbMenu=kbMenu===t.dataset.kmenu?'':t.dataset.kmenu;render();return}
   if(t.dataset.kpset){const a=t.dataset.kpset.split('|'),np=a.pop();const [p,i]=findItem(a.join('|'));if(p&&i&&i.prio!==np)await setPrio(p.name,i,np);return}
-  if(t.dataset.kmove){const a=t.dataset.kmove.split('|'),mk=a.pop();kbMenu='';taskPop='';const [p,i]=findItem(a.join('|'));if(p&&i)await setMark(p.name,i,mk);else render();return}
+  /* dal fumetto della scheda kanban il fumetto resta aperto: la pastiglia di "Sposta in" scivola mentre la scheda vola nella nuova colonna */
+  if(t.dataset.kmove){const a=t.dataset.kmove.split('|'),mk=a.pop(),inMenu=!!t.closest('.kmv');if(!inMenu)kbMenu='';taskPop='';const [p,i]=findItem(a.join('|'));if(p&&i&&i.mark===mk)return;if(p&&i)await setMark(p.name,i,mk);else render();return}
   if(t.dataset.st){stMenu=stMenu===t.dataset.st?'':t.dataset.st;render();return}
   if(t.dataset.stset){const a=t.dataset.stset.split('|'),mk=a.pop();stMenu='';const [p,i]=findItem(a.join('|'));if(p&&i&&i.mark!==mk)await setMark(p.name,i,mk);else render();return}
 });
@@ -1412,20 +1869,24 @@ document.addEventListener('change',async e=>{
   if(t.id==='sortsel'){sortKey=t.value;try{localStorage.setItem('bacheca-sort',sortKey)}catch(e){}render();return}
   if(t.id==='colcustom'){await setProjectColor(t.dataset.cname,t.value);return}
   if(t.dataset.chk){const [p,i]=findItem(t.dataset.chk);await setMark(p.name,i,t.checked?'x':' ');return}
-  if(t.dataset.prio){todoPrio[t.dataset.prio]=t.checked;render();return}
-  if(t.id==='srecent'){storicoRecent=t.checked;render();return}
+  if(t.dataset.prio){todoPrio[t.dataset.prio]=t.checked;flipFirst('');render();return}
+  if(t.id==='srecent'){storicoRecent=t.checked;enterAnim='tab';render();return}
 });
 document.addEventListener('keydown',e=>{if(e.target.id==='gq'&&e.key==='Escape'){gQ='';e.target.value='';render();return}
   if(e.target.id==='rnin'){if(e.key==='Enter')setProjectNome(detail,e.target.value);if(e.key==='Escape'){editOpen=false;render()}}
   else if(e.key==='Escape'&&sortMenu){sortMenu=false;render()}
   else if(e.key==='Escape'&&calOpen){calOpen=false;render()}
   else if(e.key==='Escape'&&ntDD){ntDD='';render()}
-  else if(e.key==='Escape'&&newTask){newTask=null;render()}
+  else if(e.key==='Escape'&&newTask){closeAnim(()=>{newTask=null;render()})}
+  else if(e.target.id==='colhex'&&e.key==='Enter'){e.preventDefault();applyHex()}
+  else if(e.key==='Escape'&&colPop){colPop=false;render()}
+  else if(e.key==='Escape'&&(kbMenu||pkMenu)){kbMenu='';pkMenu='';render()}
   else if(e.key==='Escape'&&stMenu){stMenu='';render()}
   else if(e.key==='Escape'&&taskEdit&&taskPop){taskEdit=false;render()}
-  else if(e.key==='Escape'&&taskPop){taskPop='';render()}
-  else if(e.key==='Escape'&&editOpen){editOpen=false;render()}});
+  else if(e.key==='Escape'&&taskPop){closeAnim(()=>{taskPop='';render()})}
+  else if(e.key==='Escape'&&editOpen){closeAnim(()=>{editOpen=false;render()})}});
 document.addEventListener('input',e=>{
+  if(e.target.id==='colhex'){const m=e.target.value.trim().match(/^#?([0-9a-f]{6})$/i);if(m){const pos=e.target.selectionStart;colHSV=hexToHsv('#'+m[1].toLowerCase());const v=e.target.value;colPaint();e.target.value=v;e.target.setSelectionRange(pos,pos)}return}
   if(newTask&&e.target.id==='ntTitle'){newTask.title=e.target.value;return}
   if(newTask&&e.target.id==='ntDetail'){newTask.detail=e.target.value;return}
   if(newTask&&e.target.id==='ntSecNew'){newTask.secNew=e.target.value;return}
