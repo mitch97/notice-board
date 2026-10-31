@@ -1,0 +1,26 @@
+# Bacheca online (sola lettura). Nessuna porta pubblica: ci si arriva da casa.mitchtheswimmer.uk/bacheca/
+# tramite il portale (rete "edge"), dietro il login di Cloudflare Access.
+# La porta su 127.0.0.1 serve solo al controllo di salute di deploy.sh.
+services:
+  bacheca:
+    build: .
+    image: bacheca:local
+    container_name: bacheca
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${HOST_PORT:-8461}:8080"
+    networks: [edge]
+    volumes:
+      # copia dei diari scritta da sincronizza-bacheca.ps1 (sola lettura per il container)
+      - ./progetti:/usr/share/nginx/html/progetti:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 48m
+
+networks:
+  edge:
+    external: true
+    name: edge

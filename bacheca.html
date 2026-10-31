@@ -749,7 +749,22 @@ function md(src){
 
 /* ---------- file helpers ---------- */
 async function readText(dir,name){try{const fh=await dir.getFileHandle(name);const f=await fh.getFile();return {text:await f.text(),mtime:f.lastModified}}catch(e){return null}}
-async function writeText(dir,name,text){const fh=await dir.getFileHandle(name,{create:true});const w=await fh.createWritable();await w.write(text);await w.close()}
+async function writeText(dir,name,text){if(REMOTE){toast('Copia del server in sola lettura: modifica dal PC');throw new Error('sola lettura')}const fh=await dir.getFileHandle(name,{create:true});const w=await fh.createWritable();await w.write(text);await w.close()}
+
+/* ---------- modalità server: copia dei diari in sola lettura, sincronizzata dal PC ----------
+   Se la pagina è servita via http(s) e accanto c'è progetti/_indice.json (scritto da sincronizza-bacheca.ps1),
+   le cartelle si leggono da lì invece che dal disco del PC. Stessa interfaccia delle cartelle del browser. */
+let REMOTE=false,remoteBase='progetti/',remoteInfo=null;
+async function remoteManifest(){const r=await fetch(remoteBase+'_indice.json',{cache:'no-store'});if(!r.ok)throw new Error('indice non disponibile');return r.json()}
+function remoteFile(name,meta,url){return {kind:'file',name,async getFile(){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('file non trovato');const text=await r.text();return {name,size:meta.s,lastModified:meta.m,text:async()=>text}}}}
+function remoteDir(name,tree,base){
+  const find=n=>tree&&Object.prototype.hasOwnProperty.call(tree,n)?tree[n]:null;
+  return {kind:'directory',name,
+    async *entries(){for(const [n,v] of Object.entries(tree||{}))yield [n,v.d?remoteDir(n,v.d,base+encodeURIComponent(n)+'/'):remoteFile(n,v,base+encodeURIComponent(n))]},
+    async getFileHandle(n){const v=find(n);if(!v||v.d)throw new DOMException('non trovato','NotFoundError');return remoteFile(n,v,base+encodeURIComponent(n))},
+    async queryPermission(){return 'granted'},async requestPermission(){return 'granted'}};
+}
+async function remoteRefresh(){remoteInfo=await remoteManifest();root=remoteDir('Progetti',remoteInfo.tree,remoteBase)}
 
 /* ---------- UTILS cifrato (AES-256-GCM, chiave da password con PBKDF2) ---------- */
 const UTILS_STUB='# UTILS cifrato\n\nIl contenuto riservato è in `UTILS.enc` (AES-256-GCM) e si apre solo dalla bacheca, con la password.\nNon scrivere credenziali in questo file.\n';
@@ -815,6 +830,7 @@ async function loadProject(dir){
   return p;
 }
 async function loadAll(){
+  if(REMOTE)await remoteRefresh();
   const s0=await readText(root,STATE_FILE);
   try{states=s0?JSON.parse(s0.text):{}}catch(e){states={};toast('File stato non leggibile, lo ignoro')}
   const list=[];
@@ -825,7 +841,7 @@ async function loadAll(){
   }
   list.sort((a,b)=>a.name.localeCompare(b.name,'it',{sensitivity:'base'}));
   projects=list;
-  {const hh=new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});$('#sync').textContent='Letto alle '+hh;$('#refresh').title='Aggiorna (letto alle '+hh+')'}
+  {const hh=new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});$('#sync').textContent=REMOTE?'Copia del server, sola lettura · dal PC il '+new Date(remoteInfo.t*1000).toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'Letto alle '+hh;$('#refresh').title='Aggiorna (letto alle '+hh+')'}
 }
 const updShort=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
 const updLabel=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT')+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
@@ -1647,6 +1663,7 @@ function pageEnter(kind){
 /* ---------- aggiornamento automatico (controlla le date dei file ogni pochi secondi) ---------- */
 let lastSig='',polling=false;
 async function sigAll(){
+  if(REMOTE){try{return String((await remoteManifest()).t)}catch(e){return lastSig}}
   let s='';
   const mt=async(d,n)=>{try{return (await (await d.getFileHandle(n)).getFile()).lastModified}catch(e){return 0}};
   s+=await mt(root,STATE_FILE)+'|';
@@ -1897,6 +1914,9 @@ window.addEventListener('focus',()=>{if(root&&projects.length&&!document.querySe
 
 /* ---------- avvio ---------- */
 (async()=>{
+  if(location.protocol.startsWith('http')){
+    try{await remoteRefresh();REMOTE=true;document.body.classList.add('remote');await loadAll();render();return}catch(e){root=null}
+  }
   if(!window.showDirectoryPicker){$('#main').innerHTML='<div class="welcome"><h2>Browser non supportato</h2><p>Apri questa pagina con Chrome o Edge.</p></div>';return}
   root=await kvGet('root');
   if(!root){welcome();return}

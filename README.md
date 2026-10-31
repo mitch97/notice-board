@@ -88,3 +88,15 @@ _Ultimo aggiornamento: 2026-10-29_
 
 ## Dati che non vanno nel repository
 Questo repository contiene solo lo strumento. I dati dei progetti (SAL, STORICO, TODO, UTILS, `_STATO-PROGETTI.json`) restano sul PC e sono esclusi dal `.gitignore`; fanno eccezione solo i progetti finti di `esempio/`. Non committare mai file con credenziali: la cronologia di Git li conserva per sempre.
+
+## Bacheca online (sola lettura)
+
+La pagina può girare anche su un server, accanto a una **copia dei diari** sincronizzata dal PC:
+`sincronizza-bacheca.ps1` copia di ogni progetto i file `.md`/`.txt` (mai UTILS, mai file con "passw"/"credenz", niente PDF)
+e un `_indice.json`. Quando la pagina è servita via http(s) e trova `progetti/_indice.json`, legge da lì, in sola lettura;
+da file locale (doppio clic) funziona come sempre. Il PC resta l'originale.
+
+    .\sincronizza-bacheca.ps1                       # verso il server
+    .\sincronizza-bacheca.ps1 -SoloLocale C:\prova  # prova senza toccare il server
+
+`Dockerfile`, `nginx.conf` e `docker-compose.yml` sono per il server (nessuna porta pubblica, container senza privilegi).
