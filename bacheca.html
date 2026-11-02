@@ -1079,13 +1079,13 @@ async function setMark(pname,item,newMark){
 }
 
 /* stato del progetto che segue le attività (solo quando cambi lo stato di un'attività, così resta libero di spostarlo a mano):
-   tutte fatte → terminato; le aperte tutte in test → test; tutte in analisi → in analisi;
+   tutte fatte → terminato; le aperte solo in test o in analisi con almeno una in test → test; tutte in analisi → in analisi;
    se era terminato/test (o in analisi con lavoro già avanzato) e le attività non lo giustificano più → torna in corso */
 function autoCol(name,marks){
   if(!marks.length)return '';
   const open=marks.filter(m=>m!=='x'), s=states[name]?.stato;
   if(!open.length)return 'terminato';
-  if(open.every(m=>m==='t'))return 'test';
+  if(open.includes('t')&&open.every(m=>m==='t'||m==='?'))return 'test';
   if(marks.every(m=>m==='?'))return 'attesa';
   if(s==='terminato'||s==='test'||(s==='attesa'&&marks.some(m=>m==='t'||m==='x'||m==='~')))return 'corso';
   return '';
