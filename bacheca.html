@@ -138,16 +138,19 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .tpt{margin:0;font-size:22px;line-height:1.35;overflow-wrap:anywhere}
 .tpb{font-size:16px;line-height:1.65;overflow-wrap:anywhere}.tpb p{margin:0 0 .7em}.tpb p:last-child{margin-bottom:0}
 .tpb p.lp{--lc:var(--accent);border-left:3px solid var(--lc);padding:3px 0 3px 12px;margin-bottom:.9em}.tpb p.lp.upd{--lc:var(--p3)}.tpb p.lp.todo{--lc:var(--p2)}.tpb .lbl{color:var(--lc);font-weight:700}
+/* modifica del testo nel popup: i campi entrano scivolando, e dopo il salvataggio titolo e dettagli si riaccendono */
+.tpedit{display:flex;flex-direction:column;gap:12px}.tpedit.in{animation:calin .2s ease}
+.tpt.saved,.tpb.saved{animation:calin .35s ease}
 .tpmv{border-top:1px solid var(--line);padding-top:12px}
 .kcard.ovt{box-shadow:0 -3px 0 0 var(--accent),var(--shadow)}.kcard.ovb{box-shadow:0 3px 0 0 var(--accent),var(--shadow)}
 .kadd{margin-left:auto;border:1px solid var(--line);background:var(--panel);color:var(--muted);width:26px;height:26px;flex:none;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:background-color .25s ease,color .25s ease,border-color .25s ease}.kadd:hover{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}.kwip+.kadd{margin-left:8px}
 .kadd svg{display:block;transition:transform .25s ease}.kadd:hover svg{transform:rotate(90deg)}
 .modal.nt{width:min(700px,100%);max-height:calc(100vh - 32px);overflow:auto}
 .ntf{display:flex;flex-direction:column;gap:5px}.ntl{color:var(--muted);font-size:13px}.ntl .meta{font-size:12px}
-.modal.nt input,.modal.nt textarea,.modal.nt select{box-sizing:border-box;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease}
-.modal.nt input,.modal.nt select{height:38px;padding:0 12px}.modal.nt #ntTitle,.modal.nt #ntProj{width:100%}.modal.nt textarea{width:100%;padding:10px 12px;line-height:1.55;resize:vertical;min-height:120px}
-.modal.nt input:hover,.modal.nt textarea:hover,.modal.nt select:hover{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))}
-.modal.nt input:focus,.modal.nt textarea:focus,.modal.nt select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.tpedit input,.tpedit textarea,.modal.nt input,.modal.nt textarea,.modal.nt select{box-sizing:border-box;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:10px;outline:none;transition:border-color .3s ease,box-shadow .3s ease,background-color .3s ease}
+.tpedit input{height:38px;padding:0 12px;width:100%}.modal.nt input,.modal.nt select{height:38px;padding:0 12px}.modal.nt #ntTitle,.modal.nt #ntProj{width:100%}.tpedit textarea,.modal.nt textarea{width:100%;padding:10px 12px;line-height:1.55;resize:vertical;min-height:120px}
+.tpedit input:hover,.tpedit textarea:hover,.modal.nt input:hover,.modal.nt textarea:hover,.modal.nt select:hover{border-color:var(--accent);background-color:color-mix(in srgb,var(--accent) 6%,var(--panel))}
+.tpedit input:focus,.tpedit textarea:focus,.modal.nt input:focus,.modal.nt textarea:focus,.modal.nt select:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
 .ddw{position:relative;display:inline-block}
 .btn.dd{display:inline-flex;align-items:center;justify-content:space-between;gap:14px;min-width:220px;height:38px;padding:0 12px;border-radius:10px;text-align:left}
 .btn.dd.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 9%,var(--panel))}.ddc{color:var(--muted);font-size:12px;transition:transform .2s ease}.btn.dd.on .ddc{transform:rotate(180deg)}
@@ -1069,9 +1072,38 @@ async function setMark(pname,item,newMark){
     if(item.mark==='x'&&newMark!=='x'&&undoInfo&&undoInfo.pname===pname&&undoInfo.line===item.raw)hideUndo();
     lines[idx]=applyMark(lines[idx],newMark);
     await writeText(p.dir,'TODO.md',lines.join(eol));
+    await autoProject(p,p.todo.items.map(i=>i===item?newMark:i.mark));
     land={p:pname,t:item.title,from:item.mark,to:newMark,dir:newMark==='x'?'struck':(item.mark==='x'?'revived':'')};flipFirst(pname+'|'+item.idx);await refresh(true);
     if(newMark==='x'&&item.mark!=='x')showUndo(pname,lines[idx],item.mark,item.title);
   }catch(e){toast('Scrittura non riuscita (permesso?)')}
+}
+
+/* stato del progetto che segue le attività (solo quando cambi lo stato di un'attività, così resta libero di spostarlo a mano):
+   tutte fatte → terminato; le aperte tutte in test → test; tutte in analisi → in analisi;
+   se era terminato/test (o in analisi con lavoro già avanzato) e le attività non lo giustificano più → torna in corso */
+function autoCol(name,marks){
+  if(!marks.length)return '';
+  const open=marks.filter(m=>m!=='x'), s=states[name]?.stato;
+  if(!open.length)return 'terminato';
+  if(open.every(m=>m==='t'))return 'test';
+  if(marks.every(m=>m==='?'))return 'attesa';
+  if(s==='terminato'||s==='test'||(s==='attesa'&&marks.some(m=>m==='t'||m==='x'||m==='~')))return 'corso';
+  return '';
+}
+let projAuto='';
+async function autoProject(p,marks){
+  const col=autoCol(p.name,marks), was=states[p.name]?.stato||'corso';
+  if(!col||col===was)return;
+  try{
+    const cur=await readState(); const e=cur[p.name]||{};
+    if(col==='terminato')e.stato='terminato',e.data=new Date().toISOString().slice(0,10);
+    else if(col==='attesa'||col==='test')e.stato=col,delete e.data;
+    else delete e.stato,delete e.data;
+    if(Object.keys(e).length)cur[p.name]=e;else delete cur[p.name];
+    await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
+    states=cur; landProj=projAuto=p.name;
+    toast('Progetto '+label(p.name)+' → '+(col==='terminato'?'terminato':col==='attesa'?'in analisi':col==='test'?'in test':'in corso'));
+  }catch(err){toast('Stato del progetto non aggiornato (permesso?)')}
 }
 
 /* ---------- annulla "fatta": badge in basso a sinistra con una barra che si svuota in 8 s (si ferma col mouse sopra) ---------- */
@@ -1258,7 +1290,7 @@ const secLbl=x=>x&&!/^(da fare|in corso|in attesa|in analisi|test|fatto|fatte|co
 function kbCard(p,i,mk){
   const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
   const pbtn=(k,pre)=>`<span class="seg sm">${['P1','P2','P3','none'].map(q=>`<button class="${i.prio===q?'on':''}" data-kpset="${esc(k)}|${q}">${q==='none'?PNO:plab(q)}</button>`).join('')}</span>`;
-  const menu=kbMenu===key?`<div class="kmv" role="dialog" aria-label="Priorità e spostamenti"><div class="kmr"><span class="meta">Priorità</span>${pbtn(key)}</div>${mk==='x'?'':`<div class="kmr"><span class="meta">Ordine</span><span class="seg sm"><button data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">${ico('up',13,'au')}Su</button><button data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">${ico('down',13,'ad')}Giù</button></span></div>`}<div class="kmr"><span class="meta">Sposta in</span><span class="seg sm">${KB_COLS.map(c=>`<button class="${c[0]===mk?'on':''}" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</span></div></div>`:'';
+  const menu=kbMenu===key?`<div class="kmv" role="dialog" aria-label="Priorità e spostamenti"><div class="kmr"><span class="meta">Priorità</span>${pbtn(key)}</div>${mk==='x'?'':`<div class="kmr"><span class="meta">Ordine</span><span class="seg sm"><button data-kup="${esc(key)}" title="Sposta più in alto, restando nella stessa priorità">${ico('up',13,'au')}Su</button><button data-kdown="${esc(key)}" title="Sposta più in basso, restando nella stessa priorità">${ico('down',13,'ad')}Giù</button></span></div>`}<div class="kmr"><span class="meta">Sposta in</span><span class="seg sm">${KB_COLS.map(c=>`<button class="${c[0]===mk?'on':''}" data-kmove="${esc(key)}|${c[0]}">${c[1]}</button>`).join('')}</span></div><div class="kmr"><span class="meta">Testo</span><button class="btn small" data-kttext="${esc(key)}">${ico('pencil',13)}Modifica titolo e dettagli</button></div></div>`:'';
   const dd=mk==='x'&&i.doneDate?`<span class="meta">${ico('check',12)}${esc(i.doneDate.slice(8)+'/'+i.doneDate.slice(5,7))}</span>`:'<span></span>';
   return `<div class="kcard kp${i.prio}${mk==='x'?' kdone':''}" draggable="true" data-kk="${esc(key)}" data-prio="${i.prio}">
     <div class="head">${i.prio!=='none'?`<span class="chip ${i.prio}">${i.prio}</span>`:''}<span class="ttl">${inline(i.title)}</span></div>
@@ -1266,20 +1298,54 @@ function kbCard(p,i,mk){
     <div class="kfoot">${dd}<button class="btn ib kmb${kbMenu===key?' on':''}" data-kmenu="${esc(key)}" title="Priorità e spostamenti" aria-label="Priorità e spostamenti" aria-expanded="${kbMenu===key}">${IC_EDIT}</button></div>${menu}</div>`;
 }
 
+/* dettagli divisi in paragrafi (una frase che finisce con . o ; e poi una maiuscola), senza spezzare il codice tra apici */
+function tpParas(detail){const paras=[],toks=(detail||'').split(/(?<=[.;])\s+(?=[A-ZÀ-Ü0-9`(])/);let cur='';for(const t of toks){cur=cur?cur+' '+t:t;if((cur.match(/`/g)||[]).length%2===0){paras.push(cur);cur=''}}if(cur)paras.push(cur);return paras}
+/* modifica del testo dell'attività nel popup: titolo e dettagli, scritti nella stessa forma della finestra Nuova attività */
+let taskText=null,tpSaved='';
+function openTaskText(){const [p,it]=findItem(taskPop);if(!it)return;taskEdit=false;taskText={key:taskPop,title:it.title.replace(/…$/,''),detail:it.detail&&it.detail!==it.title?tpParas(it.detail).join('\n'):'',focused:false};render()}
+async function saveTaskText(){
+  const tx=taskText;if(!tx)return;
+  const title=(tx.title||'').replace(/\*\*/g,'').replace(/\s+/g,' ').trim();
+  if(title.length<2){toast('Scrivi un titolo');return}
+  const [p,item]=findItem(tx.key);if(!p||!item){taskText=null;render();return}
+  const detail=(tx.detail||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(x=>/[.;:!?]$/.test(x)?x:x+'.').join(' ');
+  try{
+    const cur=await readText(p.dir,'TODO.md'); if(!cur)throw 0;
+    const eol=cur.text.includes('\r\n')?'\r\n':'\n', lines=cur.text.split(/\r?\n/);
+    let idx=lines[item.idx]===item.raw?item.idx:-1;
+    if(idx<0){const f=lines.map((l,i)=>l===item.raw?i:-1).filter(i=>i>=0);if(f.length===1)idx=f[0]}
+    if(idx<0){toast('Il TODO è cambiato nel frattempo: ricarico');taskText=null;await refresh();return}
+    /* restano rientro, stato, priorità e data di completamento: cambia solo il testo */
+    const head=item.raw.match(/^\s*- \[(?: |~|x|X|\?|t|T)\]\s*/)[0];
+    const line=head+(item.prio!=='none'?'**'+item.prio+'** ':'')+'**'+title+'**'+(detail?' — '+detail:'')+(item.doneDate?' ✓'+item.doneDate:'');
+    if(line===item.raw){taskText=null;render();return}
+    if(undoInfo&&undoInfo.pname===p.name&&undoInfo.line===item.raw)hideUndo();
+    lines[idx]=line;
+    await writeText(p.dir,'TODO.md',lines.join(eol));
+    taskText=null;tpSaved=taskPop;land={p:p.name,t:title};
+    await refresh(true);toast('Attività aggiornata');tpSaved='';
+  }catch(e){toast('Scrittura non riuscita (permesso?)')}
+}
 function taskPopHTML(p){
   const it=p.todo.items.find(i=>p.name+'|'+i.idx===taskPop); if(!it){taskPop='';return ''}
   const col=KB_COLS.find(c=>c[0]===it.mark)||KB_COLS[1];
-  let paras=[];{const toks=(it.detail||'').split(/(?<=[.;])\s+(?=[A-ZÀ-Ü0-9`(])/);let cur='';for(const t of toks){cur=cur?cur+' '+t:t;if((cur.match(/`/g)||[]).length%2===0){paras.push(cur);cur=''}}if(cur)paras.push(cur)}
+  const paras=tpParas(it.detail);
   const has=!!it.detail&&it.detail!==it.title;
+  const tx=taskText&&taskText.key===taskPop?taskText:null;
   const para=x=>{const m=x.match(/^([^:`*\n]{2,45}):\s+([\s\S]*)$/);if(!m)return `<p>${inline(x)}</p>`;const l=m[1],cls=/^aggiorn/i.test(l)?' upd':/^(da fare|prossim|azione|todo)/i.test(l)?' todo':'';return `<p class="lp${cls}"><strong class="lbl">${esc(l)}:</strong> ${inline(m[2])}</p>`};
   const moves=KB_COLS.filter(c=>c[0]!==it.mark).map(c=>`<button class="btn small" data-kmove="${esc(p.name+'|'+it.idx)}|${c[0]}">${c[1]}</button>`).join('');
   return `<div class="mback" data-mclose="1"><div class="modal tp" role="dialog" aria-label="Dettagli attività">
     <div class="mhead"><span class="tpmeta">${it.prio!=='none'?`<span class="chip ${it.prio}">${it.prio}</span>`:''}<span class="chip tpst">${esc(col[1])}</span>${secLbl(it.sec)?`<span class="meta">${esc(secLbl(it.sec))}</span>`:''}</span><span class="mact"><button class="btn ib${taskEdit?' on':''}" data-tedit="1" title="Modifica priorità e colonna" aria-label="Modifica priorità e colonna" aria-expanded="${taskEdit}">${IC_EDIT}</button>${closeBtn()}</span></div>
-    <h3 class="tpt">${inline(it.title)}</h3>
-    <div class="tpb">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>
+    ${tx?`<div class="tpedit">
+      <div class="ntf"><span class="ntl">Titolo</span><input id="ttTitle" maxlength="70" placeholder="Titolo breve (max 5 parole)" value="${esc(tx.title)}" autocomplete="off"></div>
+      <div class="ntf"><span class="ntl">Dettagli <span class="meta">(ogni riga diventa un paragrafo; inizia una riga con <i>Aggiornamento …:</i> o <i>Da fare:</i> per metterla in evidenza)</span></span><textarea id="ttDetail" rows="7">${esc(tx.detail)}</textarea></div>
+      <div class="mrow ntact"><button class="btn primary" id="ttsave">Salva</button><button class="btn" data-ttcancel="1">Annulla</button><span class="meta">Ctrl+Invio per salvare · Esc per annullare</span></div></div>`
+    :`<h3 class="tpt${tpSaved===taskPop?' saved':''}">${inline(it.title)}</h3>
+    <div class="tpb${tpSaved===taskPop?' saved':''}">${has?paras.map(para).join(''):'<p class="meta">Nessun dettaglio aggiunto.</p>'}</div>`}
     ${it.mark==='x'&&it.doneDate?`<div class="meta">Completata il ${esc(it.doneDate.split('-').reverse().join('/'))}</div>`:''}
     ${taskEdit?`<div class="tpop" role="dialog" aria-label="Modifica attività"><div class="mrow"><span>Priorità</span><span class="seg sm">${['P1','P2','P3','none'].map(q=>`<button class="${it.prio===q?'on':''}" data-kpset="${esc(p.name+'|'+it.idx)}|${q}">${q==='none'?PNO:plab(q)}</button>`).join('')}</span></div>
-    <div class="mrow"><span>Sposta in</span>${moves}</div></div>`:''}
+    <div class="mrow"><span>Sposta in</span>${moves}</div>
+    <div class="mrow"><span>Testo</span><button class="btn small" data-ttext="1">${ico('pencil',13)}Modifica titolo e dettagli</button></div></div>`:''}
   </div></div>`;
 }
 function renderKanban(p){
@@ -1305,13 +1371,14 @@ function ddHTML(id,opts,val,ph,up){
 }
 const NT_MARKS=[[' ','Da fare'],['?','In analisi'],['~','In corso'],['t','Test']];
 function ntSections(p){const out=[];(p&&p.files['TODO.md']?p.files['TODO.md'].text.split(/\r?\n/):[]).forEach(l=>{const h=l.match(/^#{2,3}\s+(.*)/);if(h&&!out.includes(h[1]))out.push(h[1])});return out}
-function ntDefSec(p){return ntSections(p).find(x=>!/fatt|complet|archiv|chius/i.test(x))||'__new'}
-function openNewTask(mark,pname){const p=projects.find(x=>x.name===pname);newTask={pname:pname||'',mark:mark||' ',prio:'P2',title:'',detail:'',secSel:p?ntDefSec(p):'',secNew:'Da fare',focused:false};render()}
+/* sezione scelta in automatico dallo stato: quella con lo stesso nome ("In corso", "In corso (data)"…), altrimenti la prima non chiusa, altrimenti "Da fare" */
+const NT_SEC={' ':/^da fare/i,'?':/analisi/i,'~':/^in corso/i,'t':/^(in )?test/i};
+function ntAutoSec(p,mark){const s=ntSections(p).map(x=>x.trim());return s.find(x=>NT_SEC[mark]&&NT_SEC[mark].test(x))||s.find(x=>!/fatt|complet|archiv|chius/i.test(x))||'Da fare'}
+function openNewTask(mark,pname){const p=projects.find(x=>x.name===pname);newTask={pname:pname||'',mark:mark||' ',prio:'P2',title:'',detail:'',focused:false};render()}
 function newTaskHTML(){
-  const n=newTask, p=projects.find(x=>x.name===n.pname), secs=p?ntSections(p):[];
+  const n=newTask, p=projects.find(x=>x.name===n.pname);
   const plist=projects.filter(x=>!isDone(x)).slice().sort((a,b)=>label(a.name).localeCompare(label(b.name),'it',{sensitivity:'base'}));
   const projRow=detail?'':`<div class="mrow"><span>Progetto</span>${ddHTML('ntProj',plist.map(x=>[x.name,label(x.name)]),n.pname,'Scegli il progetto…')}</div>`;
-  const secRow=p?`<div class="mrow"><span>Sezione</span>${ddHTML('ntSec',secs.map(x=>[x,x]).concat([['__new','Nuova sezione…']]),n.secSel,'Scegli la sezione…',true)}${n.secSel==='__new'?`<input id="ntSecNew" placeholder="Nome della sezione" maxlength="60" value="${esc(n.secNew)}">`:''}</div>`:'';
   return `<div class="mback" data-mclose="1"><div class="modal nt" role="dialog" aria-label="Nuova attività">
     <div class="mhead"><b>Nuova attività${p?' · '+esc(label(p.name)):''}</b>${closeBtn()}</div>
     ${projRow}
@@ -1319,7 +1386,6 @@ function newTaskHTML(){
     <div class="ntf"><span class="ntl">Dettagli <span class="meta">(facoltativi · ogni riga diventa un paragrafo; inizia una riga con <i>Aggiornamento …:</i> o <i>Da fare:</i> per metterla in evidenza)</span></span><textarea id="ntDetail" rows="6">${esc(n.detail)}</textarea></div>
     <div class="mrow"><span>Priorità</span><span class="seg" style="margin:0">${[['P1',plab('P1')],['P2',plab('P2')],['P3',plab('P3')],['none',PNO]].map(([k,l])=>`<button data-ntprio="${k}" class="${n.prio===k?'on':''}">${l}</button>`).join('')}</span></div>
     <div class="mrow"><span>Stato</span><span class="seg" style="margin:0">${NT_MARKS.map(([k,l])=>`<button data-ntmark="${esc(k)}" class="${n.mark===k?'on':''}">${l}</button>`).join('')}</span></div>
-    ${secRow}
     <div class="mrow ntact"><button class="btn primary" id="ntsave">Aggiungi</button><button class="btn" data-mclose="1">Annulla</button><span class="meta">Ctrl+Invio per aggiungere</span></div>
   </div></div>`;
 }
@@ -1330,7 +1396,7 @@ async function addTask(){
   const p=projects.find(x=>x.name===n.pname); if(!p){toast('Scegli il progetto');return}
   const detail=(n.detail||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean).map(x=>/[.;:!?]$/.test(x)?x:x+'.').join(' ');
   const line=`- [${n.mark}] ${n.prio&&n.prio!=='none'?`**${n.prio}** `:''}**${title}**${detail?` — ${detail}`:''}`;
-  const sec=(n.secSel==='__new'?(n.secNew||'').trim():(n.secSel||'')).replace(/\s+/g,' ');
+  const sec=ntAutoSec(p,n.mark);
   const d=new Date(), today=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   try{
     const cur=await readText(p.dir,'TODO.md');
@@ -1500,7 +1566,7 @@ function viewDetail(){
   return `<div class="pbar${pbShow?' show':''}" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
   <div class="dtop"><div class="crumb"><button class="btn small" id="back">${ico('left',13)}Progetti</button></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 id="ptitle" style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
-   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in analisi</span>':''}${isTest(p)?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">${ico('clock',13)}${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">${ico('pencil',13)}${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}" data-ak="toggle">${done?ico('ref',13,'tgl'):ico('check',13,'tgl')}${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
+   ${done?'<span class="chip none" data-pst>terminato</span>':''}${isWait(p)?'<span class="chip wait" data-pst>in analisi</span>':''}${isTest(p)?'<span class="chip test" data-pst>in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">${ico('clock',13)}${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">${ico('pencil',13)}${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}" data-ak="toggle">${done?ico('ref',13,'tgl'):ico('check',13,'tgl')}${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
    <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato" data-ak="medit">${ico('gear',14,'gi')}Modifica</button></div>
   <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div></div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
 }
@@ -1534,6 +1600,8 @@ function render(){
   /* la scheda o la riga appena spostata "atterra" nel nuovo posto */
   if(land){const land0=land,{p,t,dir,from,to,pfrom,pto}=land;land=null;const pr=projects.find(x=>x.name===p),it=pr&&pr.todo.items.find(i=>i.title===t);if(it){const k=CSS.escape(p+'|'+it.idx),c=document.querySelector('input[data-chk="'+k+'"]'),el=document.querySelector('.kcard[data-kk="'+k+'"]')||(c&&c.closest('.todo-row'));if(el){el.classList.add('landed');if(dir){el.classList.add(dir);setTimeout(()=>el.classList.remove(dir),700)}if(from!==undefined&&from!==to)roll(el.querySelector('.st .stl'),ST.findIndex(s=>s[0]===to)>ST.findIndex(s=>s[0]===from));if(pfrom!==undefined&&pfrom!==pto)chipChange(el,pfrom,pto,land0.oldChip);if(pfrom!==undefined&&pfrom!==pto){const tm=document.querySelector('.modal.tp .tpmeta');if(tm)chipChange(tm,pfrom,pto,land0.oldPop)}}}}
   if(landProj){const el=document.querySelector('.kcard[data-kp="'+CSS.escape(landProj)+'"]');landProj='';if(el)el.classList.add('landed')}
+  /* stato del progetto cambiato da solo seguendo le attività: il chip nell'intestazione entra come quello della priorità */
+  if(projAuto){projAuto='';const c=document.querySelector('[data-pst]');if(c){c.classList.add('chipin');setTimeout(()=>c.classList.remove('chipin'),350)}}
   flipPlay();
   segTry();
   openAnims();placeTpop();
@@ -1541,6 +1609,7 @@ function render(){
   {const km=$('.kmv');if(km){const l=km.getBoundingClientRect().left;if(l<8){const sh=8-l;km.style.right=(6-sh)+'px';km.style.setProperty('--ar',(14+sh)+'px')}}}
   {const cp=$('.colpop');if(cp){const over=cp.getBoundingClientRect().right-(document.documentElement.clientWidth-8);if(over>0)cp.style.left=(-over)+'px'}}
   if(newTask&&!newTask.focused){newTask.focused=true;const el=$('#ntTitle');if(el)el.focus()}
+  if(taskText&&!taskText.focused){taskText.focused=true;const el=$('#ttTitle');if(el){el.focus();el.select()}}
   $('#main').classList.toggle('wide',!gQ.trim()&&(detail?detailTab==='Kanban':view==='progetti'&&viewMode==='kanban'));
   highlight();
   $('#gq').hidden=false;
@@ -1550,10 +1619,11 @@ async function refresh(silent){await loadAll();render();if(!silent)toast('Aggior
 /* ---------- animazioni d'apertura: partono solo quando popup, fumetto, menu o dettagli compaiono, non a ogni render ---------- */
 let lastOpen={},expAnim='';
 function openAnims(){
-  const now={modal:taskPop?'tp'+taskPop:newTask?'nt':editOpen?'ed':'',tpop:taskEdit&&taskPop?taskPop:'',kmv:kbMenu+'|'+pkMenu,cal:calOpen?'1':'',col:colPop?'1':''};
+  const now={modal:taskPop?'tp'+taskPop:newTask?'nt':editOpen?'ed':'',tpop:taskEdit&&taskPop?taskPop:'',kmv:kbMenu+'|'+pkMenu,cal:calOpen?'1':'',col:colPop?'1':'',tx:taskText?taskText.key:''};
   const on=sel=>{const el=document.querySelector(sel);if(el)el.classList.add('in')};
   if(now.modal&&now.modal!==lastOpen.modal)on('#main .mback');
   if(now.tpop&&now.tpop!==lastOpen.tpop)on('.tpop');
+  if(now.tx&&now.tx!==lastOpen.tx)on('.tpedit');
   if(now.kmv!=='|'&&now.kmv!==lastOpen.kmv)on('.kmv');
   if(now.cal&&!lastOpen.cal)on('.cal');
   if(now.col&&!lastOpen.col)on('.colpop');
@@ -1774,7 +1844,8 @@ async function utilsAction(id){
     }
   }catch(err){utilsBusy=false;utilsErr='Operazione non riuscita: '+(err&&err.message||err);render()}
 }
-document.addEventListener('keydown',e=>{if(newTask&&((e.key==='Enter'&&(e.target.id==='ntTitle'||e.target.id==='ntSecNew'))||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ntDetail'))){e.preventDefault();addTask();return}
+document.addEventListener('keydown',e=>{if(taskText&&((e.key==='Enter'&&e.target.id==='ttTitle')||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ttDetail'))){e.preventDefault();saveTaskText();return}
+  if(newTask&&((e.key==='Enter'&&(e.target.id==='ntTitle'||e.target.id==='ntSecNew'))||(e.key==='Enter'&&(e.ctrlKey||e.metaKey)&&e.target.id==='ntDetail'))){e.preventDefault();addTask();return}
   if(e.key==='Enter'&&(e.target.id==='upw'||e.target.id==='upw2')){e.preventDefault();const b=$('#uunlock')||$('#uencgo');if(b)b.click()}});
 /* barra del titolo: si ricorda se era visibile, così ridisegnando la pagina non lampeggia */
 let pbShow=false;
@@ -1862,13 +1933,17 @@ document.addEventListener('click',async e=>{
   if(t.dataset.pkall){pkAllDone=!pkAllDone;flipFirst('');render();return}
   if(t.dataset.pkset){const c=t.dataset.pkset,st=(states[detail]&&states[detail].stato)||'corso';if(c===st)return;await setProjectKb(detail,c);return}
   if(t.dataset.dd){ntDD=ntDD===t.dataset.dd?'':t.dataset.dd;render();return}
-  if(t.dataset.ddv&&newTask){const [id,ix]=t.dataset.ddv.split('|'),o=(ddOpts[id]||[])[+ix];ntDD='';if(o){if(id==='ntSec')newTask.secSel=o[0];else if(id==='ntProj'){newTask.pname=o[0];const p=projects.find(x=>x.name===o[0]);newTask.secSel=p?ntDefSec(p):''}}render();return}
+  if(t.dataset.ddv&&newTask){const [id,ix]=t.dataset.ddv.split('|'),o=(ddOpts[id]||[])[+ix];ntDD='';if(o){if(id==='ntProj')newTask.pname=o[0]}render();return}
   if(t.dataset.nt!==undefined){taskPop='';ntDD='';openNewTask(t.dataset.nt||' ',detail||'');return}
   if(t.dataset.ntprio&&newTask){newTask.prio=t.dataset.ntprio;document.querySelectorAll('[data-ntprio]').forEach(b=>b.classList.toggle('on',b.dataset.ntprio===newTask.prio));return}
   if(t.dataset.ntmark!==undefined&&newTask){newTask.mark=t.dataset.ntmark;document.querySelectorAll('[data-ntmark]').forEach(b=>b.classList.toggle('on',b.dataset.ntmark===newTask.mark));return}
   if(t.id==='ntsave'){await addTask();return}
-  if(t.dataset.kk){taskPop=t.dataset.kk;taskEdit=false;kbMenu='';render();return}
+  if(t.dataset.kk){taskPop=t.dataset.kk;taskEdit=false;taskText=null;kbMenu='';render();return}
   if(t.dataset.tedit){taskEdit=!taskEdit;render();return}
+  if(t.dataset.kttext){kbMenu='';taskPop=t.dataset.kttext;taskEdit=false;openTaskText();return}
+  if(t.dataset.ttext){openTaskText();return}
+  if(t.id==='ttsave'){await saveTaskText();return}
+  if(t.dataset.ttcancel){taskText=null;render();return}
   if(t.dataset.kprio!==undefined){tabPrio=t.dataset.kprio;render();return}
   if(t.dataset.kup||t.dataset.kdown){const key=t.dataset.kup||t.dataset.kdown,up=!!t.dataset.kup,el=document.querySelector('.kcard[data-kk="'+(window.CSS&&CSS.escape?CSS.escape(key):key)+'"]');
     let nb=el&&(up?el.previousElementSibling:el.nextElementSibling);while(nb&&!(nb.classList.contains('kcard')&&nb.dataset.prio===el.dataset.prio))nb=up?nb.previousElementSibling:nb.nextElementSibling;
@@ -1899,14 +1974,16 @@ document.addEventListener('keydown',e=>{if(e.target.id==='gq'&&e.key==='Escape')
   else if(e.key==='Escape'&&colPop){colPop=false;render()}
   else if(e.key==='Escape'&&(kbMenu||pkMenu)){kbMenu='';pkMenu='';render()}
   else if(e.key==='Escape'&&stMenu){stMenu='';render()}
+  else if(e.key==='Escape'&&taskText&&taskPop){taskText=null;render()}
   else if(e.key==='Escape'&&taskEdit&&taskPop){taskEdit=false;render()}
   else if(e.key==='Escape'&&taskPop){closeAnim(()=>{taskPop='';render()})}
   else if(e.key==='Escape'&&editOpen){closeAnim(()=>{editOpen=false;render()})}});
 document.addEventListener('input',e=>{
   if(e.target.id==='colhex'){const m=e.target.value.trim().match(/^#?([0-9a-f]{6})$/i);if(m){const pos=e.target.selectionStart;colHSV=hexToHsv('#'+m[1].toLowerCase());const v=e.target.value;colPaint();e.target.value=v;e.target.setSelectionRange(pos,pos)}return}
+  if(taskText&&e.target.id==='ttTitle'){taskText.title=e.target.value;return}
+  if(taskText&&e.target.id==='ttDetail'){taskText.detail=e.target.value;return}
   if(newTask&&e.target.id==='ntTitle'){newTask.title=e.target.value;return}
   if(newTask&&e.target.id==='ntDetail'){newTask.detail=e.target.value;return}
-  if(newTask&&e.target.id==='ntSecNew'){newTask.secNew=e.target.value;return}
   if(e.target.id==='gq'){gQ=e.target.value;render();return}
   if(e.target.id==='sq'){storicoQ=e.target.value;const pos=e.target.selectionStart;render();const s=$('#sq');s.focus();s.setSelectionRange(pos,pos)}
 });
