@@ -14,7 +14,7 @@ Pagina web locale, in un solo file (`bacheca.html`), per tenere sott'occhio i mi
 4. Dopo ogni modifica al codice della pagina fai Ctrl+F5, perché il browser tiene la vecchia versione.
 
 ### Provarla con la cartella `esempio`
-Per vederla subito senza dati tuoi, al punto 2 scegli la cartella `esempio` di questo repository: contiene due progetti finti (`Sito-vetrina` con attività in tutti gli stati, `Manuale-utente` in attesa) e il loro `_STATO-PROGETTI.json`. La bacheca scrive nei file che apri: se sposti attività o cambi colori, `git checkout esempio` riporta tutto com'era.
+Per vederla subito senza dati tuoi, al punto 2 scegli la cartella `esempio` di questo repository: contiene due progetti finti (`Sito-vetrina` con attività in tutti gli stati, `Manuale-utente` in analisi) e il loro `_STATO-PROGETTI.json`. La bacheca scrive nei file che apri: se sposti attività o cambi colori, `git checkout esempio` riporta tutto com'era.
 
 ## Struttura attesa della cartella
 ```
@@ -32,10 +32,10 @@ Per vederla subito senza dati tuoi, al punto 2 scegli la cartella `esempio` di q
 - **SAL.md**: la riga `Ultimo aggiornamento: AAAA-MM-GG` fornisce la data mostrata nelle schede.
 - **TODO.md**: sezioni con titoli `##` o `###`; ogni attività è una riga
   `- [ ] **P1** **Titolo breve** — dettagli`
-  Marcatori: `[ ]` da fare, `[~]` in corso, `[?]` in attesa, `[t]` in test, `[x]` fatta. Priorità `P1`, `P2`, `P3` oppure assente. Il titolo in grassetto (max 5 parole) si vede nell'elenco, i dettagli si aprono con un clic. Senza grassetto la bacheca ricava il titolo dalle prime parole.
+  Marcatori: `[ ]` da fare, `[~]` in corso, `[?]` in analisi, `[t]` in test, `[x]` fatta. Priorità `P1`, `P2`, `P3` oppure assente. Il titolo in grassetto (max 5 parole) si vede nell'elenco, i dettagli si aprono con un clic. Senza grassetto la bacheca ricava il titolo dalle prime parole.
 - Le attività si possono creare dalla bacheca ("+ Nuova attività"): la riga viene scritta in `TODO.md` nel formato sopra.
 - Spostare un'attività dalla bacheca modifica direttamente `TODO.md`. Quando passa a fatta viene aggiunta in fondo alla riga la data (`✓2026-10-21`), che si toglie se la riporti in un'altra colonna.
-- **Stato dei progetti**: `_STATO-PROGETTI.json` salva per ogni progetto `stato` (`attesa`, `test` o `terminato`; assente = in corso), colore, nome mostrato e scadenza.
+- **Stato dei progetti**: `_STATO-PROGETTI.json` salva per ogni progetto `stato` (`attesa` = in analisi, `test` o `terminato`; assente = in corso), colore, nome mostrato e scadenza.
 
 ### Modello minimo di un progetto
 Basta una cartella con un `SAL.md`; gli altri file sono facoltativi (esempio completo in `esempio/Sito-vetrina`).
@@ -73,8 +73,8 @@ _Ultimo aggiornamento: 2026-10-29_
 ```
 
 ## Cosa fa
-- Elenco dei progetti in vista a blocchi, a elenco o **kanban** (In attesa / In corso / Test / Terminato), con ordinamento per priorità, alfabetico, ultima modifica o manuale (trascinando).
-- **Kanban del progetto**: scheda dedicata con le colonne In attesa / Da fare / In corso / Test / Fatto (ultimi 14 giorni). Si trascina o si usa "Sposta"; avviso se ci sono più di 3 attività in corso. Le colonne sono sempre ordinate per priorità (P1, P2, P3); dentro la stessa priorità si può cambiare l'ordine trascinando le schede (vale l'ordine delle righe del `TODO.md`).
+- Elenco dei progetti in vista a blocchi, a elenco o **kanban** (In analisi / In corso / Test / Terminato), con ordinamento per priorità, alfabetico, ultima modifica o manuale (trascinando).
+- **Kanban del progetto**: scheda dedicata con le colonne In analisi / Da fare / In corso / Test / Fatto (ultimi 14 giorni). Si trascina o si usa "Sposta"; avviso se ci sono più di 3 attività in corso. Le colonne sono sempre ordinate per priorità (P1, P2, P3); dentro la stessa priorità si può cambiare l'ordine trascinando le schede (vale l'ordine delle righe del `TODO.md`).
 - Scadenza, colore e nome mostrato per ogni progetto, salvati in `_STATO-PROGETTI.json`.
 - Vista "Da fare" con tutte le attività aperte, con opzione "In corso in alto".
 - Sezioni SAL, TODO, STORICO, UTILS e Documenti per progetto, con ricerca globale.

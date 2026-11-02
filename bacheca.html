@@ -209,7 +209,7 @@ main.wide .dtop{max-width:1052px;margin-left:auto;margin-right:auto}
 .st{font:inherit;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:96px;height:26px;padding:0 10px;border-radius:8px;border:1px solid var(--st-b,var(--line));background:var(--st-bg,transparent);color:var(--st-c,var(--muted));cursor:pointer;white-space:nowrap;transition:border-color .2s ease,background-color .2s ease,filter .2s ease}
 .st:hover,.st.on{filter:brightness(1.08);border-color:var(--st-c,var(--accent))}
 .st .ddc{opacity:.75;transition:transform .2s ease}.st.on .ddc{transform:rotate(180deg)}
-/* colori degli stati: stessa saturazione e luminosità, cambia solo la tinta (da fare arancione, in corso azzurro, in attesa giallo chiaro, in test viola, fatta verde) */
+/* colori degli stati: stessa saturazione e luminosità, cambia solo la tinta (da fare arancione, in corso azzurro, in analisi giallo chiaro, in test viola, fatta verde) */
 .st-todo{--sh:14;--sl:40%;--dl:68%}.st-doing{--sh:208}.st-wait{--sh:46;--sl:34%}.st-test{--sh:268}.st-done{--sh:145}
 :is(.st-todo,.st-doing,.st-wait,.st-test,.st-done){--st-c:hsl(var(--sh) 72% var(--sl,42%));--st-b:hsl(var(--sh) 62% 74%);--st-bg:hsl(var(--sh) 85% 95%)}
 @media (prefers-color-scheme:dark){:is(.st-todo,.st-doing,.st-wait,.st-test,.st-done){--st-c:hsl(var(--sh) 80% var(--dl,72%));--st-b:hsl(var(--sh) 42% 38%);--st-bg:hsl(var(--sh) 40% 17%)}}
@@ -845,7 +845,7 @@ async function loadAll(){
 }
 const updShort=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT',{day:'2-digit',month:'2-digit'})+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
 const updLabel=p=>{if(!p.updatedTs)return p.updated||'—';const d=new Date(p.updatedTs);return d.toLocaleDateString('it-IT')+' '+d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})};
-/* un progetto con attività in corso è per forza "in corso": non risulta né terminato né in attesa né in test finché le ha */
+/* un progetto con attività in corso è per forza "in corso": non risulta né terminato né in analisi né in test finché le ha */
 const hasDoing=p=>!!(p&&p.todo&&p.todo.items.some(i=>i.mark==='~'));
 const isDone=p=>states[p.name]?.stato==='terminato'&&!hasDoing(p);
 
@@ -866,7 +866,7 @@ async function setProjectKb(name,col){
     else{delete e.stato;delete e.data}
     if(Object.keys(e).length)cur[name]=e;else delete cur[name];
     await writeText(root,STATE_FILE,JSON.stringify(cur,null,2)+'\n');
-    states=cur; toast(name+': '+(col==='terminato'?'terminato':col==='attesa'?'in attesa':col==='test'?'in test':'in corso')); render();
+    states=cur; toast(name+': '+(col==='terminato'?'terminato':col==='attesa'?'in analisi':col==='test'?'in test':'in corso')); render();
   }catch(err){toast('Scrittura non riuscita (permesso?)')}
 }
 /* riordino dei progetti nel kanban: solo in modalità Manuale (ordine in __ordine); negli ordinamenti automatici il trascinamento cambia solo la colonna */
@@ -1101,7 +1101,7 @@ function cardHTML(p,i){
   const d=dlInfo(p.name);
   const tags=(d?`<span class="dl c-dl ${d.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${d.dd} (${esc(d.txt)}) — clicca per modificare">${ico('clock',13)}${esc(d.short)} · ${d.dd.slice(0,5)}</span>`:'<span class="c-dl nodl">—</span>')
     +`<span class="dl upd c-upd" title="Ultimo aggiornamento ${esc(updLabel(p))}">${ico('pencil',13)}${esc(updShort(p))}</span>`
-    +(tipoOf(p.name)==='documentazione'?`<span class="c-x">${ico('doc',13)}Documentazione</span>`:'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'')+(isWait(p)?'<span class="c-x chip wait">in attesa</span>':'')+(isTest(p)?'<span class="c-x chip test">in test</span>':'');
+    +(tipoOf(p.name)==='documentazione'?`<span class="c-x">${ico('doc',13)}Documentazione</span>`:'')+(done&&st?`<span class="c-x">terminato il ${esc(st.data||'')}</span>`:'')+(isWait(p)?'<span class="c-x chip wait">in analisi</span>':'')+(isTest(p)?'<span class="c-x chip test">in test</span>':'');
   return `<div class="card${sortKey==='manual'?' dnd':''}"${sortKey==='manual'?' draggable="true" title="Trascina per riordinare"':''} data-card="${esc(p.name)}" style="--c:${colOf(p.name)}">
     <span class="rank">${i+1}</span>
     <h2 data-open="${esc(p.name)}" title="${esc(p.excerpt||'')}">${esc(label(p.name))}</h2>
@@ -1143,7 +1143,7 @@ function viewSearch(){
 }
 
 /* ---------- Kanban dei progetti ---------- */
-const PK_COLS=[['attesa','In attesa'],['corso','In corso'],['test','Test'],['terminato','Terminato']], PK_DAYS=30;
+const PK_COLS=[['attesa','In analisi'],['corso','In corso'],['test','Test'],['terminato','Terminato']], PK_DAYS=30;
 let pkMenu='',pkAllDone=false,pkDrag=null;
 const pkCol=p=>{if(hasDoing(p))return 'corso';const s=states[p.name]&&states[p.name].stato;return s==='terminato'||s==='attesa'||s==='test'?s:'corso'};
 function pkCard(p,col){
@@ -1196,7 +1196,7 @@ function rowHTML(p,i,showProj){
     ${stHTML(p,i)}</div>`;
 }
 /* stato della riga: un solo badge a destra che apre il menu per cambiarlo */
-const ST=[[' ','da fare','todo'],['~','in corso','doing'],['?','in attesa','wait'],['t','in test','test'],['x','fatta','done']];
+const ST=[[' ','da fare','todo'],['~','in corso','doing'],['?','in analisi','wait'],['t','in test','test'],['x','fatta','done']];
 let stMenu='';
 function stHTML(p,i){
   const k=p.name+'|'+i.idx, cur=ST.find(s=>s[0]===i.mark)||ST[0], on=stMenu===k;
@@ -1204,7 +1204,7 @@ function stHTML(p,i){
 }
 
 /* ---------- Kanban dei task del progetto ---------- */
-const KB_COLS=[['?','In attesa'],[' ','Da fare'],['~','In corso'],['t','Test'],['x','Fatto']], KB_WIP=3, KB_DAYS=14;
+const KB_COLS=[['?','In analisi'],[' ','Da fare'],['~','In corso'],['t','Test'],['x','Fatto']], KB_WIP=3, KB_DAYS=14;
 let kbMenu='',kbAllDone=false,kbDrag=null,kbDragPrio='',taskPop='',taskEdit=false;
 const svgI=d=>`<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
 /* icone a linee usate nel testo di pulsanti e chip, stesso tratto di quelle dell'intestazione */
@@ -1247,14 +1247,14 @@ const PNO=`<span class="pno" title="Senza priorità (idea da concretizzare)" ari
 /* icone delle priorità, della stessa famiglia della lampadina: tutte = pila di fogli, P1 = fiamma (urgente), P2 = freccia (da portare avanti), P3 = tazza di caffè (con calma) */
 const PIC={'':['layers','Tutte le priorità'],P1:['flame','Urgente'],P2:['fwd','Da portare avanti'],P3:['coffee','Con calma']};
 const plab=(k,txt)=>`<span class="pic pic-${k||'all'}" title="${PIC[k][1]}">${ico(PIC[k][0],13,'solo')}</span>${txt||k}`;
-/* conteggi per stato delle attività di un progetto (in corso, in test, in attesa), con i colori degli stati e icone animate */
-const ST_CNT=[[' ','da fare','todo','todo'],['~','in corso','doing','play'],['t','in test','test','flask'],['?','in attesa','wait','hglass']];
+/* conteggi per stato delle attività di un progetto (in corso, in test, in analisi), con i colori degli stati e icone animate */
+const ST_CNT=[[' ','da fare','todo','todo'],['~','in corso','doing','play'],['t','in test','test','flask'],['?','in analisi','wait','hglass']];
 function stChips(p,inline){const c=ST_CNT.map(([m,l,cls,ic])=>{const n=p.todo.items.filter(i=>i.mark===m).length;return n?`<span class="chip scnt st-${cls}" title="${n} ${n===1?'attività':'attività'} ${l}"><span class="sci">${ico(ic,12,'solo')}</span>${n} ${l}</span>`:''}).join('');return c?(inline?`<span class="scbr"></span>${c}`:`<div class="pkchips scrow">${c}</div>`):''}
 const IC_X=svgI('<path d="M18 6 6 18M6 6l12 12"/>'), IC_EDIT=svgI('<path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>');
 const closeBtn=()=>`<button class="btn ib cls" data-mclose="1" title="Chiudi" aria-label="Chiudi">${IC_X}</button>`;
 function kbRecent(d){if(!d)return false;const [y,m,g]=d.split('-').map(Number);return Date.now()-new Date(y,m-1,g).getTime()<=KB_DAYS*DAY}
 /* il nome della sezione non si mostra se coincide con uno stato (la colonna lo dice già) */
-const secLbl=x=>x&&!/^(da fare|in corso|in attesa|test|fatto|fatte|completat\w*)$/i.test(x.trim())?x:'';
+const secLbl=x=>x&&!/^(da fare|in corso|in attesa|in analisi|test|fatto|fatte|completat\w*)$/i.test(x.trim())?x:'';
 function kbCard(p,i,mk){
   const key=p.name+'|'+i.idx, has=!!i.detail&&i.detail!==i.title;
   const pbtn=(k,pre)=>`<span class="seg sm">${['P1','P2','P3','none'].map(q=>`<button class="${i.prio===q?'on':''}" data-kpset="${esc(k)}|${q}">${q==='none'?PNO:plab(q)}</button>`).join('')}</span>`;
@@ -1303,7 +1303,7 @@ function ddHTML(id,opts,val,ph,up){
   ddOpts[id]=opts; const cur=opts.find(o=>o[0]===val), on=ntDD===id;
   return `<span class="ddw"><button type="button" class="btn dd${on?' on':''}" data-dd="${id}" aria-haspopup="listbox" aria-expanded="${on}"><span class="ddl">${esc(cur?cur[1]:ph||'Scegli…')}</span><span class="ddc">${ico('chev',12,'solo')}</span></button>${on?`<div class="fpop ddpop${up?' up':''}" role="listbox">${opts.map((o,i)=>`<button type="button" role="option" aria-selected="${o[0]===val}" class="fitem${o[0]===val?' on':''}" data-ddv="${id}|${i}"><span class="ck">${o[0]===val?ico('check',13):''}</span>${esc(o[1])}</button>`).join('')}</div>`:''}</span>`;
 }
-const NT_MARKS=[[' ','Da fare'],['?','In attesa'],['~','In corso'],['t','Test']];
+const NT_MARKS=[[' ','Da fare'],['?','In analisi'],['~','In corso'],['t','Test']];
 function ntSections(p){const out=[];(p&&p.files['TODO.md']?p.files['TODO.md'].text.split(/\r?\n/):[]).forEach(l=>{const h=l.match(/^#{2,3}\s+(.*)/);if(h&&!out.includes(h[1]))out.push(h[1])});return out}
 function ntDefSec(p){return ntSections(p).find(x=>!/fatt|complet|archiv|chius/i.test(x))||'__new'}
 function openNewTask(mark,pname){const p=projects.find(x=>x.name===pname);newTask={pname:pname||'',mark:mark||' ',prio:'P2',title:'',detail:'',secSel:p?ntDefSec(p):'',secNew:'Da fare',focused:false};render()}
@@ -1500,7 +1500,7 @@ function viewDetail(){
   return `<div class="pbar${pbShow?' show':''}" id="pbar"><div class="pbi"><b style="color:${colOf(p.name)}">${esc(label(p.name))}</b><span class="meta">${esc(detailTab)}</span></div></div>
   <div class="dtop"><div class="crumb"><button class="btn small" id="back">${ico('left',13)}Progetti</button></div>
   <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><h1 id="ptitle" style="margin:0;font-size:24px;color:${colOf(p.name)}">${esc(label(p.name))}</h1>
-   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in attesa</span>':''}${isTest(p)?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">${ico('clock',13)}${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">${ico('pencil',13)}${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}" data-ak="toggle">${done?ico('ref',13,'tgl'):ico('check',13,'tgl')}${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
+   ${done?'<span class="chip none">terminato</span>':''}${isWait(p)?'<span class="chip wait">in analisi</span>':''}${isTest(p)?'<span class="chip test">in test</span>':''}${dli?`<span class="dl ${dli.cls}" data-dledit="${esc(p.name)}" title="Scadenza ${dli.dd} — clicca per modificare">${ico('clock',13)}${esc(dli.txt)} · ${dli.dd.slice(0,5)}</span>`:''}<span class="dl upd" title="Ultimo aggiornamento">${ico('pencil',13)}${esc(updLabel(p))}</span><button class="btn small" data-toggle="${esc(p.name)}" data-ak="toggle">${done?ico('ref',13,'tgl'):ico('check',13,'tgl')}${done?'Riapri progetto':'Segna terminato'}</button><span class="spacer"></span>
    <button class="btn small" data-medit="1" title="Modifica nome, colore, scadenza, stato" data-ak="medit">${ico('gear',14,'gi')}Modifica</button></div>
   <div class="tabs">${tabs.map(t=>`<button data-tab="${t}" class="${t===detailTab?'on':''}">${t==='TODO'&&p.openCount?`TODO (${p.openCount})`:t}</button>`).join('')}</div></div>${body}${modal}${taskPop?taskPopHTML(p):''}`;
 }
