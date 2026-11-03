@@ -468,6 +468,9 @@ input[type=checkbox]:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(i
 /* schede e segmenti: al passaggio cambia solo il colore del testo (uno sfondo sparirebbe e riapparirebbe quando la pagina si ridisegna sotto il mouse) */
 .seg button:not(.on):hover{color:var(--accent)}.tabs button:not(.on):hover{color:var(--ink)}
 .chip[data-prioopen]:hover,.dl[data-dledit]:hover{filter:brightness(.96);transform:translateY(-1px)}
+/* badge delle schede (priorità, conteggi per stato, scadenza, ultima modifica): stesso passaggio del mouse per tutti, si alzano di 1 px e si circondano di un alone del loro colore, oltre all icona animata */
+.chip.scnt,.dl{transition:transform .25s ease,box-shadow .25s ease,filter .2s ease}
+.chip.scnt:hover,.dl:hover{transform:translateY(-1px);box-shadow:0 0 0 3px color-mix(in srgb,currentColor 14%,transparent)}
 .cd:active{transform:scale(.88)}
 /* + Nuova attività: il più ruota al passaggio e al clic */
 .ic.pl{transition:transform .25s ease}.btn:hover .ic.pl{transform:rotate(90deg)}.press .ic.pl{animation:plspin .5s ease}
@@ -653,7 +656,7 @@ a.btn{text-decoration:none}
 /* calendario della scadenza: compare solo all'apertura, non a ogni cambio mese */
 .cal.in{animation:calin .18s ease}
 .ic.solo{margin:0;vertical-align:-3px}
-@media (prefers-reduced-motion:reduce){:is(.btn,nav button,.seg button,.st,.kadd,.datebtn,.fitem,.mitem,input[type=checkbox]):is(:hover,:active){transform:none!important}.press,.landed,.picked,.stl,.pno .ic,.pic .ic,.pic .ic *,.sci .ic,.sci .ic *,.deny,.det.out,.chev .ic,.dl .ic,.c-x .ic,.ic.tgl,.datebtn.press .ic,.struck *,.revived *,.struck .ttl::after,.revived .ttl::after,#undo.out{animation:none!important}.struck .ttl::after,.revived .ttl::after{display:none}.struck .t{text-decoration:line-through!important}}
+@media (prefers-reduced-motion:reduce){:is(.btn,nav button,.seg button,.st,.kadd,.datebtn,.fitem,.mitem,input[type=checkbox],.chip.scnt,.dl):is(:hover,:active){transform:none!important}.press,.landed,.picked,.stl,.pno .ic,.pic .ic,.pic .ic *,.sci .ic,.sci .ic *,.deny,.det.out,.chev .ic,.dl .ic,.c-x .ic,.ic.tgl,.datebtn.press .ic,.struck *,.revived *,.struck .ttl::after,.revived .ttl::after,#undo.out{animation:none!important}.struck .ttl::after,.revived .ttl::after{display:none}.struck .t{text-decoration:line-through!important}}
 </style>
 </head>
 <body>
